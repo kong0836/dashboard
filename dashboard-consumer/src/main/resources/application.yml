@@ -1,0 +1,24 @@
+spring:
+  # 数据源
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/dashboard?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+  # 模板引擎配置
+  #  thymeleaf:
+  #    prefix: classpath:/templates/
+  #    suffix: .js
+  # 静态资源配置
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/, classpath:/public/
+
+# dubbo
+dubbo:
+  application:
+    name: dashboard-consumer
+  registry:
+    address: zookeeper://127.0.0.1:2181
+    protocol: zookeeper
+  consumer:
+    timeout: 3000

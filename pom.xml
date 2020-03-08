@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <groupId>com.dashboard</groupId>
+  <artifactId>dashboard</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modelVersion>4.0.0</modelVersion>
+  <name>dashboard</name>
+
+  <modules>
+    <module>dashboard-common</module>
+    <module>dashboard-consumer</module>
+    <module>dashboard-provider</module>
+    <module>dashboard-util</module>
+  </modules>
+
+  <parent>
+    <!-- Spring Boot的版本仲裁中心，控制了所有依赖的版本号 -->
+    <!--好处：以后我们导入依赖默认是不需要写版本 -->
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.2.1.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
+  <properties>
+    <java.version>1.8</java.version>
+    <file.encoding>UTF-8</file.encoding>
+    <dubbo.boot.version>0.2.0</dubbo.boot.version>
+    <zkclient.version>0.10</zkclient.version>
+    <mybatis.boot.version>2.0.0</mybatis.boot.version>
+    <druid.boot.version>1.1.10</druid.boot.version>
+    <mysql.version>5.1.28</mysql.version>
+  </properties>
+
+  <dependencies>
+    <!-- web的场景，自动帮我们引入了web模块开发需要的相关jar包 -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <!-- 移除嵌入式tomcat插件 -->
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <version>4.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <encoding>${file.encoding}</encoding>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <encoding>${file.encoding}</encoding>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
