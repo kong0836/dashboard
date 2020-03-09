@@ -35,3 +35,15 @@ target/generated-test-sources/
 target/maven-archiver/
 target/maven-status/
 target/surefire-reports/
+dashboard-common/dashboard-common.iml
+dashboard-common/src/main/resources/
+dashboard-common/src/test/
+dashboard-consumer/src/main/java/com/dashboard/config/
+dashboard-consumer/src/main/java/com/dashboard/controller/menu/
+dashboard-consumer/src/main/java/com/dashboard/controller/role/
+dashboard-consumer/src/main/resources/templates/
+dashboard-consumer/src/test/
+dashboard-provider/src/test/
+dashboard-util/dashboard-util.iml
+dashboard-util/src/main/resources/
+dashboard-util/src/test/
