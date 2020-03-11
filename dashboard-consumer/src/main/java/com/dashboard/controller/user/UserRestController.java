@@ -33,7 +33,6 @@ public class UserRestController {
      * @return
      */
     @GetMapping("create")
-    // .CuratorConnectionLossException: KeeperErrorCode = ConnectionLoss
     @ApiOperation("添加用户")
     public RestResult createUser() {
 
