@@ -3,6 +3,8 @@ package com.dashboard.controller.user;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.result.RestResult;
 import com.dashboard.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  **/
 @RestController
 @RequestMapping("/user")
+@Api(tags = "用户管理接口")
 public class UserRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserRestController.class);
@@ -31,6 +34,7 @@ public class UserRestController {
      */
     @GetMapping("create")
     // .CuratorConnectionLossException: KeeperErrorCode = ConnectionLoss
+    @ApiOperation("添加用户")
     public RestResult createUser() {
 
         userService.createUser(null);
