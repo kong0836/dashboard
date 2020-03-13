@@ -1,5 +1,7 @@
 package com.dashboard.redis;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -16,8 +18,9 @@ import java.util.concurrent.TimeUnit;
  * @date 2020/3/11 23:00
  **/
 @Component
-public class RedisUtils {
+public class RedisClient {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisClient.class);
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -36,7 +39,7 @@ public class RedisUtils {
             }
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.info("指定缓存失效时间异常：{}", e.getMessage());
             return false;
         }
     }

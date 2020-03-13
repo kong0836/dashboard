@@ -35,12 +35,15 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Bean(name = "redisTemplate")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
+
         template.setConnectionFactory(redisConnectionFactory);
+
         //使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值
         Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
         ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        mapper.activateDefaultTyping(mapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL);
+
         jackson2JsonRedisSerializer.setObjectMapper(mapper);
         template.setValueSerializer(jackson2JsonRedisSerializer);
 
@@ -48,13 +51,18 @@ public class RedisConfig extends CachingConfigurerSupport {
         //使用StringRedisSerializer来序列化和反序列化redis的key值
         template.setKeySerializer(stringRedisSerializer);
         template.setKeySerializer(stringRedisSerializer);
+
         // hash的key也采用String的序列化方式
         template.setHashKeySerializer(stringRedisSerializer);
+
         // value序列化方式采用jackson
         template.setValueSerializer(jackson2JsonRedisSerializer);
+
         // hash的value序列化方式采用jackson
         template.setHashValueSerializer(jackson2JsonRedisSerializer);
+
         template.afterPropertiesSet();
+
         return template;
     }
 
@@ -64,10 +72,10 @@ public class RedisConfig extends CachingConfigurerSupport {
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
 
         //解决查询缓存转换异常的问题
-        ObjectMapper om = new ObjectMapper();
-        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
-        jackson2JsonRedisSerializer.setObjectMapper(om);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        mapper.activateDefaultTyping(mapper.getPolymorphicTypeValidator(), ObjectMapper.DefaultTyping.NON_FINAL);
+        jackson2JsonRedisSerializer.setObjectMapper(mapper);
 
         // 配置序列化（解决乱码的问题）
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
@@ -79,6 +87,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         RedisCacheManager cacheManager = RedisCacheManager.builder(factory)
                 .cacheDefaults(config)
                 .build();
+
         return cacheManager;
     }
 }
