@@ -1,4 +1,4 @@
-package com.dashboard.enums;
+package com.dashboard.enums.result;
 
 /**
  * @author konglinghui

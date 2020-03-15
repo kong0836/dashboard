@@ -1,6 +1,6 @@
 package com.dashboard.result;
 
-import com.dashboard.enums.RestResultEnum;
+import com.dashboard.enums.result.RestResultEnum;
 
 import java.io.Serializable;
 

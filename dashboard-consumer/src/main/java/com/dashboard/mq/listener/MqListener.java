@@ -1,5 +1,6 @@
 package com.dashboard.mq.listener;
 
+import com.dashboard.constants.mq.QueueConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,8 @@ public class MqListener {
     @Autowired
     private JmsMessagingTemplate jmsMessagingTemplate;
 
-
     @SendTo("SQueue")
-    @JmsListener(destination = "ActiveMQQueue")
+    @JmsListener(destination = QueueConstants.TEST_QUEUE)
     public String handleMessage(String name) {
         LOGGER.info("接受mq消息：{}", name);
 
