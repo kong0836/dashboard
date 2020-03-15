@@ -5,14 +5,20 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.jms.annotation.EnableJms;
 
 /**
+ * EnableJms-启动消息队列
+ *
  * @author konglinghui
- */
-@SpringBootApplication
+ * @description 启动类
+ * @date 2019/11/14 19:59
+ **/
+@EnableJms
+@MapperScan(basePackages = "com.dashboard.mapper")
 @ComponentScan(basePackages = {"com.dashboard.*"})
 @EnableDubbo(scanBasePackages = "com.dashboard.service.impl")
-@MapperScan(basePackages = "com.dashboard.mapper")
+@SpringBootApplication
 public class ProviderApplication {
 
     public static void main(String[] args) {
