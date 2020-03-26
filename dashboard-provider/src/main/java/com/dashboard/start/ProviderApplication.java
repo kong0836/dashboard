@@ -15,7 +15,7 @@ import org.springframework.jms.annotation.EnableJms;
  * @date 2019/11/14 19:59
  **/
 @EnableJms
-@MapperScan(basePackages = "com.dashboard.mapper")
+@MapperScan(basePackages = "com.dashboard.mapper.*")
 @ComponentScan(basePackages = {"com.dashboard.*"})
 @EnableDubbo(scanBasePackages = "com.dashboard.service.impl")
 @SpringBootApplication
