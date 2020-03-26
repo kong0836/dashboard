@@ -1,74 +1,80 @@
 -- 用户表
-DROP TABLE IF EXISTS user;
-CREATE TABLE user (
-    user_id     varchar(32) NOT NULL COMMENT '主键',
-    role_id     varchar(32) NOT NULL COMMENT '关联角色主键',
-    user_name   varchar(32) NOT NULL COMMENT '用户名',
-    phone       varchar(11) NOT NULL COMMENT '手机号',
-    password    varchar(32) NOT NULL COMMENT '密码',
-    status      tinyint(2)  NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
-    create_by   varchar(32) NOT NULL COMMENT '创建人ID',
-    create_time datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    update_by   varchar(32) NOT NULL COMMENT '更新人ID',
-    update_time datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
-    PRIMARY KEY (user_id),
-    KEY (role_id),
-    UNIQUE INDEX (user_name)
+DROP TABLE IF EXISTS person;
+CREATE TABLE person (
+    id          varchar(32)  NOT NULL COMMENT '主键',
+    name        varchar(32)  NOT NULL COMMENT '用户名',
+    age         smallint(6)  NULL     DEFAULT NULL COMMENT '年龄',
+    gender      smallint(6)  NOT NULL COMMENT '性别: 1-男 2-女',
+    birthday    datetime     NULL     DEFAULT NULL COMMENT '生日',
+    picture     varchar(256) NULL     DEFAULT '' COMMENT '照片',
+    email       varchar(256) NULL     DEFAULT '' COMMENT '邮箱',
+    phone       varchar(16)  NULL     DEFAULT '' COMMENT '手机号',
+    password    varchar(32)  NULL     DEFAULT '123456' COMMENT '密码: 默认值-123456',
+    status      tinyint(2)   NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
+    create_by   varchar(32)  NOT NULL COMMENT '创建人ID',
+    create_time datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_by   varchar(32)  NOT NULL COMMENT '更新人ID',
+    update_time datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+    PRIMARY KEY `person_id` (id),
+    UNIQUE INDEX (name)
 )
     ENGINE = InnoDB
     CHARACTER SET = utf8
     COMMENT = '用户表';
 
--- 角色表
-DROP TABLE IF EXISTS role;
-CREATE TABLE role (
-    role_id     varchar(32) NOT NULL COMMENT '主键',
-    role_name   varchar(32) NOT NULL COMMENT '角色姓名',
-    order_no    int(10)     NOT NULL COMMENT '排序号',
+-- 权限角色表
+DROP TABLE IF EXISTS permission_role;
+CREATE TABLE permission_role (
+    id          varchar(32) NOT NULL COMMENT '主键',
+    role_name   varchar(32) NOT NULL COMMENT '角色名称',
+    description varchar(32) NULL     DEFAULT '' COMMENT '描述',
     status      tinyint(2)  NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
     create_by   varchar(32) NOT NULL COMMENT '创建人ID',
     create_time datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_by   varchar(32) NOT NULL COMMENT '更新人ID',
     update_time datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
-    PRIMARY KEY (role_id)
+    PRIMARY KEY `permission_role_id` (id)
 )
     ENGINE = InnoDB
     CHARACTER SET = utf8
     COMMENT = '角色表';
 
--- 权限表
-DROP TABLE IF EXISTS menu;
-CREATE TABLE menu (
-    menu_id     varchar(32)  NOT NULL COMMENT '主键',
+-- 权限资源表
+DROP TABLE IF EXISTS permission_resource;
+CREATE TABLE permission_resource (
+    id          varchar(32)  NOT NULL COMMENT '主键',
     parent_id   varchar(32)  NOT NULL COMMENT '上级菜单主键',
-    name        varchar(50)  NOT NULL COMMENT '菜单名称',
-    url         varchar(255) NOT NULL COMMENT '菜单对应URL',
+    name        varchar(32)  NOT NULL COMMENT '菜单名称',
+    url         varchar(255) NOT NULL COMMENT '菜单URL',
     code        varchar(50)  NOT NULL COMMENT '授权码',
-    type        int(10)      NOT NULL COMMENT '类型: 1-目录 2-菜单 3-按钮',
-    icon        varchar(50)  NOT NULL COMMENT '图标',
+    type        tinyint(2)   NOT NULL COMMENT '类型: 1-目录 2-菜单 3-按钮',
+    icon        varchar(32)  NOT NULL COMMENT '图标',
     order_no    int(10)      NOT NULL DEFAULT 0 COMMENT '排序号',
+    description varchar(32)  NULL     DEFAULT '' COMMENT '描述',
     create_by   varchar(32)  NOT NULL COMMENT '创建人ID',
     create_time datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_by   varchar(32)  NOT NULL COMMENT '更新人ID',
     update_time datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
-    PRIMARY KEY (menu_id)
+    PRIMARY KEY `permission_resource_id` (id),
+    KEY `permission_resource_parent_id` (parent_id)
 )
     ENGINE = InnoDB
     CHARACTER SET = utf8
     COMMENT = '权限表';
 
--- 部门表
-DROP TABLE IF EXISTS department;
-CREATE TABLE department (
-    dept_id     varchar(32) NOT NULL COMMENT '主键',
-    dept_name   varchar(10) NOT NULL COMMENT '部门名称',
-    parent_id   varchar(32) NOT NULL COMMENT '上级部门主键',
+-- 权限组织表
+DROP TABLE IF EXISTS permission_organization;
+CREATE TABLE permission_organization (
+    id          varchar(32) NOT NULL COMMENT '主键',
+    parent_id   varchar(32) NOT NULL COMMENT '上级组织主键',
+    name        varchar(10) NOT NULL COMMENT '组织名称',
     order_no    int(10)     NOT NULL COMMENT '排序号',
+    description varchar(32) NULL     DEFAULT '' COMMENT '描述',
     create_by   varchar(32) NOT NULL COMMENT '创建人ID',
     create_time datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_by   varchar(32) NOT NULL COMMENT '更新人ID',
     update_time datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
-    PRIMARY KEY (dept_id)
+    PRIMARY KEY `permission_organization` (id)
 )
     ENGINE = InnoDB
     CHARACTER SET = utf8
@@ -114,7 +120,7 @@ DROP TABLE IF EXISTS sys_log;
 CREATE TABLE sys_log (
     id          varchar(32)  NOT NULL COMMENT '主键ID',
     type        int(11)      NULL DEFAULT NULL COMMENT '日志类型',
-    user_Name   varchar(50)  NOT NULL COMMENT '用户名',
+    person_Name varchar(50)  NOT NULL COMMENT '用户名',
     operation   varchar(50)  NOT NULL COMMENT '用户操作',
     uri         varchar(100) NULL DEFAULT NULL COMMENT '请求URI',
     method      varchar(200) NULL DEFAULT NULL COMMENT '请求方法',
@@ -129,14 +135,14 @@ CREATE TABLE sys_log (
     CHARACTER SET = utf8
     COMMENT = '系统日志表';
 
--- user_token
-DROP TABLE IF EXISTS user_token;
-CREATE TABLE user_token (
-    user_id     varchar(32)  NOT NULL,
+-- person_token
+DROP TABLE IF EXISTS person_token;
+CREATE TABLE person_token (
+    person_id   varchar(32)  NOT NULL,
     token       varchar(100) NOT NULL,
     expire_time datetime     NULL DEFAULT NULL COMMENT '过期时间',
     update_time datetime     NULL DEFAULT NULL COMMENT '更新时间',
-    PRIMARY KEY (user_id),
+    PRIMARY KEY (person_id),
     UNIQUE INDEX token (token)
 )
     ENGINE = InnoDB
