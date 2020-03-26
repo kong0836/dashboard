@@ -1,15 +1,15 @@
 -- 用户表
 DROP TABLE IF EXISTS person;
 CREATE TABLE person (
-    id          varchar(32)  NOT NULL COMMENT '主键',
+    id          bigint(20)   NOT NULL COMMENT '主键',
     name        varchar(32)  NOT NULL COMMENT '用户名',
     age         smallint(6)  NULL     DEFAULT NULL COMMENT '年龄',
-    gender      smallint(6)  NOT NULL COMMENT '性别: 1-男 2-女',
+    gender      tinyint(2)   NOT NULL COMMENT '性别: 1-男 2-女',
     birthday    datetime     NULL     DEFAULT NULL COMMENT '生日',
     picture     varchar(256) NULL     DEFAULT '' COMMENT '照片',
     email       varchar(256) NULL     DEFAULT '' COMMENT '邮箱',
     phone       varchar(16)  NULL     DEFAULT '' COMMENT '手机号',
-    password    varchar(32)  NULL     DEFAULT '123456' COMMENT '密码: 默认值-123456',
+    password    varchar(256) NULL     DEFAULT '123456' COMMENT '密码: 默认值-123456',
     status      tinyint(2)   NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
     create_by   varchar(32)  NOT NULL COMMENT '创建人ID',
     create_time datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -25,7 +25,7 @@ CREATE TABLE person (
 -- 权限角色表
 DROP TABLE IF EXISTS permission_role;
 CREATE TABLE permission_role (
-    id          varchar(32) NOT NULL COMMENT '主键',
+    id          bigint(20)  NOT NULL COMMENT '主键',
     role_name   varchar(32) NOT NULL COMMENT '角色名称',
     description varchar(32) NULL     DEFAULT '' COMMENT '描述',
     status      tinyint(2)  NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
@@ -42,7 +42,7 @@ CREATE TABLE permission_role (
 -- 权限资源表
 DROP TABLE IF EXISTS permission_resource;
 CREATE TABLE permission_resource (
-    id          varchar(32)  NOT NULL COMMENT '主键',
+    id          bigint(20)   NOT NULL COMMENT '主键',
     parent_id   varchar(32)  NOT NULL COMMENT '上级菜单主键',
     name        varchar(32)  NOT NULL COMMENT '菜单名称',
     url         varchar(255) NOT NULL COMMENT '菜单URL',
@@ -65,7 +65,7 @@ CREATE TABLE permission_resource (
 -- 权限组织表
 DROP TABLE IF EXISTS permission_organization;
 CREATE TABLE permission_organization (
-    id          varchar(32) NOT NULL COMMENT '主键',
+    id          bigint(20)  NOT NULL COMMENT '主键',
     parent_id   varchar(32) NOT NULL COMMENT '上级组织主键',
     name        varchar(10) NOT NULL COMMENT '组织名称',
     order_no    int(10)     NOT NULL COMMENT '排序号',
@@ -82,9 +82,9 @@ CREATE TABLE permission_organization (
 
 DROP TABLE IF EXISTS captcha;
 CREATE TABLE captcha (
-    id          varchar(36) NOT NULL COMMENT '主键',
-    code        varchar(6)  NOT NULL COMMENT '验证码',
-    expire_time datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '过期时间',
+    id          bigint(20) NOT NULL COMMENT '主键',
+    code        varchar(6) NOT NULL COMMENT '验证码',
+    expire_time datetime   NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '过期时间',
     PRIMARY KEY (id)
 )
     ENGINE = InnoDB
@@ -94,7 +94,7 @@ CREATE TABLE captcha (
 -- 字典表
 DROP TABLE IF EXISTS dictionary;
 CREATE TABLE dictionary (
-    id          varchar(32)  NOT NULL,
+    id          bigint(20)   NOT NULL,
     code        varchar(10)  NULL DEFAULT NULL COMMENT 'key',
     name        varchar(20)  NULL DEFAULT NULL COMMENT 'value',
     type        varchar(10)  NULL DEFAULT NULL,
@@ -118,7 +118,7 @@ CREATE TABLE dictionary (
 -- ----------------------------
 DROP TABLE IF EXISTS sys_log;
 CREATE TABLE sys_log (
-    id          varchar(32)  NOT NULL COMMENT '主键ID',
+    id          bigint(20)   NOT NULL COMMENT '主键ID',
     type        int(11)      NULL DEFAULT NULL COMMENT '日志类型',
     person_Name varchar(50)  NOT NULL COMMENT '用户名',
     operation   varchar(50)  NOT NULL COMMENT '用户操作',
@@ -138,7 +138,7 @@ CREATE TABLE sys_log (
 -- person_token
 DROP TABLE IF EXISTS person_token;
 CREATE TABLE person_token (
-    person_id   varchar(32)  NOT NULL,
+    person_id   bigint(20)   NOT NULL,
     token       varchar(100) NOT NULL,
     expire_time datetime     NULL DEFAULT NULL COMMENT '过期时间',
     update_time datetime     NULL DEFAULT NULL COMMENT '更新时间',
