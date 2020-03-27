@@ -8,12 +8,5 @@ import org.springframework.stereotype.Repository;
  * @author konglinghui
  */
 @Repository
-public interface PersonMapper extends BaseMapper {
-
-    /**
-     * 新增用户
-     *
-     * @param person
-     */
-    void insertUser(Person person);
+public interface PersonMapper extends BaseMapper<Person> {
 }

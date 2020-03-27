@@ -2,12 +2,15 @@ package com.dashboard.controller.user;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.result.RestResult;
+import com.dashboard.mapper.other.Person;
 import com.dashboard.service.permission.PersonService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @description 用户
  * @date 2019/11/14 19:59
  **/
+@Api(tags = "用户管理接口")
 @RestController
 @RequestMapping("/person/rest")
-@Api(tags = "用户管理接口")
 public class PersonRestController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PersonRestController.class);
@@ -32,11 +35,11 @@ public class PersonRestController {
      * @param user
      * @return
      */
-    @GetMapping("create")
     @ApiOperation("添加用户")
-    public RestResult createUser() {
+    @PostMapping("/createPerson")
+    public RestResult createPerson(@RequestBody Person person) {
 
-        personService.createUser(null);
+        personService.createPerson(person);
         return RestResult.success();
     }
 }

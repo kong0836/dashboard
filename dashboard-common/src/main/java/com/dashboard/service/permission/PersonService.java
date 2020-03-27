@@ -13,5 +13,5 @@ public interface PersonService {
      *
      * @param person
      */
-    void createUser(Person person);
+    void createPerson(Person person);
 }

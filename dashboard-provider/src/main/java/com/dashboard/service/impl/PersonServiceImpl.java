@@ -31,13 +31,9 @@ public class PersonServiceImpl implements PersonService {
     private JmsMessagingTemplate jmsMessagingTemplate;
 
     @Override
-    public void createUser(Person person) {
+    public void createPerson(Person person) {
         jmsMessagingTemplate.convertAndSend(QueueConstants.TEST_QUEUE, "mq消息发送了1");
-        jmsMessagingTemplate.convertAndSend(QueueConstants.TEST_QUEUE, "mq消息发送了2");
-        jmsMessagingTemplate.convertAndSend(QueueConstants.TEST_QUEUE, "mq消息发送了3");
-        jmsMessagingTemplate.convertAndSend(QueueConstants.TEST_QUEUE, "mq消息发送了4");
-        jmsMessagingTemplate.convertAndSend(QueueConstants.TEST_QUEUE, "mq消息发送了5");
 
-        // userMapper.insertUser(user);
+        personMapper.insert(person);
     }
 }
