@@ -31,7 +31,7 @@ public class Person extends BaseDO implements Serializable {
     @Id
     @Column(name = "id")
     @ApiModelProperty("用户ID")
-    private String id;
+    private Long id;
 
     /**
      * 姓名

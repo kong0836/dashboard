@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.mapper.permission.PermissionResource;
 import com.dashboard.service.permission.PermissionResourceService;
+import com.dashboard.snowflake.SnowflakeIdWorker;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +34,8 @@ public class PermissionResourceRestController {
     @ApiOperation("新增资源")
     @PostMapping("/createResource")
     public RestResult createResource(@RequestBody PermissionResource permissionResource) {
+
+        permissionResource.setId(SnowflakeIdWorker.generateId());
 
         permissionResourceService.insertPermissionResource(permissionResource);
 

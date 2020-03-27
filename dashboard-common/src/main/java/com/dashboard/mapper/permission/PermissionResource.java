@@ -30,7 +30,7 @@ public class PermissionResource extends BaseDO implements Serializable {
     @Id
     @Column(name = "id")
     @ApiModelProperty("资源主键id")
-    private String id;
+    private Long id;
 
     /**
      * 上级资源主键id
@@ -73,4 +73,26 @@ public class PermissionResource extends BaseDO implements Serializable {
     @Column(name = "icon")
     @ApiModelProperty("图标")
     private String icon;
+
+    /**
+     * 用户状态: 0-启用 1-禁用
+     */
+    @Column(name = "status")
+    @ApiModelProperty("用户状态: 0-启用 1-禁用")
+    private Integer status;
+
+    /**
+     * 排序号
+     */
+    @Column(name = "order_no")
+    @ApiModelProperty("'排序号'")
+    private Integer orderNo;
+
+    /**
+     * 描述
+     */
+    @Column(name = "description")
+    @ApiModelProperty("描述")
+    private String description;
+
 }
