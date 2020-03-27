@@ -50,6 +50,7 @@ CREATE TABLE permission_resource (
     type        tinyint(2)   NOT NULL COMMENT '类型: 1-目录 2-菜单 3-按钮',
     icon        varchar(32)  NOT NULL COMMENT '图标',
     order_no    int(10)      NOT NULL DEFAULT 0 COMMENT '排序号',
+    status      tinyint(2)   NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
     description varchar(32)  NULL     DEFAULT '' COMMENT '描述',
     create_by   varchar(32)  NOT NULL COMMENT '创建人ID',
     create_time datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
