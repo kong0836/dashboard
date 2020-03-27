@@ -59,6 +59,17 @@
       <version>${mysql.version}</version>
       <scope>runtime</scope>
     </dependency>
+    <!-- tk-mybatis -->
+    <dependency>
+      <groupId>tk.mybatis</groupId>
+      <artifactId>mapper-spring-boot-starter</artifactId>
+      <version>2.0.3-beta1</version>
+    </dependency>
+    <dependency>
+      <groupId>tk.mybatis</groupId>
+      <artifactId>mapper</artifactId>
+      <version>4.0.0</version>
+    </dependency>
 
     <!-- lombok -->
     <dependency>
