@@ -35,7 +35,7 @@ public class PersonRestController {
      * @param user
      * @return
      */
-    @ApiOperation("添加用户")
+    @ApiOperation("新增用户")
     @PostMapping("/createPerson")
     public RestResult createPerson(@RequestBody Person person) {
 

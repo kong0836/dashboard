@@ -1,18 +1,34 @@
 package com.dashboard.service.impl.permission;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.dashboard.mapper.menu.MenuMapper;
-import com.dashboard.service.permission.MenuService;
+import com.dashboard.mapper.menu.PermissionResourceMapper;
+import com.dashboard.mapper.permission.PermissionResource;
+import com.dashboard.service.permission.PermissionResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author konglinghui
- * @description TODO
+ * @description 资源相关接口
  * @date 2020/3/16 22:40
  **/
 @Service
-public class PermissionResourceServiceImpl implements MenuService {
+public class PermissionResourceServiceImpl implements PermissionResourceService {
 
     @Autowired
-    private MenuMapper menuMapper;
+    private PermissionResourceMapper permissionResourceMapper;
+
+    @Override
+    public void insertPermissionResource(PermissionResource permissionResource) {
+        permissionResourceMapper.insert(permissionResource);
+    }
+
+    @Override
+    public void updatePermissionResource(PermissionResource permissionResource) {
+        permissionResourceMapper.updateByPrimaryKey(permissionResource);
+    }
+
+    @Override
+    public void deletePermissionResource(PermissionResource permissionResource) {
+        permissionResourceMapper.updateByPrimaryKey(permissionResource);
+    }
 }
