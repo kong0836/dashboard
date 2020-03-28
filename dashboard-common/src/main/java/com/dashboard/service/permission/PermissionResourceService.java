@@ -1,6 +1,6 @@
 package com.dashboard.service.permission;
 
-import com.dashboard.mapper.permission.PermissionResource;
+import com.dashboard.entity.permission.PermissionResource;
 
 /**
  * @author konglinghui

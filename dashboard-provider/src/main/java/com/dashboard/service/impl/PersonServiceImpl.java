@@ -3,7 +3,7 @@ package com.dashboard.service.impl;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.dashboard.common.redis.RedisClient;
 import com.dashboard.mapper.PersonMapper;
-import com.dashboard.mapper.other.Person;
+import com.dashboard.entity.other.Person;
 import com.dashboard.mq.QueueConstants;
 import com.dashboard.service.permission.PersonService;
 import org.slf4j.Logger;

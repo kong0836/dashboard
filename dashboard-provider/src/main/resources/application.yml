@@ -41,7 +41,7 @@ spring:
 # mybatis
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.dashboard.mapper
+  type-aliases-package: com.dashboard.entity
 
 # dubbo
 dubbo:

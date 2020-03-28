@@ -2,13 +2,12 @@ package com.dashboard.controller.user;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.result.RestResult;
-import com.dashboard.mapper.other.Person;
+import com.dashboard.entity.other.Person;
 import com.dashboard.service.permission.PersonService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

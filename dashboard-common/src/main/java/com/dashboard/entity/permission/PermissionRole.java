@@ -1,4 +1,4 @@
-package com.dashboard.mapper.permission;
+package com.dashboard.entity.permission;
 
 import com.dashboard.common.entity.BaseDO;
 import io.swagger.annotations.ApiModel;

@@ -22,7 +22,7 @@ CREATE TABLE person (
     CHARACTER SET = utf8
     COMMENT = '用户表';
 
--- 权限角色表
+-- 权限-角色表
 DROP TABLE IF EXISTS permission_role;
 CREATE TABLE permission_role (
     id          bigint(20)  NOT NULL COMMENT '主键',
@@ -39,7 +39,7 @@ CREATE TABLE permission_role (
     CHARACTER SET = utf8
     COMMENT = '角色表';
 
--- 权限资源表
+-- 权限-资源表
 DROP TABLE IF EXISTS permission_resource;
 CREATE TABLE permission_resource (
     id          bigint(20)   NOT NULL COMMENT '主键',
@@ -63,7 +63,7 @@ CREATE TABLE permission_resource (
     CHARACTER SET = utf8
     COMMENT = '权限表';
 
--- 权限组织表
+-- 权限-组织表
 DROP TABLE IF EXISTS permission_organization;
 CREATE TABLE permission_organization (
     id          bigint(20)  NOT NULL COMMENT '主键',

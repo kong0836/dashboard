@@ -1,4 +1,4 @@
-package com.dashboard.mapper.other;
+package com.dashboard.entity.other;
 
 import com.dashboard.common.entity.BaseDO;
 import io.swagger.annotations.ApiModel;

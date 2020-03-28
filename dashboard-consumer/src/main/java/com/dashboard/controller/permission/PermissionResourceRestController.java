@@ -2,7 +2,7 @@ package com.dashboard.controller.permission;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.result.RestResult;
-import com.dashboard.mapper.permission.PermissionResource;
+import com.dashboard.entity.permission.PermissionResource;
 import com.dashboard.service.permission.PermissionResourceService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
 import io.swagger.annotations.Api;

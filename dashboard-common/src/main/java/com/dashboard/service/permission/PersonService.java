@@ -1,6 +1,6 @@
 package com.dashboard.service.permission;
 
-import com.dashboard.mapper.other.Person;
+import com.dashboard.entity.other.Person;
 
 /**
  * @author konglinghui

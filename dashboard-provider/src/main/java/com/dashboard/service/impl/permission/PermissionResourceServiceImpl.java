@@ -1,8 +1,8 @@
 package com.dashboard.service.impl.permission;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.dashboard.mapper.menu.PermissionResourceMapper;
-import com.dashboard.mapper.permission.PermissionResource;
+import com.dashboard.mapper.permission.PermissionResourceMapper;
+import com.dashboard.entity.permission.PermissionResource;
 import com.dashboard.service.permission.PermissionResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 
