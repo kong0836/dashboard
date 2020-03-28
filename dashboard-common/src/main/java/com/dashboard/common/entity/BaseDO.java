@@ -36,7 +36,7 @@ public class BaseDO implements Serializable {
     /**
      * 修改时间
      */
-    @Column(name = "update_time")
+    @Column(name = "update_time", columnDefinition = "datetime DEFAULT CURRENT_TIMESTAMP")
     @ApiModelProperty("修改时间")
     private Timestamp updateTime;
 
