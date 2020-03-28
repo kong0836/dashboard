@@ -2,6 +2,7 @@ package com.dashboard.controller.permission;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.result.RestResult;
+import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.permission.PermissionResource;
 import com.dashboard.service.permission.PermissionResourceService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.Timestamp;
 
 /**
  * @author konglinghui
@@ -36,6 +39,12 @@ public class PermissionResourceRestController {
     public RestResult createResource(@RequestBody PermissionResource permissionResource) {
 
         permissionResource.setId(SnowflakeIdWorker.generateId());
+
+        Timestamp currentTimeStamp = DateTimeUtils.currentTimeStamp();
+        permissionResource.setCreateTime(currentTimeStamp);
+        permissionResource.setCreateBy("0");
+        permissionResource.setUpdateTime(currentTimeStamp);
+        permissionResource.setUpdateBy("0");
 
         permissionResourceService.insertPermissionResource(permissionResource);
 
