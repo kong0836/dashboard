@@ -1,6 +1,9 @@
 package com.dashboard.service.permission;
 
 import com.dashboard.entity.permission.PermissionResource;
+import com.dashboard.entity.permission.ResourceTreeVO;
+
+import java.util.List;
 
 /**
  * @author konglinghui
@@ -29,4 +32,11 @@ public interface PermissionResourceService {
      * @param permissionResource
      */
     void deletePermissionResource(PermissionResource permissionResource);
+
+    /**
+     * 查询所有可用资源并用树结构展示
+     *
+     * @return
+     */
+    List<ResourceTreeVO> findResourceTreeList();
 }

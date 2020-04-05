@@ -4,16 +4,23 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.permission.PermissionResource;
+import com.dashboard.entity.permission.ResourceTreeVO;
 import com.dashboard.service.permission.PermissionResourceService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author konglinghui
@@ -24,6 +31,8 @@ import java.sql.Timestamp;
 @RestController
 @RequestMapping("/permission/resource")
 public class PermissionResourceRestController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PermissionResourceRestController.class);
 
     @Reference
     private PermissionResourceService permissionResourceService;
@@ -79,5 +88,21 @@ public class PermissionResourceRestController {
         permissionResourceService.deletePermissionResource(permissionResource);
 
         return RestResult.success();
+    }
+
+    /**
+     * 查询所有可用资源并用树结构展示
+     *
+     * @return
+     */
+    @ApiModelProperty("查询所有可用资源并用树结构展示")
+    @GetMapping("/findResourceTreeList")
+    public RestResult findResourceTreeList() {
+
+        List<ResourceTreeVO> resourceTreeList = permissionResourceService.findResourceTreeList();
+
+        LOGGER.info("资源树:{}", resourceTreeList);
+
+        return RestResult.success(resourceTreeList);
     }
 }

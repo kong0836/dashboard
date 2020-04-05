@@ -37,7 +37,7 @@ public class PermissionResource extends BaseDO implements Serializable {
      */
     @Column(name = "parent_id")
     @ApiModelProperty("上级资源主键id")
-    private String parentId;
+    private Long parentId;
 
     /**
      * 资源名称
