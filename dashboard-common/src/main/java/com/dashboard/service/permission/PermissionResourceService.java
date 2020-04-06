@@ -1,6 +1,7 @@
 package com.dashboard.service.permission;
 
 import com.dashboard.entity.permission.PermissionResource;
+import com.dashboard.entity.permission.ResourceNavTreeVO;
 import com.dashboard.entity.permission.ResourceTreeVO;
 
 import java.util.List;
@@ -39,4 +40,11 @@ public interface PermissionResourceService {
      * @return
      */
     List<ResourceTreeVO> findResourceTreeList();
+
+    /**
+     * 导航菜单树
+     *
+     * @return
+     */
+    List<ResourceNavTreeVO> findNavResourceTreeList();
 }

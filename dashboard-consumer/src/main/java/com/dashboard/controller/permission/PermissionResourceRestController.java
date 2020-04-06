@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.permission.PermissionResource;
+import com.dashboard.entity.permission.ResourceNavTreeVO;
 import com.dashboard.entity.permission.ResourceTreeVO;
 import com.dashboard.service.permission.PermissionResourceService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -91,18 +93,28 @@ public class PermissionResourceRestController {
     }
 
     /**
-     * 查询所有可用资源并用树结构展示
+     * 资源树-新增资源使用
      *
      * @return
      */
-    @ApiModelProperty("查询所有可用资源并用树结构展示")
+    @ApiModelProperty("资源树-新增资源使用")
     @GetMapping("/findResourceTreeList")
     public RestResult findResourceTreeList() {
-
         List<ResourceTreeVO> resourceTreeList = permissionResourceService.findResourceTreeList();
 
-        LOGGER.info("资源树:{}", resourceTreeList);
-
         return RestResult.success(resourceTreeList);
+    }
+
+    /**
+     * 导航菜单树
+     *
+     * @return
+     */
+    @ApiModelProperty("导航菜单树")
+    @GetMapping("/findNavResourceTreeList")
+    public RestResult findNavResourceTreeList() {
+        List<ResourceNavTreeVO> resourceNavTreeList = permissionResourceService.findNavResourceTreeList();
+
+        return RestResult.success(resourceNavTreeList);
     }
 }
