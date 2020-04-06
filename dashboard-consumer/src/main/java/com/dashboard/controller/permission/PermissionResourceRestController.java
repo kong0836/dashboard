@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.permission.PermissionResource;
+import com.dashboard.entity.permission.PermissionResourceVO;
 import com.dashboard.entity.permission.ResourceNavTreeVO;
 import com.dashboard.entity.permission.ResourceTreeVO;
 import com.dashboard.service.permission.PermissionResourceService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Permission;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,5 +118,18 @@ public class PermissionResourceRestController {
         List<ResourceNavTreeVO> resourceNavTreeList = permissionResourceService.findNavResourceTreeList();
 
         return RestResult.success(resourceNavTreeList);
+    }
+
+    /**
+     * 资源列表数据
+     *
+     * @return
+     */
+    @ApiModelProperty("资源列表数据")
+    @PostMapping("/findResourceList")
+    public RestResult findResourceList() {
+        List<PermissionResourceVO> resourceList = permissionResourceService.findNavResourceList();
+
+        return RestResult.success(resourceList);
     }
 }
