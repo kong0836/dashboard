@@ -109,6 +109,8 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
         typeList.add(ResourceTypeEnum.DIRECTORY.getCode());
         typeList.add(ResourceTypeEnum.MENU.getCode());
         criteria.andIn("type", typeList);
+        condition.orderBy("orderNo").asc();
+
         List<PermissionResource> resourceList = permissionResourceMapper.selectByCondition(condition);
 
         // 将所有的数据，以键值对的形式装入map中
