@@ -1,6 +1,8 @@
 package com.dashboard.controller.permission;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dashboard.common.enums.BaseResultEnum;
+import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.permission.PermissionResource;
@@ -12,19 +14,19 @@ import com.dashboard.snowflake.SnowflakeIdWorker;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Permission;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author konglinghui
@@ -74,7 +76,7 @@ public class PermissionResourceRestController {
     @PostMapping("/updateResource")
     public RestResult updateResource(@RequestBody PermissionResource permissionResource) {
 
-        permissionResourceService.updatePermissionResource(permissionResource);
+        permissionResourceService.updateResourceById(permissionResource);
 
         return RestResult.success();
     }
@@ -89,6 +91,7 @@ public class PermissionResourceRestController {
     @PostMapping("/deleteResource")
     public RestResult deleteResource(@RequestBody PermissionResource permissionResource) {
 
+        permissionResource.setStatus(StatusEnum.OFF.getCode());
         permissionResourceService.deletePermissionResource(permissionResource);
 
         return RestResult.success();
@@ -131,5 +134,30 @@ public class PermissionResourceRestController {
         List<PermissionResourceVO> resourceList = permissionResourceService.findNavResourceList();
 
         return RestResult.success(resourceList);
+    }
+
+    /**
+     * 查询资源数据
+     *
+     * @return
+     */
+    @ApiModelProperty("查询资源数据")
+    @GetMapping("/findResourceById/{id}")
+    public RestResult findResourceById(@PathVariable String id) {
+        if (StringUtils.isBlank(id)) {
+            return RestResult.fail(BaseResultEnum.PARAM_ERROR);
+        }
+
+        PermissionResource permissionResource = permissionResourceService.findResourceById(id);
+        PermissionResourceVO permissionResourceVO = new PermissionResourceVO();
+        BeanUtils.copyProperties(permissionResource,
+                permissionResourceVO,
+                "idString",
+                "parentIdString",
+                "children");
+        permissionResourceVO.setIdString(permissionResource.getId().toString());
+        permissionResourceVO.setParentIdString(permissionResource.getParentId().toString());
+
+        return RestResult.success(permissionResourceVO);
     }
 }

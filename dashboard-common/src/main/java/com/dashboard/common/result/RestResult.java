@@ -1,6 +1,6 @@
 package com.dashboard.common.result;
 
-import com.dashboard.common.enums.RestResultEnum;
+import com.dashboard.common.enums.BaseResultEnum;
 
 import java.io.Serializable;
 
@@ -77,8 +77,8 @@ public final class RestResult<T> implements Serializable {
      */
     public static <T> RestResult<T> success(T data) {
         RestResult result = new RestResult();
-        result.setCode(RestResultEnum.SUCCESS.getCode());
-        result.setMessage(RestResultEnum.SUCCESS.getMessage());
+        result.setCode(BaseResultEnum.SUCCESS.getCode());
+        result.setMessage(BaseResultEnum.SUCCESS.getMessage());
         result.setData(data);
 
         return result;
@@ -91,7 +91,7 @@ public final class RestResult<T> implements Serializable {
      * @return
      */
     public static <T> RestResult<T> fail() {
-        return fail(RestResultEnum.FAIL);
+        return fail(BaseResultEnum.FAIL);
     }
 
     /**
@@ -101,7 +101,7 @@ public final class RestResult<T> implements Serializable {
      * @param <T>
      * @return
      */
-    public static <T> RestResult<T> fail(RestResultEnum resultEnum) {
+    public static <T> RestResult<T> fail(BaseResultEnum resultEnum) {
         RestResult result = new RestResult();
         result.setCode(resultEnum.getCode());
         result.setMessage(resultEnum.getMessage());

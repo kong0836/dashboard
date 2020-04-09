@@ -18,6 +18,16 @@ public class PermissionResourceVO extends PermissionResource implements Serializ
     private static final long serialVersionUID = -7441174829920015686L;
 
     /**
+     * 主键id字符串
+     */
+    private String idString;
+
+    /**
+     * 主键id字符串
+     */
+    private String parentIdString;
+
+    /**
      * 下级资源
      */
     private List<PermissionResourceVO> children;

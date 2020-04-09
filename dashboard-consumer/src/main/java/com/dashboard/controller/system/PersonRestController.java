@@ -1,4 +1,4 @@
-package com.dashboard.controller.user;
+package com.dashboard.controller.system;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.result.RestResult;

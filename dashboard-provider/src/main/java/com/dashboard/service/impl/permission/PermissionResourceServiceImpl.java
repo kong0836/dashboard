@@ -41,7 +41,7 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
     }
 
     @Override
-    public void updatePermissionResource(PermissionResource permissionResource) {
+    public void updateResourceById(PermissionResource permissionResource) {
         permissionResourceMapper.updateByPrimaryKey(permissionResource);
     }
 
@@ -171,7 +171,14 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
                 .collect(Collectors.toMap(PermissionResource::getId,
                         permissionResource -> {
                             PermissionResourceVO permissionResourceVO = new PermissionResourceVO();
-                            BeanUtils.copyProperties(permissionResource, permissionResourceVO, "children");
+                            BeanUtils.copyProperties(permissionResource,
+                                    permissionResourceVO,
+                                    "idString",
+                                    "parentIdString",
+                                    "children");
+                            permissionResourceVO.setIdString(permissionResource.getId().toString());
+                            permissionResourceVO.setParentIdString(permissionResource.getParentId().toString());
+
                             return permissionResourceVO;
                         }));
 
@@ -196,5 +203,10 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
         });
 
         return resourceTreeList;
+    }
+
+    @Override
+    public PermissionResource findResourceById(String id) {
+        return permissionResourceMapper.selectByPrimaryKey(id);
     }
 }

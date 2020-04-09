@@ -26,7 +26,7 @@ public interface PermissionResourceService {
      *
      * @param permissionResource
      */
-    void updatePermissionResource(PermissionResource permissionResource);
+    void updateResourceById(PermissionResource permissionResource);
 
     /**
      * 删除资源
@@ -55,4 +55,12 @@ public interface PermissionResourceService {
      * @return
      */
     List<PermissionResourceVO> findNavResourceList();
+
+    /**
+     * 查询资源数据
+     *
+     * @param id
+     * @return
+     */
+    PermissionResource findResourceById(String id);
 }
