@@ -149,15 +149,7 @@ public class PermissionResourceRestController {
         }
 
         PermissionResource permissionResource = permissionResourceService.findResourceById(id);
-        PermissionResourceVO permissionResourceVO = new PermissionResourceVO();
-        BeanUtils.copyProperties(permissionResource,
-                permissionResourceVO,
-                "idString",
-                "parentIdString",
-                "children");
-        permissionResourceVO.setIdString(permissionResource.getId().toString());
-        permissionResourceVO.setParentIdString(permissionResource.getParentId().toString());
 
-        return RestResult.success(permissionResourceVO);
+        return RestResult.success(permissionResource);
     }
 }

@@ -173,12 +173,7 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
                             PermissionResourceVO permissionResourceVO = new PermissionResourceVO();
                             BeanUtils.copyProperties(permissionResource,
                                     permissionResourceVO,
-                                    "idString",
-                                    "parentIdString",
                                     "children");
-                            permissionResourceVO.setIdString(permissionResource.getId().toString());
-                            permissionResourceVO.setParentIdString(permissionResource.getParentId().toString());
-
                             return permissionResourceVO;
                         }));
 
