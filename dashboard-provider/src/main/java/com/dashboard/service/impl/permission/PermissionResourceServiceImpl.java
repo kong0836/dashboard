@@ -5,6 +5,7 @@ import com.dashboard.common.constants.DashboardConstants;
 import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.entity.permission.PermissionResource;
 import com.dashboard.entity.permission.PermissionResourceTreeVO;
+import com.dashboard.entity.permission.PermissionResourceVO;
 import com.dashboard.entity.permission.ResourceNavTreeVO;
 import com.dashboard.entity.permission.ResourceTreeVO;
 import com.dashboard.enums.permission.ResourceTypeEnum;
@@ -17,6 +18,7 @@ import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -192,7 +194,32 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
     }
 
     @Override
-    public PermissionResource findResourceById(String id) {
-        return permissionResourceMapper.selectByPrimaryKey(id);
+    public PermissionResourceVO findResourceById(String id) {
+        PermissionResourceVO permissionResourceVO = new PermissionResourceVO();
+        PermissionResource permissionResource = permissionResourceMapper.selectByPrimaryKey(id);
+        BeanUtils.copyProperties(permissionResource, permissionResourceVO, "parentIdTem");
+
+        // 查询当前资源所属上级资源集合
+        List<String> parentIdTem = new ArrayList<>();
+        this.findRootResource(permissionResource.getParentId(), parentIdTem);
+        Collections.reverse(parentIdTem);
+        permissionResourceVO.setParentIdTem(parentIdTem);
+
+        return permissionResourceVO;
+    }
+
+    /**
+     * 递归查询当前资源的上级资源
+     *
+     * @param parentId
+     * @param parentIdTem
+     */
+    private void findRootResource(Long parentId, List<String> parentIdTem) {
+        parentIdTem.add(parentId.toString());
+        PermissionResource permissionResource = permissionResourceMapper.selectByPrimaryKey(parentId);
+        Long parentId1 = permissionResource.getParentId();
+        if (!DashboardConstants.ZERO_LONG.equals(parentId1)) {
+            this.findRootResource(parentId1, parentIdTem);
+        }
     }
 }

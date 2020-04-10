@@ -7,6 +7,7 @@ import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.permission.PermissionResource;
 import com.dashboard.entity.permission.PermissionResourceTreeVO;
+import com.dashboard.entity.permission.PermissionResourceVO;
 import com.dashboard.entity.permission.ResourceNavTreeVO;
 import com.dashboard.entity.permission.ResourceTreeVO;
 import com.dashboard.service.permission.PermissionResourceService;
@@ -177,8 +178,8 @@ public class PermissionResourceRestController {
             return RestResult.fail(BaseResultEnum.PARAM_ERROR);
         }
 
-        PermissionResource permissionResource = permissionResourceService.findResourceById(id);
+        PermissionResourceVO permissionResourceVO = permissionResourceService.findResourceById(id);
 
-        return RestResult.success(permissionResource);
+        return RestResult.success(permissionResourceVO);
     }
 }
