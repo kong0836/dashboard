@@ -42,6 +42,10 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.dashboard.entity
+# log
+logging:
+  level:
+    com.dashboard.mapper.**: debug
 
 # dubbo
 dubbo:
@@ -52,3 +56,4 @@ dubbo:
   protocol:
     name: dubbo
     port: 20880
+
