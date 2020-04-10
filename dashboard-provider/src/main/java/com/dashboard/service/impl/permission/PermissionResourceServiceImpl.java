@@ -217,9 +217,11 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
     private void findRootResource(Long parentId, List<String> parentIdTem) {
         parentIdTem.add(parentId.toString());
         PermissionResource permissionResource = permissionResourceMapper.selectByPrimaryKey(parentId);
-        Long parentId1 = permissionResource.getParentId();
-        if (!DashboardConstants.ZERO_LONG.equals(parentId1)) {
-            this.findRootResource(parentId1, parentIdTem);
+        if (Objects.nonNull(permissionResource)) {
+            Long parentId1 = permissionResource.getParentId();
+            if (!DashboardConstants.ZERO_LONG.equals(parentId1)) {
+                this.findRootResource(parentId1, parentIdTem);
+            }
         }
     }
 }
