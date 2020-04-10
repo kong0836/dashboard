@@ -17,7 +17,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author konglinghui
@@ -82,17 +82,43 @@ public class PermissionResourceRestController {
     }
 
     /**
-     * 删除资源
+     * 禁用资源
      *
-     * @param permissionResource
+     * @param id 资源主键id
      * @return
      */
-    @ApiOperation("删除资源")
-    @PostMapping("/deleteResource")
-    public RestResult deleteResource(@RequestBody PermissionResource permissionResource) {
+    @ApiOperation("禁用资源")
+    @PostMapping("/disabledResource/{id}")
+    public RestResult disabledResource(@PathVariable String id) {
+        if (StringUtils.isBlank(id)) {
+            return RestResult.fail(BaseResultEnum.PARAM_ERROR);
+        }
 
+        PermissionResource permissionResource = permissionResourceService.findResourceById(id);
         permissionResource.setStatus(StatusEnum.OFF.getCode());
-        permissionResourceService.deletePermissionResource(permissionResource);
+        permissionResource.setUpdateTime(DateTimeUtils.currentTimeStamp());
+        permissionResourceService.updateResourceById(permissionResource);
+
+        return RestResult.success();
+    }
+
+    /**
+     * 启用资源
+     *
+     * @param id 资源主键id
+     * @return
+     */
+    @ApiOperation("启用资源")
+    @PostMapping("/enabledResource/{id}")
+    public RestResult enabledResource(@PathVariable String id) {
+        if (StringUtils.isBlank(id)) {
+            return RestResult.fail(BaseResultEnum.PARAM_ERROR);
+        }
+
+        PermissionResource permissionResource = permissionResourceService.findResourceById(id);
+        permissionResource.setStatus(StatusEnum.ON.getCode());
+        permissionResource.setUpdateTime(DateTimeUtils.currentTimeStamp());
+        permissionResourceService.updateResourceById(permissionResource);
 
         return RestResult.success();
     }
@@ -130,8 +156,11 @@ public class PermissionResourceRestController {
      */
     @ApiModelProperty("资源列表数据")
     @PostMapping("/findResourceList")
-    public RestResult findResourceList() {
-        List<PermissionResourceVO> resourceList = permissionResourceService.findNavResourceList();
+    public RestResult findResourceList(@RequestBody PermissionResource permissionResource) {
+        if (Objects.isNull(permissionResource)) {
+            permissionResource = new PermissionResource();
+        }
+        List<PermissionResourceVO> resourceList = permissionResourceService.findResourceList(permissionResource);
 
         return RestResult.success(resourceList);
     }
