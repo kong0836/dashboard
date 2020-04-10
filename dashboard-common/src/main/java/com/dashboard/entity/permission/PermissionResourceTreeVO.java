@@ -13,12 +13,12 @@ import java.util.List;
  **/
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class PermissionResourceVO extends PermissionResource implements Serializable {
+public class PermissionResourceTreeVO extends PermissionResource implements Serializable {
 
     private static final long serialVersionUID = -7441174829920015686L;
 
     /**
      * 下级资源
      */
-    private List<PermissionResourceVO> children;
+    private List<PermissionResourceTreeVO> children;
 }

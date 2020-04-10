@@ -1,7 +1,7 @@
 package com.dashboard.service.permission;
 
 import com.dashboard.entity.permission.PermissionResource;
-import com.dashboard.entity.permission.PermissionResourceVO;
+import com.dashboard.entity.permission.PermissionResourceTreeVO;
 import com.dashboard.entity.permission.ResourceNavTreeVO;
 import com.dashboard.entity.permission.ResourceTreeVO;
 
@@ -48,7 +48,7 @@ public interface PermissionResourceService {
      * @param permissionResource
      * @return
      */
-    List<PermissionResourceVO> findResourceList(PermissionResource permissionResource);
+    List<PermissionResourceTreeVO> findResourceList(PermissionResource permissionResource);
 
     /**
      * 查询资源数据

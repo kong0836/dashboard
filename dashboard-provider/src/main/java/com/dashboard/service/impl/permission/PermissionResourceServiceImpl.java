@@ -4,7 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.dashboard.common.constants.DashboardConstants;
 import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.entity.permission.PermissionResource;
-import com.dashboard.entity.permission.PermissionResourceVO;
+import com.dashboard.entity.permission.PermissionResourceTreeVO;
 import com.dashboard.entity.permission.ResourceNavTreeVO;
 import com.dashboard.entity.permission.ResourceTreeVO;
 import com.dashboard.enums.permission.ResourceTypeEnum;
@@ -150,18 +150,18 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
     }
 
     @Override
-    public List<PermissionResourceVO> findResourceList(PermissionResource permissionResource) {
-        List<PermissionResourceVO> resourceTreeList = new ArrayList<>();
+    public List<PermissionResourceTreeVO> findResourceList(PermissionResource permissionResource) {
+        List<PermissionResourceTreeVO> resourceTreeList = new ArrayList<>();
 
         // 获取所有可用资源
         List<PermissionResource> resourceList = permissionResourceMapper.select(permissionResource);
         resourceList.sort(Comparator.comparing(PermissionResource::getOrderNo));
 
         // 将所有的数据，以键值对的形式装入map中
-        Map<Long, PermissionResourceVO> resourceTreeVOMap = resourceList.stream()
+        Map<Long, PermissionResourceTreeVO> resourceTreeVOMap = resourceList.stream()
                 .collect(Collectors.toMap(PermissionResource::getId,
                         resource -> {
-                            PermissionResourceVO permissionResourceVO = new PermissionResourceVO();
+                            PermissionResourceTreeVO permissionResourceVO = new PermissionResourceTreeVO();
                             BeanUtils.copyProperties(resource,
                                     permissionResourceVO,
                                     "children");
@@ -171,13 +171,13 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
         resourceList.forEach(resource -> {
             Long id = resource.getId();
             Long parentId = resource.getParentId();
-            PermissionResourceVO permissionResourceVO = resourceTreeVOMap.get(id);
+            PermissionResourceTreeVO permissionResourceVO = resourceTreeVOMap.get(id);
             if (DashboardConstants.ZERO_LONG.equals(parentId) && Objects.nonNull(permissionResourceVO)) {
                 // 一级资源
                 resourceTreeList.add(permissionResourceVO);
             } else {
                 // 子级通过父id获取到父级的类型
-                PermissionResourceVO parentResourceTreeVO = resourceTreeVOMap.get(parentId);
+                PermissionResourceTreeVO parentResourceTreeVO = resourceTreeVOMap.get(parentId);
                 if (Objects.nonNull(parentResourceTreeVO)) {
                     if (CollectionUtils.isEmpty(parentResourceTreeVO.getChildren())) {
                         parentResourceTreeVO.setChildren(new ArrayList<>());
