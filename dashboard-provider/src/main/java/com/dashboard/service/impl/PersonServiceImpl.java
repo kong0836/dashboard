@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 
+import java.util.List;
+
 /**
  * @author konglinghui
  * @description TODO
@@ -32,8 +34,25 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public void createPerson(Person person) {
-        jmsMessagingTemplate.convertAndSend(QueueConstants.TEST_QUEUE, "mq消息发送了1");
+        personMapper.insertSelective(person);
+    }
 
-        personMapper.insert(person);
+    @Override
+    public void updatePerson(Person person) {
+        personMapper.updateByPrimaryKeySelective(person);
+    }
+
+    @Override
+    public List<Person> findPersonList(Person person) {
+        List<Person> personList = personMapper.select(person);
+
+        return personList;
+    }
+
+    @Override
+    public Person findPersonById(String id) {
+        Person person = personMapper.selectByPrimaryKey(id);
+
+        return person;
     }
 }
