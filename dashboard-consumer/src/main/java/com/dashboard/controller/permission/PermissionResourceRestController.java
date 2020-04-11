@@ -161,6 +161,10 @@ public class PermissionResourceRestController {
         if (Objects.isNull(permissionResource)) {
             permissionResource = new PermissionResource();
         }
+        if (StringUtils.isBlank(permissionResource.getName())) {
+            permissionResource.setName(null);
+        }
+
         List<PermissionResourceTreeVO> resourceList = permissionResourceService.findResourceList(permissionResource);
 
         return RestResult.success(resourceList);
