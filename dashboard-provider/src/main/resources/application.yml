@@ -41,7 +41,17 @@ spring:
 # mybatis
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
-  type-aliases-package: com.dashboard.mapper
+  type-aliases-package: com.dashboard.entity
+# log
+logging:
+  level:
+    com.dashboard.mapper.**: debug
+# pageHelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
 
 # dubbo
 dubbo:
