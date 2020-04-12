@@ -46,6 +46,12 @@ mybatis:
 logging:
   level:
     com.dashboard.mapper.**: debug
+# pageHelper
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
 
 # dubbo
 dubbo:
@@ -56,4 +62,3 @@ dubbo:
   protocol:
     name: dubbo
     port: 20880
-

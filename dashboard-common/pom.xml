@@ -46,6 +46,13 @@
       <artifactId>mybatis-spring-boot-starter</artifactId>
       <version>${mybatis.boot.version}</version>
     </dependency>
+    <!-- pageHelper -->
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper-spring-boot-starter</artifactId>
+      <version>${pagehelper.boot.version}</version>
+    </dependency>
+
     <!-- druid -->
     <dependency>
       <groupId>com.alibaba</groupId>
