@@ -1,6 +1,6 @@
-package com.dashboard.service.permission;
+package com.dashboard.service.system;
 
-import com.dashboard.entity.other.Person;
+import com.dashboard.entity.system.Person;
 
 import java.util.List;
 
