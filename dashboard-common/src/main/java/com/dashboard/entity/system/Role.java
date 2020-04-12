@@ -1,12 +1,14 @@
 package com.dashboard.entity.system;
 
 import com.dashboard.common.entity.BaseDO;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -15,6 +17,8 @@ import java.io.Serializable;
  * @date 2020/4/12 10:29
  **/
 @Data
+@ApiModel
+@Table(name = "permission_role")
 @EqualsAndHashCode(callSuper = false)
 public class Role extends BaseDO implements Serializable {
 
