@@ -1,10 +1,14 @@
 package com.dashboard.service.impl.system;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
+import com.dashboard.common.entity.Page;
 import com.dashboard.entity.system.Role;
+import com.dashboard.entity.system.RolePageInfo;
 import com.dashboard.mapper.system.RoleMapper;
 import com.dashboard.service.system.RoleService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -31,10 +35,18 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Role> findRoleList(Role role) {
-        List<Role> roleList = roleMapper.select(role);
+    public Page<Role> findRoleList(RolePageInfo rolePageInfo) {
+        PageHelper.startPage(rolePageInfo);
 
-        return roleList;
+        Role role = new Role();
+        BeanUtils.copyProperties(rolePageInfo,role);
+
+        List<Role> roleList = roleMapper.select(role);
+        PageInfo<Role> pageInfo = new PageInfo<>(roleList);
+        Page<Role> page = new Page<>();
+        BeanUtils.copyProperties(pageInfo,page);
+
+        return page;
     }
 
     @Override

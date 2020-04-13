@@ -1,8 +1,8 @@
 package com.dashboard.service.system;
 
+import com.dashboard.common.entity.Page;
 import com.dashboard.entity.system.Role;
-
-import java.util.List;
+import com.dashboard.entity.system.RolePageInfo;
 
 /**
  * @author konglinghui
@@ -28,10 +28,10 @@ public interface RoleService {
     /**
      * 查询角色列表
      *
-     * @param role
+     * @param rolePageInfo
      * @return
      */
-    List<Role> findRoleList(Role role);
+    Page<Role> findRoleList(RolePageInfo rolePageInfo);
 
     /**
      * 查询角色信息

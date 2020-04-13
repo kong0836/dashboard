@@ -1,10 +1,12 @@
 package com.dashboard.controller.system;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dashboard.common.entity.Page;
 import com.dashboard.common.enums.BaseResultEnum;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.system.Role;
+import com.dashboard.entity.system.RolePageInfo;
 import com.dashboard.service.system.RoleService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
 import io.swagger.annotations.Api;
@@ -70,22 +72,22 @@ public class RoleRestController {
     /**
      * 查询角色列表
      *
-     * @param role
+     * @param rolePageInfo
      * @return
      */
     @ApiOperation("查询角色列表")
     @PostMapping("/findRoleList")
-    public RestResult findRoleList(@RequestBody Role role) {
-        if (Objects.isNull(role)) {
-            role = new Role();
+    public RestResult findRoleList(@RequestBody RolePageInfo rolePageInfo) {
+        if (Objects.isNull(rolePageInfo)) {
+            rolePageInfo = new RolePageInfo();
         }
-        if (StringUtils.isBlank(role.getName())) {
-            role.setName(null);
+        if (StringUtils.isBlank(rolePageInfo.getName())) {
+            rolePageInfo.setName(null);
         }
 
-        List<Role> roleList = roleService.findRoleList(role);
+        Page<Role> page = roleService.findRoleList(rolePageInfo);
 
-        return RestResult.success(roleList);
+        return RestResult.success(page);
     }
 
     /**
