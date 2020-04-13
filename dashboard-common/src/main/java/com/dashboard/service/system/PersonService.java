@@ -1,8 +1,8 @@
 package com.dashboard.service.system;
 
+import com.dashboard.common.entity.Page;
 import com.dashboard.entity.system.Person;
-
-import java.util.List;
+import com.dashboard.entity.system.PersonPageInfo;
 
 /**
  * @author konglinghui
@@ -28,10 +28,10 @@ public interface PersonService {
     /**
      * 查询用户信息
      *
-     * @param person
+     * @param personPageInfo
      * @return
      */
-    List<Person> findPersonList(Person person);
+    Page<Person> findPersonList(PersonPageInfo personPageInfo);
 
     /**
      * 查询用户信息

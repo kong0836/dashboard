@@ -1,12 +1,17 @@
 package com.dashboard.service.impl.system;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.dashboard.common.entity.Page;
 import com.dashboard.common.redis.RedisClient;
+import com.dashboard.entity.system.PersonPageInfo;
 import com.dashboard.mapper.system.PersonMapper;
 import com.dashboard.entity.system.Person;
 import com.dashboard.service.system.PersonService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsMessagingTemplate;
 
@@ -42,10 +47,19 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<Person> findPersonList(Person person) {
-        List<Person> personList = personMapper.select(person);
+    public Page<Person> findPersonList(PersonPageInfo personPageInfo) {
+        // 分页
+        PageHelper.startPage(personPageInfo);
 
-        return personList;
+        Person person = new Person();
+        BeanUtils.copyProperties(personPageInfo, person);
+
+        List<Person> personList = personMapper.select(person);
+        PageInfo<Person> pageInfo = new PageInfo(personList);
+        Page<Person> page = new Page<>();
+        BeanUtils.copyProperties(pageInfo, page);
+
+        return page;
     }
 
     @Override
