@@ -1,6 +1,8 @@
 package com.dashboard.service.account;
 
+import com.dashboard.common.entity.Page;
 import com.dashboard.entity.account.AccountCategory;
+import com.dashboard.entity.account.AccountCategoryPageInfo;
 
 /**
  * @author konglinghui
@@ -15,4 +17,12 @@ public interface AccountCategoryService {
      * @param accountCategory
      */
     void createAccountCategory(AccountCategory accountCategory);
+
+    /**
+     * 消费分类列表数据
+     *
+     * @param accountCategoryPageInfo
+     * @return
+     */
+    Page<AccountCategory> findAccountCategoryList(AccountCategoryPageInfo accountCategoryPageInfo);
 }
