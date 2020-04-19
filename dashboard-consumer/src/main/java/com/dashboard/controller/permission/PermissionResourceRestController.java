@@ -1,15 +1,33 @@
 package com.dashboard.controller.permission;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dashboard.common.enums.BaseResultEnum;
+import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.common.result.RestResult;
-import com.dashboard.mapper.permission.PermissionResource;
+import com.dashboard.date.DateTimeUtils;
+import com.dashboard.entity.permission.PermissionResource;
+import com.dashboard.entity.permission.PermissionResourceTreeVO;
+import com.dashboard.entity.permission.PermissionResourceVO;
+import com.dashboard.entity.permission.ResourceNavTreeVO;
+import com.dashboard.entity.permission.ResourceTreeVO;
 import com.dashboard.service.permission.PermissionResourceService;
+import com.dashboard.snowflake.SnowflakeIdWorker;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author konglinghui
@@ -20,6 +38,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/permission/resource")
 public class PermissionResourceRestController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PermissionResourceRestController.class);
 
     @Reference
     private PermissionResourceService permissionResourceService;
@@ -33,6 +53,14 @@ public class PermissionResourceRestController {
     @ApiOperation("新增资源")
     @PostMapping("/createResource")
     public RestResult createResource(@RequestBody PermissionResource permissionResource) {
+
+        permissionResource.setId(SnowflakeIdWorker.generateId());
+
+        Timestamp currentTimeStamp = DateTimeUtils.currentTimeStamp();
+        permissionResource.setCreateTime(currentTimeStamp);
+        permissionResource.setCreateBy("0");
+        permissionResource.setUpdateTime(currentTimeStamp);
+        permissionResource.setUpdateBy("0");
 
         permissionResourceService.insertPermissionResource(permissionResource);
 
@@ -49,23 +77,113 @@ public class PermissionResourceRestController {
     @PostMapping("/updateResource")
     public RestResult updateResource(@RequestBody PermissionResource permissionResource) {
 
-        permissionResourceService.updatePermissionResource(permissionResource);
+        permissionResourceService.updateResourceById(permissionResource);
 
         return RestResult.success();
     }
 
     /**
-     * 删除资源
+     * 禁用资源
      *
-     * @param permissionResource
+     * @param id 资源主键id
      * @return
      */
-    @ApiOperation("删除资源")
-    @PostMapping("/deleteResource")
-    public RestResult deleteResource(@RequestBody PermissionResource permissionResource) {
+    @ApiOperation("禁用资源")
+    @PostMapping("/disabledResource/{id}")
+    public RestResult disabledResource(@PathVariable String id) {
+        if (StringUtils.isBlank(id)) {
+            return RestResult.fail(BaseResultEnum.PARAM_ERROR);
+        }
 
-        permissionResourceService.deletePermissionResource(permissionResource);
+        PermissionResource permissionResource = permissionResourceService.findResourceById(id);
+        permissionResource.setStatus(StatusEnum.OFF.getCode());
+        permissionResource.setUpdateTime(DateTimeUtils.currentTimeStamp());
+        permissionResourceService.updateResourceById(permissionResource);
 
         return RestResult.success();
+    }
+
+    /**
+     * 启用资源
+     *
+     * @param id 资源主键id
+     * @return
+     */
+    @ApiOperation("启用资源")
+    @PostMapping("/enabledResource/{id}")
+    public RestResult enabledResource(@PathVariable String id) {
+        if (StringUtils.isBlank(id)) {
+            return RestResult.fail(BaseResultEnum.PARAM_ERROR);
+        }
+
+        PermissionResource permissionResource = permissionResourceService.findResourceById(id);
+        permissionResource.setStatus(StatusEnum.ON.getCode());
+        permissionResource.setUpdateTime(DateTimeUtils.currentTimeStamp());
+        permissionResourceService.updateResourceById(permissionResource);
+
+        return RestResult.success();
+    }
+
+    /**
+     * 资源树-新增资源使用
+     *
+     * @return
+     */
+    @ApiModelProperty("资源树-新增资源使用")
+    @GetMapping("/findResourceTreeList")
+    public RestResult findResourceTreeList() {
+        List<ResourceTreeVO> resourceTreeList = permissionResourceService.findResourceTreeList();
+
+        return RestResult.success(resourceTreeList);
+    }
+
+    /**
+     * 导航菜单树
+     *
+     * @return
+     */
+    @ApiModelProperty("导航菜单树")
+    @GetMapping("/findNavResourceTreeList")
+    public RestResult findNavResourceTreeList() {
+        List<ResourceNavTreeVO> resourceNavTreeList = permissionResourceService.findNavResourceTreeList();
+
+        return RestResult.success(resourceNavTreeList);
+    }
+
+    /**
+     * 资源列表数据
+     *
+     * @return
+     */
+    @ApiModelProperty("资源列表数据")
+    @PostMapping("/findResourceList")
+    public RestResult findResourceList(@RequestBody PermissionResource permissionResource) {
+        if (Objects.isNull(permissionResource)) {
+            permissionResource = new PermissionResource();
+        }
+        if (StringUtils.isBlank(permissionResource.getName())) {
+            permissionResource.setName(null);
+        }
+
+        List<PermissionResourceTreeVO> resourceList = permissionResourceService.findResourceList(permissionResource);
+
+        return RestResult.success(resourceList);
+    }
+
+    /**
+     * 查询资源数据
+     *
+     * @return
+     */
+    @ApiModelProperty("查询资源数据")
+    @GetMapping("/findResourceById/{id}")
+    public RestResult findResourceById(@PathVariable String id) {
+        if (StringUtils.isBlank(id)) {
+            return RestResult.fail(BaseResultEnum.PARAM_ERROR);
+        }
+
+        PermissionResourceVO permissionResourceVO = permissionResourceService.findResourceById(id);
+
+        return RestResult.success(permissionResourceVO);
     }
 }

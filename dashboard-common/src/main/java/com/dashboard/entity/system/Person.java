@@ -1,4 +1,4 @@
-package com.dashboard.mapper.other;
+package com.dashboard.entity.system;
 
 import com.dashboard.common.entity.BaseDO;
 import io.swagger.annotations.ApiModel;
@@ -31,13 +31,13 @@ public class Person extends BaseDO implements Serializable {
     @Id
     @Column(name = "id")
     @ApiModelProperty("用户ID")
-    private String id;
+    private Long id;
 
     /**
-     * 姓名
+     * 用户名
      */
     @Column(name = "name")
-    @ApiModelProperty("姓名")
+    @ApiModelProperty("用户名")
     private String name;
 
     /**
@@ -48,7 +48,7 @@ public class Person extends BaseDO implements Serializable {
     private Integer age;
 
     /**
-     * 性别
+     * 性别: 1-男 2-女 3-保密
      */
     @Column(name = "gender")
     @ApiModelProperty("性别")

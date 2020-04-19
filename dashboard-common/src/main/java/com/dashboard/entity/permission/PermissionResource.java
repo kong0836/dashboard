@@ -1,4 +1,4 @@
-package com.dashboard.mapper.permission;
+package com.dashboard.entity.permission;
 
 import com.dashboard.common.entity.BaseDO;
 import io.swagger.annotations.ApiModel;
@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Data
 @ApiModel
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "permission-resource")
+@Table(name = "permission_resource")
 public class PermissionResource extends BaseDO implements Serializable {
 
     private static final long serialVersionUID = -3079489125879591467L;
@@ -30,14 +30,14 @@ public class PermissionResource extends BaseDO implements Serializable {
     @Id
     @Column(name = "id")
     @ApiModelProperty("资源主键id")
-    private String id;
+    private Long id;
 
     /**
      * 上级资源主键id
      */
-    @Column(name = "parentId")
+    @Column(name = "parent_id")
     @ApiModelProperty("上级资源主键id")
-    private String parentId;
+    private Long parentId;
 
     /**
      * 资源名称
@@ -73,4 +73,26 @@ public class PermissionResource extends BaseDO implements Serializable {
     @Column(name = "icon")
     @ApiModelProperty("图标")
     private String icon;
+
+    /**
+     * 用户状态: 0-启用 1-禁用
+     */
+    @Column(name = "status")
+    @ApiModelProperty("用户状态: 0-启用 1-禁用")
+    private Integer status;
+
+    /**
+     * 排序号
+     */
+    @Column(name = "order_no")
+    @ApiModelProperty("'排序号'")
+    private Integer orderNo;
+
+    /**
+     * 描述
+     */
+    @Column(name = "description")
+    @ApiModelProperty("描述")
+    private String description;
+
 }

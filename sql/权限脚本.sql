@@ -4,16 +4,16 @@ CREATE TABLE person (
     id          bigint(20)   NOT NULL COMMENT '主键',
     name        varchar(32)  NOT NULL COMMENT '用户名',
     age         smallint(6)  NULL     DEFAULT NULL COMMENT '年龄',
-    gender      tinyint(2)   NOT NULL COMMENT '性别: 1-男 2-女',
+    gender      tinyint(2)   NOT NULL DEFAULT 1 COMMENT '性别: 1-男 2-女 3-保密',
     birthday    datetime     NULL     DEFAULT NULL COMMENT '生日',
     picture     varchar(256) NULL     DEFAULT '' COMMENT '照片',
     email       varchar(256) NULL     DEFAULT '' COMMENT '邮箱',
     phone       varchar(16)  NULL     DEFAULT '' COMMENT '手机号',
     password    varchar(256) NULL     DEFAULT '123456' COMMENT '密码: 默认值-123456',
     status      tinyint(2)   NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
-    create_by   varchar(32)  NOT NULL COMMENT '创建人ID',
+    create_by   varchar(32)  NOT NULL DEFAULT '0' COMMENT '创建人ID',
     create_time datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    update_by   varchar(32)  NOT NULL COMMENT '更新人ID',
+    update_by   varchar(32)  NOT NULL DEFAULT '0' COMMENT '更新人ID',
     update_time datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
     PRIMARY KEY `person_id` (id),
     UNIQUE INDEX (name)
@@ -22,13 +22,13 @@ CREATE TABLE person (
     CHARACTER SET = utf8
     COMMENT = '用户表';
 
--- 权限角色表
+-- 权限-角色表
 DROP TABLE IF EXISTS permission_role;
 CREATE TABLE permission_role (
     id          bigint(20)  NOT NULL COMMENT '主键',
-    role_name   varchar(32) NOT NULL COMMENT '角色名称',
-    description varchar(32) NULL     DEFAULT '' COMMENT '描述',
+    name        varchar(32) NOT NULL COMMENT '角色名称',
     status      tinyint(2)  NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
+    description varchar(32) NULL     DEFAULT '' COMMENT '描述',
     create_by   varchar(32) NOT NULL COMMENT '创建人ID',
     create_time datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_by   varchar(32) NOT NULL COMMENT '更新人ID',
@@ -39,22 +39,23 @@ CREATE TABLE permission_role (
     CHARACTER SET = utf8
     COMMENT = '角色表';
 
--- 权限资源表
+-- 权限-资源表
 DROP TABLE IF EXISTS permission_resource;
 CREATE TABLE permission_resource (
-    id          bigint(20)   NOT NULL COMMENT '主键',
-    parent_id   varchar(32)  NOT NULL COMMENT '上级菜单主键',
-    name        varchar(32)  NOT NULL COMMENT '菜单名称',
-    url         varchar(255) NOT NULL COMMENT '菜单URL',
-    code        varchar(50)  NOT NULL COMMENT '授权码',
-    type        tinyint(2)   NOT NULL COMMENT '类型: 1-目录 2-菜单 3-按钮',
-    icon        varchar(32)  NOT NULL COMMENT '图标',
-    order_no    int(10)      NOT NULL DEFAULT 0 COMMENT '排序号',
-    description varchar(32)  NULL     DEFAULT '' COMMENT '描述',
-    create_by   varchar(32)  NOT NULL COMMENT '创建人ID',
-    create_time datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    update_by   varchar(32)  NOT NULL COMMENT '更新人ID',
-    update_time datetime     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+    id          bigint(20)  NOT NULL COMMENT '主键',
+    parent_id   bigint(20)  NOT NULL COMMENT '上级资源主键',
+    name        varchar(32) NOT NULL COMMENT '资源名称',
+    url         varchar(64) NOT NULL DEFAULT '' COMMENT '资源URL',
+    code        varchar(50) NOT NULL DEFAULT '' COMMENT '授权码',
+    type        tinyint(2)  NOT NULL COMMENT '类型: 1-目录 2-菜单 3-按钮',
+    icon        varchar(32) NOT NULL COMMENT '图标',
+    order_no    int(10)     NOT NULL DEFAULT 0 COMMENT '排序号',
+    status      tinyint(2)  NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
+    description varchar(32) NULL     DEFAULT '' COMMENT '描述',
+    create_by   varchar(32) NOT NULL COMMENT '创建人ID',
+    create_time datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_by   varchar(32) NOT NULL COMMENT '更新人ID',
+    update_time datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
     PRIMARY KEY `permission_resource_id` (id),
     KEY `permission_resource_parent_id` (parent_id)
 )
@@ -62,7 +63,7 @@ CREATE TABLE permission_resource (
     CHARACTER SET = utf8
     COMMENT = '权限表';
 
--- 权限组织表
+-- 权限-组织表
 DROP TABLE IF EXISTS permission_organization;
 CREATE TABLE permission_organization (
     id          bigint(20)  NOT NULL COMMENT '主键',

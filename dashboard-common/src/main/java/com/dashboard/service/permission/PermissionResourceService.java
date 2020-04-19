@@ -1,6 +1,12 @@
 package com.dashboard.service.permission;
 
-import com.dashboard.mapper.permission.PermissionResource;
+import com.dashboard.entity.permission.PermissionResource;
+import com.dashboard.entity.permission.PermissionResourceTreeVO;
+import com.dashboard.entity.permission.PermissionResourceVO;
+import com.dashboard.entity.permission.ResourceNavTreeVO;
+import com.dashboard.entity.permission.ResourceTreeVO;
+
+import java.util.List;
 
 /**
  * @author konglinghui
@@ -21,12 +27,35 @@ public interface PermissionResourceService {
      *
      * @param permissionResource
      */
-    void updatePermissionResource(PermissionResource permissionResource);
+    void updateResourceById(PermissionResource permissionResource);
 
     /**
-     * 删除资源
+     * 查询所有可用资源并用树结构展示
+     *
+     * @return
+     */
+    List<ResourceTreeVO> findResourceTreeList();
+
+    /**
+     * 导航菜单树
+     *
+     * @return
+     */
+    List<ResourceNavTreeVO> findNavResourceTreeList();
+
+    /**
+     * 资源列表数据
      *
      * @param permissionResource
+     * @return
      */
-    void deletePermissionResource(PermissionResource permissionResource);
+    List<PermissionResourceTreeVO> findResourceList(PermissionResource permissionResource);
+
+    /**
+     * 查询资源数据
+     *
+     * @param id
+     * @return
+     */
+    PermissionResourceVO findResourceById(String id);
 }

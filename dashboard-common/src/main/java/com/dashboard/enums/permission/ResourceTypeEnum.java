@@ -5,7 +5,7 @@ package com.dashboard.enums.permission;
  * @description 菜单类型
  * @date 2020/3/16 19:58
  **/
-public enum MenuTypeEnum {
+public enum ResourceTypeEnum {
 
     /**
      * 目录
@@ -33,7 +33,7 @@ public enum MenuTypeEnum {
      */
     private String name;
 
-    MenuTypeEnum(Integer code, String name) {
+    ResourceTypeEnum(Integer code, String name) {
         this.code = code;
         this.name = name;
     }

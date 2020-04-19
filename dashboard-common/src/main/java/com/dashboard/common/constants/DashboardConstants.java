@@ -14,7 +14,8 @@ public final class DashboardConstants implements Serializable {
     /**
      * 数值类型
      */
-    private static final Integer ONE = 1;
+    public static final Integer ONE = 1;
+    public static final Long ZERO_LONG = 0L;
 
 
     private DashboardConstants() {
