@@ -55,6 +55,20 @@ public class AccountCategoryRestController {
     }
 
     /**
+     * 更新消费分类
+     *
+     * @param accountCategory
+     * @return
+     */
+    @PostMapping("/updateAccountCategory")
+    public RestResult updateAccountCategory(@RequestBody AccountCategory accountCategory) {
+
+        accountCategoryService.updateAccountCategory(accountCategory);
+
+        return RestResult.success();
+    }
+
+    /**
      * 查询消费分类数据
      *
      * @return

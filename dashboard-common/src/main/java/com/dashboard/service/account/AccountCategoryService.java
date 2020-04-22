@@ -25,4 +25,11 @@ public interface AccountCategoryService {
      * @return
      */
     Page<AccountCategory> findAccountCategoryList(AccountCategoryPageInfo accountCategoryPageInfo);
+
+    /**
+     * 更新
+     *
+     * @param accountCategory
+     */
+    void updateAccountCategory(AccountCategory accountCategory);
 }

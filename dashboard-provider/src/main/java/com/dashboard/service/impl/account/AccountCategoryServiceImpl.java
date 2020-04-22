@@ -43,4 +43,9 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
 
         return page;
     }
+
+    @Override
+    public void updateAccountCategory(AccountCategory accountCategory) {
+        accountCategoryMapper.updateByPrimaryKey(accountCategory);
+    }
 }
