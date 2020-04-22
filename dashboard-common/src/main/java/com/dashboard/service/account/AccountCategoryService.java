@@ -3,6 +3,9 @@ package com.dashboard.service.account;
 import com.dashboard.common.entity.Page;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountCategoryPageInfo;
+import com.dashboard.entity.account.AccountCategoryTreeVO;
+
+import java.util.List;
 
 /**
  * @author konglinghui
@@ -32,4 +35,11 @@ public interface AccountCategoryService {
      * @param accountCategory
      */
     void updateAccountCategory(AccountCategory accountCategory);
+
+    /**
+     * 查询消费分类树结构
+     *
+     * @return
+     */
+    List<AccountCategoryTreeVO> findAccountCategoryTreeList();
 }

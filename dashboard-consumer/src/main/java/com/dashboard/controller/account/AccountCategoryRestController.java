@@ -6,6 +6,7 @@ import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountCategoryPageInfo;
+import com.dashboard.entity.account.AccountCategoryTreeVO;
 import com.dashboard.service.account.AccountCategoryService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
 import io.netty.util.internal.StringUtil;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -94,6 +96,8 @@ public class AccountCategoryRestController {
      */
     @GetMapping("/findCategoryTreeList")
     public RestResult findCategoryTreeList() {
-        return RestResult.success();
+        List<AccountCategoryTreeVO> accountCategoryTreeVOList = accountCategoryService.findAccountCategoryTreeList();
+
+        return RestResult.success(accountCategoryTreeVOList);
     }
 }
