@@ -28,6 +28,17 @@ public final class DateTimeUtils implements Serializable {
     }
 
     /**
+     * 获取某年的最后一天的最后一秒
+     *
+     * @return
+     */
+    public static Timestamp getLastDateTimeOfYear(int year) {
+        // int year = LocalDateTime.now().getYear();
+        LocalDateTime localDateTime = LocalDateTime.of(year, 12, 31, 23, 59, 59);
+        return Timestamp.valueOf(localDateTime);
+    }
+
+    /**
      * 获取当天开始时间
      *
      * @return
