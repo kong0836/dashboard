@@ -64,4 +64,10 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
 
         return accountCategoryTreeVOList;
     }
+
+    @Override
+    public AccountCategory findAccountCategoryById(String id) {
+
+        return accountCategoryMapper.selectByPrimaryKey(id);
+    }
 }

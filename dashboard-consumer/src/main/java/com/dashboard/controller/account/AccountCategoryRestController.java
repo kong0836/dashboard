@@ -2,6 +2,7 @@ package com.dashboard.controller.account;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.entity.Page;
+import com.dashboard.common.enums.BaseResultEnum;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountCategory;
@@ -9,11 +10,11 @@ import com.dashboard.entity.account.AccountCategoryPageInfo;
 import com.dashboard.entity.account.AccountCategoryTreeVO;
 import com.dashboard.service.account.AccountCategoryService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
-import io.netty.util.internal.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,8 +43,11 @@ public class AccountCategoryRestController {
      * @param accountCategory
      * @return
      */
-    @PostMapping("/createAccountCategory")
-    public RestResult createAccountCategory(@RequestBody AccountCategory accountCategory) {
+    @PostMapping("/createCategory")
+    public RestResult createCategory(@RequestBody AccountCategory accountCategory) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("创建消费分类:{}", accountCategory);
+        }
 
         accountCategory.setId(SnowflakeIdWorker.generateId());
         accountCategory.setCreateBy("0");
@@ -62,8 +66,8 @@ public class AccountCategoryRestController {
      * @param accountCategory
      * @return
      */
-    @PostMapping("/updateAccountCategory")
-    public RestResult updateAccountCategory(@RequestBody AccountCategory accountCategory) {
+    @PostMapping("/updateCategory")
+    public RestResult updateCategory(@RequestBody AccountCategory accountCategory) {
 
         accountCategoryService.updateAccountCategory(accountCategory);
 
@@ -87,6 +91,22 @@ public class AccountCategoryRestController {
         Page<AccountCategory> page = accountCategoryService.findAccountCategoryList(accountCategoryPageInfo);
 
         return RestResult.success(page);
+    }
+
+    /**
+     * 查询消费分类
+     *
+     * @return
+     */
+    @GetMapping("/findCategoryById/{id}")
+    public RestResult findCategoryById(@PathVariable String id) {
+        if (StringUtils.isBlank(id)) {
+            return RestResult.fail(BaseResultEnum.PARAM_ERROR);
+        }
+
+        AccountCategory accountCategory = accountCategoryService.findAccountCategoryById(id);
+
+        return RestResult.success(accountCategory);
     }
 
     /**

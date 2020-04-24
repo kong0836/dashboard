@@ -42,4 +42,12 @@ public interface AccountCategoryService {
      * @return
      */
     List<AccountCategoryTreeVO> findAccountCategoryTreeList();
+
+    /**
+     * 查询消费分类
+     *
+     * @param id
+     * @return
+     */
+    AccountCategory findAccountCategoryById(String id);
 }
