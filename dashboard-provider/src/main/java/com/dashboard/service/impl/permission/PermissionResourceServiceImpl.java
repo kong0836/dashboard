@@ -13,14 +13,12 @@ import com.dashboard.mapper.permission.PermissionResourceMapper;
 import com.dashboard.service.permission.PermissionResourceService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -63,17 +61,28 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
         List<PermissionResource> resourceList = permissionResourceMapper.selectByCondition(condition);
 
         // 将所有的数据，以键值对的形式装入map中
-        Map<Long, ResourceTreeVO> resourceTreeVOMap = new HashMap<>();
-        for (PermissionResource resource : resourceList) {
-            ResourceTreeVO resourceTreeVO = new ResourceTreeVO();
-            Long id = resource.getId();
-            resourceTreeVO.setId(id);
-            resourceTreeVO.setParentId(resource.getParentId());
-            resourceTreeVO.setName(resource.getName());
-            resourceTreeVO.setChildren(new ArrayList<>());
+        Map<Long, ResourceTreeVO> resourceTreeVOMap = resourceList.stream()
+                .collect(
+                        Collectors.toMap(PermissionResource::getId, permissionResource -> {
+                            ResourceTreeVO resourceTreeVO = new ResourceTreeVO();
+                            BeanUtils.copyProperties(permissionResource, resourceTreeVO, "children");
+                            resourceTreeVO.setChildren(new ArrayList<>());
 
-            resourceTreeVOMap.put(id, resourceTreeVO);
-        }
+                            return resourceTreeVO;
+                        })
+                );
+
+        // Map<Long, ResourceTreeVO> resourceTreeVOMap = new HashMap<>();
+        // for (PermissionResource resource : resourceList) {
+        //     ResourceTreeVO resourceTreeVO = new ResourceTreeVO();
+        //     Long id = resource.getId();
+        //     resourceTreeVO.setId(id);
+        //     resourceTreeVO.setParentId(resource.getParentId());
+        //     resourceTreeVO.setName(resource.getName());
+        //     resourceTreeVO.setChildren(new ArrayList<>());
+        //
+        //     resourceTreeVOMap.put(id, resourceTreeVO);
+        // }
 
         resourceList.forEach(resource -> {
             Long id = resource.getId();
@@ -112,20 +121,31 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
         List<PermissionResource> resourceList = permissionResourceMapper.selectByCondition(condition);
 
         // 将所有的数据，以键值对的形式装入map中
-        Map<Long, ResourceNavTreeVO> resourceTreeVOMap = new HashMap<>();
-        for (PermissionResource resource : resourceList) {
-            ResourceNavTreeVO resourceNavTreeVO = new ResourceNavTreeVO();
-            Long id = resource.getId();
-            resourceNavTreeVO.setId(id);
-            resourceNavTreeVO.setParentId(resource.getParentId());
-            resourceNavTreeVO.setName(resource.getName());
-            resourceNavTreeVO.setUrl(resource.getUrl());
-            resourceNavTreeVO.setIcon(resource.getIcon());
-            resourceNavTreeVO.setType(resource.getType());
-            resourceNavTreeVO.setChildren(new ArrayList<>());
+        Map<Long, ResourceNavTreeVO> resourceTreeVOMap = resourceList.stream()
+                .collect(
+                        Collectors.toMap(PermissionResource::getId, permissionResource -> {
+                            ResourceNavTreeVO resourceNavTreeVO = new ResourceNavTreeVO();
+                            BeanUtils.copyProperties(permissionResource, resourceNavTreeVO, "children");
+                            resourceNavTreeVO.setChildren(new ArrayList<>());
 
-            resourceTreeVOMap.put(id, resourceNavTreeVO);
-        }
+                            return resourceNavTreeVO;
+                        })
+                );
+
+        // Map<Long, ResourceNavTreeVO> resourceTreeVOMap = new HashMap<>();
+        // for (PermissionResource resource : resourceList) {
+        //     ResourceNavTreeVO resourceNavTreeVO = new ResourceNavTreeVO();
+        //     Long id = resource.getId();
+        //     resourceNavTreeVO.setId(id);
+        //     resourceNavTreeVO.setParentId(resource.getParentId());
+        //     resourceNavTreeVO.setName(resource.getName());
+        //     resourceNavTreeVO.setUrl(resource.getUrl());
+        //     resourceNavTreeVO.setIcon(resource.getIcon());
+        //     resourceNavTreeVO.setType(resource.getType());
+        //     resourceNavTreeVO.setChildren(new ArrayList<>());
+        //
+        //     resourceTreeVOMap.put(id, resourceNavTreeVO);
+        // }
 
         resourceList.forEach(resource -> {
             Long id = resource.getId();
@@ -163,9 +183,7 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
                 .collect(Collectors.toMap(PermissionResource::getId,
                         resource -> {
                             PermissionResourceTreeVO permissionResourceVO = new PermissionResourceTreeVO();
-                            BeanUtils.copyProperties(resource,
-                                    permissionResourceVO,
-                                    "children");
+                            BeanUtils.copyProperties(resource, permissionResourceVO, "children");
                             permissionResourceVO.setChildren(new ArrayList<>());
 
                             return permissionResourceVO;
