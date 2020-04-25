@@ -13,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
@@ -76,16 +77,16 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
         Map<Long, AccountCategoryTreeVO> treeVOMap =
                 accountCategoryList.stream()
                         .collect(
-                                Collectors.toMap(AccountCategory::getId,
-                                        accountCategory -> {
-                                            AccountCategoryTreeVO accountCategoryTreeVO = new AccountCategoryTreeVO();
-                                            accountCategoryTreeVO.setId(accountCategory.getId());
-                                            accountCategoryTreeVO.setName(accountCategory.getName());
-                                            accountCategoryTreeVO.setParentId(accountCategory.getParentId());
-                                            accountCategoryTreeVO.setChildren(new ArrayList<>());
+                                Collectors.toMap(AccountCategory::getId, accountCategory -> {
+                                    AccountCategoryTreeVO accountCategoryTreeVO = new AccountCategoryTreeVO();
+                                    accountCategoryTreeVO.setId(accountCategory.getId());
+                                    accountCategoryTreeVO.setName(accountCategory.getName());
+                                    accountCategoryTreeVO.setParentId(accountCategory.getParentId());
+                                    // 不能在这里初始化children，否则前端树结构会乱
+                                    // accountCategoryTreeVO.setChildren(new ArrayList<>());
 
-                                            return accountCategoryTreeVO;
-                                        }));
+                                    return accountCategoryTreeVO;
+                                }));
 
         accountCategoryList.forEach(accountCategory -> {
             Long id = accountCategory.getId();
@@ -98,6 +99,9 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
                 // 子分类通过parentID获取到父分类
                 AccountCategoryTreeVO parentAccountCategoryTreeVO = treeVOMap.get(parentId);
                 if (Objects.nonNull(parentAccountCategoryTreeVO)) {
+                    if (CollectionUtils.isEmpty(parentAccountCategoryTreeVO.getChildren())) {
+                        parentAccountCategoryTreeVO.setChildren(new ArrayList<>());
+                    }
                     parentAccountCategoryTreeVO.getChildren().add(accountCategoryTreeVO);
                 }
             }
