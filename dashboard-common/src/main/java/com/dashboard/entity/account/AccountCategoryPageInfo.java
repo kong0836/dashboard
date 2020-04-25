@@ -18,7 +18,7 @@ import java.io.Serializable;
 @Data
 @ApiModel
 @EqualsAndHashCode(callSuper = false)
-public class AccountCategoryPageInfo extends PageInfo<Person> implements Serializable {
+public class AccountCategoryPageInfo extends PageInfo<AccountCategory> implements Serializable {
 
     private static final long serialVersionUID = 1955348804933995641L;
 
