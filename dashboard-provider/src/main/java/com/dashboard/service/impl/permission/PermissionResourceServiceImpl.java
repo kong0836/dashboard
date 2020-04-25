@@ -70,6 +70,7 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
             resourceTreeVO.setId(id);
             resourceTreeVO.setParentId(resource.getParentId());
             resourceTreeVO.setName(resource.getName());
+            resourceTreeVO.setChildren(new ArrayList<>());
 
             resourceTreeVOMap.put(id, resourceTreeVO);
         }
@@ -85,9 +86,6 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
                 // 子级通过父id获取到父级的类型
                 ResourceTreeVO parentResourceTreeVO = resourceTreeVOMap.get(parentId);
                 if (Objects.nonNull(parentResourceTreeVO)) {
-                    if (CollectionUtils.isEmpty(parentResourceTreeVO.getChildren())) {
-                        parentResourceTreeVO.setChildren(new ArrayList<>());
-                    }
                     // 父级获得子级，再将子级放到对应的父级中
                     parentResourceTreeVO.getChildren().add(resourceTreeVO);
                 }
