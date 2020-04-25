@@ -52,7 +52,7 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
         List<ResourceTreeVO> resourceTreeVOList = new ArrayList<>();
 
         ResourceTreeVO rootResourceTreeVO = new ResourceTreeVO();
-        rootResourceTreeVO.setId(DashboardConstants.ZERO_LONG.toString());
+        rootResourceTreeVO.setId(DashboardConstants.ZERO_LONG);
         rootResourceTreeVO.setName("根节点");
         resourceTreeVOList.add(rootResourceTreeVO);
 
@@ -67,8 +67,8 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
         for (PermissionResource resource : resourceList) {
             ResourceTreeVO resourceTreeVO = new ResourceTreeVO();
             Long id = resource.getId();
-            resourceTreeVO.setId(id.toString());
-            resourceTreeVO.setParentId(resource.getParentId().toString());
+            resourceTreeVO.setId(id);
+            resourceTreeVO.setParentId(resource.getParentId());
             resourceTreeVO.setName(resource.getName());
 
             resourceTreeVOMap.put(id, resourceTreeVO);
@@ -118,8 +118,8 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
         for (PermissionResource resource : resourceList) {
             ResourceNavTreeVO resourceNavTreeVO = new ResourceNavTreeVO();
             Long id = resource.getId();
-            resourceNavTreeVO.setId(id.toString());
-            resourceNavTreeVO.setParentId(resource.getParentId().toString());
+            resourceNavTreeVO.setId(id);
+            resourceNavTreeVO.setParentId(resource.getParentId());
             resourceNavTreeVO.setName(resource.getName());
             resourceNavTreeVO.setUrl(resource.getUrl());
             resourceNavTreeVO.setIcon(resource.getIcon());

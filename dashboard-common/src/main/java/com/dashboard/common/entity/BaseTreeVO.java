@@ -18,12 +18,12 @@ public class BaseTreeVO<T> implements Serializable {
     /**
      * 主键
      */
-    private String id;
+    private Long id;
 
     /**
      * 上级主键id
      */
-    private String parentId;
+    private Long parentId;
 
     /**
      * 名称
