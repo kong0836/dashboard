@@ -3,6 +3,7 @@ package com.dashboard.controller.account;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.entity.Page;
 import com.dashboard.common.enums.BaseResultEnum;
+import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountCategory;
@@ -68,6 +69,42 @@ public class AccountCategoryRestController {
      */
     @PostMapping("/updateCategory")
     public RestResult updateCategory(@RequestBody AccountCategory accountCategory) {
+
+        accountCategoryService.updateAccountCategory(accountCategory);
+
+        return RestResult.success();
+    }
+
+    /**
+     * 启用
+     *
+     * @param id 消费分类主键ID
+     * @return
+     */
+    @PostMapping("/enableCategory/{id}")
+    public RestResult enableCategory(@PathVariable String id) {
+
+        AccountCategory accountCategory = accountCategoryService.findAccountCategoryById(id);
+        accountCategory.setStatus(StatusEnum.ON.getCode());
+        accountCategory.setUpdateTime(DateTimeUtils.currentTimeStamp());
+
+        accountCategoryService.updateAccountCategory(accountCategory);
+
+        return RestResult.success();
+    }
+
+    /**
+     * 启用
+     *
+     * @param id 消费分类主键ID
+     * @return
+     */
+    @PostMapping("/disableCategory/{id}")
+    public RestResult disableCategory(@PathVariable String id) {
+
+        AccountCategory accountCategory = accountCategoryService.findAccountCategoryById(id);
+        accountCategory.setStatus(StatusEnum.OFF.getCode());
+        accountCategory.setUpdateTime(DateTimeUtils.currentTimeStamp());
 
         accountCategoryService.updateAccountCategory(accountCategory);
 
