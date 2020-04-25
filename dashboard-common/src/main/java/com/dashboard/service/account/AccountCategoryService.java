@@ -4,6 +4,7 @@ import com.dashboard.common.entity.Page;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountCategoryPageInfo;
 import com.dashboard.entity.account.AccountCategoryTreeVO;
+import com.dashboard.entity.account.AccountCategoryVO;
 
 import java.util.List;
 
@@ -49,5 +50,5 @@ public interface AccountCategoryService {
      * @param id
      * @return
      */
-    AccountCategory findAccountCategoryById(String id);
+    AccountCategoryVO findAccountCategoryById(String id);
 }

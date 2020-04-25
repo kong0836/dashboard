@@ -7,6 +7,7 @@ import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountCategoryPageInfo;
 import com.dashboard.entity.account.AccountCategoryTreeVO;
+import com.dashboard.entity.account.AccountCategoryVO;
 import com.dashboard.mapper.account.AccountCategoryMapper;
 import com.dashboard.service.account.AccountCategoryService;
 import com.github.pagehelper.PageHelper;
@@ -18,6 +19,7 @@ import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -111,8 +113,35 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
     }
 
     @Override
-    public AccountCategory findAccountCategoryById(String id) {
+    public AccountCategoryVO findAccountCategoryById(String id) {
+        AccountCategoryVO accountCategoryVO = new AccountCategoryVO();
 
-        return accountCategoryMapper.selectByPrimaryKey(id);
+        AccountCategory accountCategory = accountCategoryMapper.selectByPrimaryKey(id);
+        BeanUtils.copyProperties(accountCategory, accountCategoryVO, "parentIdTem");
+
+        // 查询所有上级分类
+        List<String> parentIdTem = new ArrayList<>();
+        this.findParentCategory(accountCategory.getParentId(), parentIdTem);
+        Collections.reverse(parentIdTem);
+        accountCategoryVO.setParentIdTem(parentIdTem);
+
+        return accountCategoryVO;
+    }
+
+    /**
+     * 查询所有上级分类
+     *
+     * @param parentId
+     * @param parentIdTem
+     */
+    private void findParentCategory(Long parentId, List<String> parentIdTem) {
+        parentIdTem.add(parentId.toString());
+        AccountCategory accountCategory = accountCategoryMapper.selectByPrimaryKey(parentId);
+        if (Objects.nonNull(accountCategory)) {
+            Long parentId1 = accountCategory.getParentId();
+            if (!DashboardConstants.ZERO_LONG.equals(parentId1)) {
+                this.findParentCategory(parentId, parentIdTem);
+            }
+        }
     }
 }

@@ -9,6 +9,7 @@ import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountCategoryPageInfo;
 import com.dashboard.entity.account.AccountCategoryTreeVO;
+import com.dashboard.entity.account.AccountCategoryVO;
 import com.dashboard.service.account.AccountCategoryService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
 import org.apache.commons.lang3.StringUtils;
@@ -141,9 +142,9 @@ public class AccountCategoryRestController {
             return RestResult.fail(BaseResultEnum.PARAM_ERROR);
         }
 
-        AccountCategory accountCategory = accountCategoryService.findAccountCategoryById(id);
+        AccountCategoryVO accountCategoryVO = accountCategoryService.findAccountCategoryById(id);
 
-        return RestResult.success(accountCategory);
+        return RestResult.success(accountCategoryVO);
     }
 
     /**
