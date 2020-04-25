@@ -122,6 +122,7 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
             resourceNavTreeVO.setUrl(resource.getUrl());
             resourceNavTreeVO.setIcon(resource.getIcon());
             resourceNavTreeVO.setType(resource.getType());
+            resourceNavTreeVO.setChildren(new ArrayList<>());
 
             resourceTreeVOMap.put(id, resourceNavTreeVO);
         }
@@ -137,9 +138,9 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
                 // 子级通过父id获取到父级的类型
                 ResourceTreeVO parentResourceTreeVO = resourceTreeVOMap.get(parentId);
                 if (Objects.nonNull(parentResourceTreeVO)) {
-                    if (CollectionUtils.isEmpty(parentResourceTreeVO.getChildren())) {
-                        parentResourceTreeVO.setChildren(new ArrayList<>());
-                    }
+                    // if (CollectionUtils.isEmpty(parentResourceTreeVO.getChildren())) {
+                    //     parentResourceTreeVO.setChildren(new ArrayList<>());
+                    // }
                     // 父级获得子级，再将子级放到对应的父级中
                     parentResourceTreeVO.getChildren().add(resourceNavTreeVO);
                 }
@@ -165,6 +166,8 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
                             BeanUtils.copyProperties(resource,
                                     permissionResourceVO,
                                     "children");
+                            permissionResourceVO.setChildren(new ArrayList<>());
+
                             return permissionResourceVO;
                         }));
 
@@ -179,9 +182,9 @@ public class PermissionResourceServiceImpl implements PermissionResourceService 
                 // 子级通过父id获取到父级的类型
                 PermissionResourceTreeVO parentResourceTreeVO = resourceTreeVOMap.get(parentId);
                 if (Objects.nonNull(parentResourceTreeVO)) {
-                    if (CollectionUtils.isEmpty(parentResourceTreeVO.getChildren())) {
-                        parentResourceTreeVO.setChildren(new ArrayList<>());
-                    }
+                    // if (CollectionUtils.isEmpty(parentResourceTreeVO.getChildren())) {
+                    //     parentResourceTreeVO.setChildren(new ArrayList<>());
+                    // }
                     // 父级获得子级，再将子级放到对应的父级中
                     parentResourceTreeVO.getChildren().add(permissionResourceVO);
                 }
