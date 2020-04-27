@@ -49,6 +49,7 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
         Condition condition = new Condition(AccountCategory.class);
         Example.Criteria criteria = condition.createCriteria();
         criteria.andLike("name", accountCategoryPageInfo.getName());
+        condition.orderBy("orderNo");
         List<AccountCategory> accountCategoryList = accountCategoryMapper.selectByCondition(condition);
 
         // key：主键ID value:分类信息
