@@ -43,23 +43,46 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
     }
 
     @Override
-    public Page<AccountCategoryTreeVO> findAccountCategoryList(AccountCategoryPageInfo accountCategoryPageInfo) {
+    public List<AccountCategoryTreeVO> findAccountCategoryList(AccountCategoryPageInfo accountCategoryPageInfo) {
+        List<AccountCategoryTreeVO> accountCategoryTreeVOList = new ArrayList<>();
 
-        // 分页
-        PageHelper.startPage(accountCategoryPageInfo);
         Condition condition = new Condition(AccountCategory.class);
         Example.Criteria criteria = condition.createCriteria();
-        // 获取所有一级分类
-        criteria.andEqualTo("parentId", 0L);
         criteria.andLike("name", accountCategoryPageInfo.getName());
         List<AccountCategory> accountCategoryList = accountCategoryMapper.selectByCondition(condition);
-        PageInfo<AccountCategory> pageInfo = new PageInfo(accountCategoryList);
-        Page<AccountCategoryTreeVO> page = new Page<>();
-        BeanUtils.copyProperties(pageInfo, page);
 
-        // //TODO ++ 子集分类处理
+        // key：主键ID value:分类信息
+        Map<Long, AccountCategoryTreeVO> treeVOMap = accountCategoryList.stream()
+                .collect(Collectors.toMap(AccountCategory::getId, accountCategory -> {
+                    AccountCategoryTreeVO accountCategoryTreeVO = new AccountCategoryTreeVO();
+                    BeanUtils.copyProperties(accountCategory, accountCategoryTreeVO, "children");
 
-        return page;
+                    return accountCategoryTreeVO;
+                }));
+
+        accountCategoryList.forEach(accountCategory -> {
+            Long id = accountCategory.getId();
+            Long parentId = accountCategory.getParentId();
+            AccountCategoryTreeVO accountCategoryTreeVO = treeVOMap.get(id);
+            if (DashboardConstants.ZERO_LONG.equals(parentId) && Objects.nonNull(accountCategoryTreeVO)) {
+                // 一级分类
+                accountCategoryTreeVOList.add(accountCategoryTreeVO);
+            } else {
+                // 获取到父集分类
+                AccountCategoryTreeVO parentAccountCategoryTreeVO = treeVOMap.get(parentId);
+                if (Objects.nonNull(parentAccountCategoryTreeVO)) {
+                    if (CollectionUtils.isEmpty(parentAccountCategoryTreeVO.getChildren())) {
+                        parentAccountCategoryTreeVO.setChildren(new ArrayList<>());
+                    }
+
+                    // 添加二级分类
+                    parentAccountCategoryTreeVO.getChildren().add(accountCategoryTreeVO);
+                }
+            }
+        });
+
+
+        return accountCategoryTreeVOList;
     }
 
     @Override
@@ -127,7 +150,7 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
 
         // 查询所有上级分类
         List<String> parentIdTem = new ArrayList<>();
-        this.findParentCategory(accountCategory.getParentId(), parentIdTem);
+        this.buildCategoryParentId(accountCategory.getParentId(), parentIdTem);
         Collections.reverse(parentIdTem);
         accountCategoryVO.setParentIdTem(parentIdTem);
 
@@ -140,13 +163,13 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
      * @param parentId
      * @param parentIdTem
      */
-    private void findParentCategory(Long parentId, List<String> parentIdTem) {
+    private void buildCategoryParentId(Long parentId, List<String> parentIdTem) {
         parentIdTem.add(parentId.toString());
         AccountCategory accountCategory = accountCategoryMapper.selectByPrimaryKey(parentId);
         if (Objects.nonNull(accountCategory)) {
             Long parentId1 = accountCategory.getParentId();
             if (!DashboardConstants.ZERO_LONG.equals(parentId1)) {
-                this.findParentCategory(parentId, parentIdTem);
+                this.buildCategoryParentId(parentId, parentIdTem);
             }
         }
     }

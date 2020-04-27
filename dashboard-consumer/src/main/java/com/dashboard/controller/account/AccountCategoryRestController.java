@@ -127,9 +127,10 @@ public class AccountCategoryRestController {
             accountCategoryPageInfo.setName(null);
         }
 
-        Page<AccountCategoryTreeVO> page = accountCategoryService.findAccountCategoryList(accountCategoryPageInfo);
+        List<AccountCategoryTreeVO> accountCategoryTreeVOList =
+                accountCategoryService.findAccountCategoryList(accountCategoryPageInfo);
 
-        return RestResult.success(page);
+        return RestResult.success(accountCategoryTreeVOList);
     }
 
     /**

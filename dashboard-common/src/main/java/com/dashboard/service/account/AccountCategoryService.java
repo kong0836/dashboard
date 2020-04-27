@@ -1,6 +1,5 @@
 package com.dashboard.service.account;
 
-import com.dashboard.common.entity.Page;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountCategoryPageInfo;
 import com.dashboard.entity.account.AccountCategoryTreeVO;
@@ -29,7 +28,7 @@ public interface AccountCategoryService {
      * @param accountCategoryPageInfo
      * @return
      */
-    Page<AccountCategoryTreeVO> findAccountCategoryList(AccountCategoryPageInfo accountCategoryPageInfo);
+    List<AccountCategoryTreeVO> findAccountCategoryList(AccountCategoryPageInfo accountCategoryPageInfo);
 
     /**
      * 更新
