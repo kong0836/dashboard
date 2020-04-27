@@ -4,6 +4,7 @@ import com.dashboard.common.entity.Page;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountCategoryPageInfo;
 import com.dashboard.entity.account.AccountCategoryTreeVO;
+import com.dashboard.entity.account.CategoryTreeVO;
 import com.dashboard.entity.account.AccountCategoryVO;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public interface AccountCategoryService {
      * @param accountCategoryPageInfo
      * @return
      */
-    Page<AccountCategory> findAccountCategoryList(AccountCategoryPageInfo accountCategoryPageInfo);
+    Page<AccountCategoryTreeVO> findAccountCategoryList(AccountCategoryPageInfo accountCategoryPageInfo);
 
     /**
      * 更新
@@ -42,7 +43,7 @@ public interface AccountCategoryService {
      *
      * @return
      */
-    List<AccountCategoryTreeVO> findAccountCategoryTreeList();
+    List<CategoryTreeVO> findAccountCategoryTreeList();
 
     /**
      * 查询消费分类

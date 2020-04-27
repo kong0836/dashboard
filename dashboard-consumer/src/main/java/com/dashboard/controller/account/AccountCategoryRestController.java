@@ -9,6 +9,7 @@ import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountCategoryPageInfo;
 import com.dashboard.entity.account.AccountCategoryTreeVO;
+import com.dashboard.entity.account.CategoryTreeVO;
 import com.dashboard.entity.account.AccountCategoryVO;
 import com.dashboard.service.account.AccountCategoryService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
@@ -126,7 +127,7 @@ public class AccountCategoryRestController {
             accountCategoryPageInfo.setName(null);
         }
 
-        Page<AccountCategory> page = accountCategoryService.findAccountCategoryList(accountCategoryPageInfo);
+        Page<AccountCategoryTreeVO> page = accountCategoryService.findAccountCategoryList(accountCategoryPageInfo);
 
         return RestResult.success(page);
     }
@@ -154,7 +155,7 @@ public class AccountCategoryRestController {
      */
     @GetMapping("/findCategoryTreeList")
     public RestResult findCategoryTreeList() {
-        List<AccountCategoryTreeVO> accountCategoryTreeVOList = accountCategoryService.findAccountCategoryTreeList();
+        List<CategoryTreeVO> accountCategoryTreeVOList = accountCategoryService.findAccountCategoryTreeList();
 
         return RestResult.success(accountCategoryTreeVOList);
     }

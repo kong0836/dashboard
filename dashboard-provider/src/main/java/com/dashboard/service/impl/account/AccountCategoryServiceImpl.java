@@ -7,6 +7,7 @@ import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountCategoryPageInfo;
 import com.dashboard.entity.account.AccountCategoryTreeVO;
+import com.dashboard.entity.account.CategoryTreeVO;
 import com.dashboard.entity.account.AccountCategoryVO;
 import com.dashboard.mapper.account.AccountCategoryMapper;
 import com.dashboard.service.account.AccountCategoryService;
@@ -42,16 +43,21 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
     }
 
     @Override
-    public Page<AccountCategory> findAccountCategoryList(AccountCategoryPageInfo accountCategoryPageInfo) {
+    public Page<AccountCategoryTreeVO> findAccountCategoryList(AccountCategoryPageInfo accountCategoryPageInfo) {
+
         // 分页
         PageHelper.startPage(accountCategoryPageInfo);
-        AccountCategory accountCategory = new AccountCategory();
-        BeanUtils.copyProperties(accountCategoryPageInfo, accountCategory);
-
-        List<AccountCategory> accountCategoryList = accountCategoryMapper.select(accountCategory);
+        Condition condition = new Condition(AccountCategory.class);
+        Example.Criteria criteria = condition.createCriteria();
+        // 获取所有一级分类
+        criteria.andEqualTo("parentId", 0L);
+        criteria.andLike("name", accountCategoryPageInfo.getName());
+        List<AccountCategory> accountCategoryList = accountCategoryMapper.selectByCondition(condition);
         PageInfo<AccountCategory> pageInfo = new PageInfo(accountCategoryList);
-        Page<AccountCategory> page = new Page<>();
+        Page<AccountCategoryTreeVO> page = new Page<>();
         BeanUtils.copyProperties(pageInfo, page);
+
+        // //TODO ++ 子集分类处理
 
         return page;
     }
@@ -62,11 +68,11 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
     }
 
     @Override
-    public List<AccountCategoryTreeVO> findAccountCategoryTreeList() {
-        List<AccountCategoryTreeVO> accountCategoryTreeVOList = new ArrayList<>();
+    public List<CategoryTreeVO> findAccountCategoryTreeList() {
+        List<CategoryTreeVO> accountCategoryTreeVOList = new ArrayList<>();
 
         // 根节点
-        AccountCategoryTreeVO rootAccountCategoryTreeVO = new AccountCategoryTreeVO();
+        CategoryTreeVO rootAccountCategoryTreeVO = new CategoryTreeVO();
         rootAccountCategoryTreeVO.setId(DashboardConstants.ZERO_LONG);
         rootAccountCategoryTreeVO.setName("根节点");
         accountCategoryTreeVOList.add(rootAccountCategoryTreeVO);
@@ -76,11 +82,11 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
         criteria.andEqualTo("status", StatusEnum.ON.getCode());
         List<AccountCategory> accountCategoryList = accountCategoryMapper.selectByCondition(condition);
 
-        Map<Long, AccountCategoryTreeVO> treeVOMap =
+        Map<Long, CategoryTreeVO> treeVOMap =
                 accountCategoryList.stream()
                         .collect(
                                 Collectors.toMap(AccountCategory::getId, accountCategory -> {
-                                    AccountCategoryTreeVO accountCategoryTreeVO = new AccountCategoryTreeVO();
+                                    CategoryTreeVO accountCategoryTreeVO = new CategoryTreeVO();
                                     accountCategoryTreeVO.setId(accountCategory.getId());
                                     accountCategoryTreeVO.setName(accountCategory.getName());
                                     accountCategoryTreeVO.setParentId(accountCategory.getParentId());
@@ -93,13 +99,13 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
         accountCategoryList.forEach(accountCategory -> {
             Long id = accountCategory.getId();
             Long parentId = accountCategory.getParentId();
-            AccountCategoryTreeVO accountCategoryTreeVO = treeVOMap.get(id);
+            CategoryTreeVO accountCategoryTreeVO = treeVOMap.get(id);
             if (DashboardConstants.ZERO_LONG.equals(parentId) && Objects.nonNull(accountCategoryTreeVO)) {
                 // 一级分类
                 accountCategoryTreeVOList.add(accountCategoryTreeVO);
             } else {
                 // 子分类通过parentID获取到父分类
-                AccountCategoryTreeVO parentAccountCategoryTreeVO = treeVOMap.get(parentId);
+                CategoryTreeVO parentAccountCategoryTreeVO = treeVOMap.get(parentId);
                 if (Objects.nonNull(parentAccountCategoryTreeVO)) {
                     if (CollectionUtils.isEmpty(parentAccountCategoryTreeVO.getChildren())) {
                         parentAccountCategoryTreeVO.setChildren(new ArrayList<>());
