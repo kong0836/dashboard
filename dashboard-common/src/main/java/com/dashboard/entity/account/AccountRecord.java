@@ -38,7 +38,7 @@ public class AccountRecord extends BaseDO implements Serializable {
      */
     @Column(name = "parent_id")
     @ApiModelProperty("上级主键ID")
-    private Long personId;
+    private String personId;
 
     /**
      * 分类ID
@@ -46,13 +46,6 @@ public class AccountRecord extends BaseDO implements Serializable {
     @Column(name = "category_id")
     @ApiModelProperty("分类ID")
     private Long categoryId;
-
-    /**
-     * 收支类型: 1-收入，2-支出
-     */
-    @Column(name = "type")
-    @ApiModelProperty("收支类型: 1-收入，2-支出")
-    private Integer type;
 
     /**
      * 金额: 单位(分)
