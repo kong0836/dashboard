@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @author konglinghui
@@ -51,14 +52,14 @@ public class AccountRecord extends BaseDO implements Serializable {
      */
     @Column(name = "type")
     @ApiModelProperty("收支类型: 1-收入，2-支出")
-    private Long type;
+    private Integer type;
 
     /**
      * 金额: 单位(分)
      */
     @Column(name = "amount")
     @ApiModelProperty("金额: 单位(分)")
-    private String amount;
+    private BigDecimal amount;
 
     /**
      * 备注
