@@ -4,7 +4,7 @@ CREATE TABLE account_category (
     id          bigint(20)  NOT NULL COMMENT '主键',
     parent_id   bigint(20)  NOT NULL COMMENT '上级分类主键',
     name        varchar(32) NOT NULL COMMENT '分类名称',
-    type        tinyint(2)  NOT NULL COMMENT '类型: 1-一级分类 2-二级分类 3-三级分类',
+    type        tinyint(2)  NOT NULL COMMENT '消费类型: 1-收入 2-支出',
     icon        varchar(32) NOT NULL COMMENT '图标',
     order_no    int(10)     NOT NULL DEFAULT 0 COMMENT '排序号',
     status      tinyint(2)  NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
