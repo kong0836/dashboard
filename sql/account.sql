@@ -26,7 +26,6 @@ CREATE TABLE account_record (
     id          bigint(20)     NOT NULL COMMENT '主键',
     person_id   bigint(20)     NOT NULL COMMENT '用户主键',
     category_id bigint(20)     NOT NULL COMMENT '账单分类主键',
-    type        tinyint(2)     NOT NULL COMMENT '收支类型: 1-收入，2-支出',
     amount      decimal(10, 2) NOT NULL COMMENT '金额: 单位(分)',
     remark      varchar(32)    NULL     DEFAULT '' COMMENT '备注',
     create_by   varchar(32)    NOT NULL COMMENT '创建人ID',
