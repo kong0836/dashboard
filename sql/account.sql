@@ -27,6 +27,7 @@ CREATE TABLE account_record (
     person_id   bigint(20)     NOT NULL COMMENT '用户主键',
     category_id bigint(20)     NOT NULL COMMENT '账单分类主键',
     amount      decimal(10, 2) NOT NULL COMMENT '金额: 单位(分)',
+    status      tinyint(2)     NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
     remark      varchar(32)    NULL     DEFAULT '' COMMENT '备注',
     create_by   varchar(32)    NOT NULL COMMENT '创建人ID',
     create_time datetime       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
