@@ -1,6 +1,7 @@
 package com.dashboard.entity.account;
 
 import com.dashboard.common.entity.BaseDO;
+import com.dashboard.enums.account.AccountCategoryTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -11,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  * @author konglinghui
@@ -36,7 +38,7 @@ public class AccountRecord extends BaseDO implements Serializable {
     /**
      * 上级主键ID
      */
-    @Column(name = "parent_id")
+    @Column(name = "person_id")
     @ApiModelProperty("上级主键ID")
     private String personId;
 
@@ -46,6 +48,22 @@ public class AccountRecord extends BaseDO implements Serializable {
     @Column(name = "category_id")
     @ApiModelProperty("分类ID")
     private Long categoryId;
+
+    /**
+     * 消费类型: 1-收入 2-支出
+     *
+     * @see AccountCategoryTypeEnum
+     */
+    @Column(name = "type")
+    @ApiModelProperty("消费类型: 1-收入 2-支出")
+    private Integer type;
+
+    /**
+     * 消费日期：默认当天
+     */
+    @Column(name = "consumer_date")
+    @ApiModelProperty("消费日期：默认当天")
+    private LocalDate consumerDate;
 
     /**
      * 金额: 单位(分)
