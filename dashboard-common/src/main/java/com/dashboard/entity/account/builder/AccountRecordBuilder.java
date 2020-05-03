@@ -43,6 +43,11 @@ public class AccountRecordBuilder implements Serializable {
         return this;
     }
 
+    public AccountRecordBuilder status(Integer status) {
+        this.target.setStatus(status);
+        return this;
+    }
+
     public AccountRecordBuilder remark(String remark) {
         this.target.setRemark(remark);
         return this;

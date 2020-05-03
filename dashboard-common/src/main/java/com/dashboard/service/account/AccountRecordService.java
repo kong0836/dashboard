@@ -2,6 +2,8 @@ package com.dashboard.service.account;
 
 import com.dashboard.entity.account.AccountRecord;
 
+import java.util.List;
+
 /**
  * @author konglinghui
  * @description 消费记录
@@ -22,4 +24,18 @@ public interface AccountRecordService {
      * @param accountRecord
      */
     void updateAccountRecord(AccountRecord accountRecord);
+
+    /**
+     * 删除消费记录
+     *
+     * @param id 主键ID
+     */
+    void deleteAccountRecord(Long id);
+
+    /**
+     * 查询记录
+     *
+     * @return
+     */
+    List<AccountRecord> findAccountRecordList();
 }

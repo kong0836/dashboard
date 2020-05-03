@@ -1,16 +1,21 @@
 package com.dashboard.controller.account;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dashboard.common.enums.BaseResultEnum;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountRecord;
 import com.dashboard.service.account.AccountRecordService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Objects;
 
 /**
  * @author konglinghui
@@ -65,10 +70,9 @@ public class AccountRecordRestController {
      */
     @PostMapping("/findAccountRecordList")
     public RestResult findAccountRecordList() {
-        //TODO ++
-        //  accountRecordService.findAccountRecordList();
+        List<AccountRecord> accountRecordList = accountRecordService.findAccountRecordList();
 
-        return RestResult.success();
+        return RestResult.success(accountRecordList);
     }
 
     /**
@@ -78,8 +82,12 @@ public class AccountRecordRestController {
      * @return
      */
     @PostMapping("/deleteAccountRecord/{id}")
-    public RestResult deleteAccountRecord(@PathVariable String id) {
-        //TODO ++
+    public RestResult deleteAccountRecord(@PathVariable Long id) {
+        if (Objects.isNull(id)) {
+            return RestResult.fail(BaseResultEnum.PARAM_ERROR);
+        }
+
+        accountRecordService.deleteAccountRecord(id);
 
         return RestResult.success();
     }

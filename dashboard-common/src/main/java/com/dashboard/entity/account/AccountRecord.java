@@ -55,6 +55,13 @@ public class AccountRecord extends BaseDO implements Serializable {
     private BigDecimal amount;
 
     /**
+     * 状态: 0-启用 1-禁用
+     */
+    @Column(name = "status")
+    @ApiModelProperty("状态: 0-启用 1-禁用")
+    private Integer status;
+
+    /**
      * 备注
      */
     @Column(name = "remark")
