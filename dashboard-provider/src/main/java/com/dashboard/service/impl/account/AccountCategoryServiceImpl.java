@@ -10,6 +10,7 @@ import com.dashboard.entity.account.AccountCategoryVO;
 import com.dashboard.entity.account.CategoryTreeVO;
 import com.dashboard.mapper.account.AccountCategoryMapper;
 import com.dashboard.service.account.AccountCategoryService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -45,7 +46,10 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
 
         Condition condition = new Condition(AccountCategory.class);
         Example.Criteria criteria = condition.createCriteria();
-        criteria.andLike("name", accountCategoryPageInfo.getName());
+        if (StringUtils.isNotBlank(accountCategoryPageInfo.getName())) {
+            criteria.andLike("name", accountCategoryPageInfo.getName());
+        }
+        criteria.andEqualTo("type", accountCategoryPageInfo.getType());
         condition.orderBy("orderNo");
         List<AccountCategory> accountCategoryList = accountCategoryMapper.selectByCondition(condition);
 

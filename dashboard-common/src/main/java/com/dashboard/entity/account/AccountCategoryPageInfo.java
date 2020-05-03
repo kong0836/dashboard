@@ -1,6 +1,6 @@
 package com.dashboard.entity.account;
 
-import com.dashboard.entity.system.Person;
+import com.dashboard.enums.account.AccountCategoryTypeEnum;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -28,4 +28,13 @@ public class AccountCategoryPageInfo extends PageInfo<AccountCategory> implement
     @Column(name = "name")
     @ApiModelProperty("用户名")
     private String name;
+
+    /**
+     * 消费类型: 1-收入 2-支出
+     *
+     * @see AccountCategoryTypeEnum
+     */
+    @Column(name = "type")
+    @ApiModelProperty("消费类型: 1-收入 2-支出")
+    private Integer type;
 }
