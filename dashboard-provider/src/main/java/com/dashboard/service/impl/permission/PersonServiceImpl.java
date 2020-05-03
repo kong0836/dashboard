@@ -1,12 +1,12 @@
-package com.dashboard.service.impl.system;
+package com.dashboard.service.impl.permission;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.dashboard.common.entity.Page;
 import com.dashboard.common.redis.RedisClient;
 import com.dashboard.entity.system.PersonPageInfo;
-import com.dashboard.mapper.system.PersonMapper;
+import com.dashboard.mapper.permission.PersonMapper;
 import com.dashboard.entity.system.Person;
-import com.dashboard.service.system.PersonService;
+import com.dashboard.service.permission.PersonService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;

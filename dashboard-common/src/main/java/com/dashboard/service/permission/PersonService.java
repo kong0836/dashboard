@@ -1,4 +1,4 @@
-package com.dashboard.service.system;
+package com.dashboard.service.permission;
 
 import com.dashboard.common.entity.Page;
 import com.dashboard.entity.system.Person;
