@@ -152,11 +152,16 @@ public class AccountCategoryRestController {
     /**
      * 查询消费分类菜单树
      *
+     * @param type 分类类型
      * @return
      */
-    @GetMapping("/findCategoryTreeList")
-    public RestResult findCategoryTreeList() {
-        List<CategoryTreeVO> accountCategoryTreeVOList = accountCategoryService.findAccountCategoryTreeList();
+    @GetMapping("/findCategoryTreeList/{type}")
+    public RestResult findCategoryTreeList(@PathVariable Integer type) {
+        if (Objects.isNull(type)) {
+            return RestResult.fail(BaseResultEnum.PARAM_ERROR);
+        }
+
+        List<CategoryTreeVO> accountCategoryTreeVOList = accountCategoryService.findAccountCategoryTreeList(type);
 
         return RestResult.success(accountCategoryTreeVOList);
     }

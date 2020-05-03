@@ -2,17 +2,14 @@ package com.dashboard.service.impl.account;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.dashboard.common.constants.DashboardConstants;
-import com.dashboard.common.entity.Page;
 import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountCategoryPageInfo;
 import com.dashboard.entity.account.AccountCategoryTreeVO;
-import com.dashboard.entity.account.CategoryTreeVO;
 import com.dashboard.entity.account.AccountCategoryVO;
+import com.dashboard.entity.account.CategoryTreeVO;
 import com.dashboard.mapper.account.AccountCategoryMapper;
 import com.dashboard.service.account.AccountCategoryService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -92,7 +89,7 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
     }
 
     @Override
-    public List<CategoryTreeVO> findAccountCategoryTreeList() {
+    public List<CategoryTreeVO> findAccountCategoryTreeList(Integer type) {
         List<CategoryTreeVO> accountCategoryTreeVOList = new ArrayList<>();
 
         // 根节点
@@ -104,6 +101,7 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
         Condition condition = new Condition(AccountCategory.class);
         Example.Criteria criteria = condition.createCriteria();
         criteria.andEqualTo("status", StatusEnum.ON.getCode());
+        criteria.andEqualTo("type", type);
         List<AccountCategory> accountCategoryList = accountCategoryMapper.selectByCondition(condition);
 
         Map<Long, CategoryTreeVO> treeVOMap =
