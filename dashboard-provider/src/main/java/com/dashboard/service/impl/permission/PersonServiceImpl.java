@@ -68,4 +68,9 @@ public class PersonServiceImpl implements PersonService {
 
         return person;
     }
+
+    @Override
+    public List<Person> findPersonListAll() {
+        return personMapper.selectAll();
+    }
 }

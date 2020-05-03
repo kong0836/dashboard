@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -110,5 +111,17 @@ public class PersonRestController {
         Person person = personService.findPersonById(id);
 
         return RestResult.success(person);
+    }
+
+    /**
+     * 查询所有人员信息
+     *
+     * @return
+     */
+    @GetMapping("/findPersonListAll")
+    public RestResult findPersonListAll() {
+        List<Person> personList = personService.findPersonListAll();
+
+        return RestResult.success(personList);
     }
 }

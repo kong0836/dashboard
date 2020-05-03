@@ -4,6 +4,8 @@ import com.dashboard.common.entity.Page;
 import com.dashboard.entity.system.Person;
 import com.dashboard.entity.system.PersonPageInfo;
 
+import java.util.List;
+
 /**
  * @author konglinghui
  * @description 用户信息接口
@@ -40,4 +42,11 @@ public interface PersonService {
      * @return
      */
     Person findPersonById(String id);
+
+    /**
+     * 查询所有人员信息
+     *
+     * @return
+     */
+    List<Person> findPersonListAll();
 }
