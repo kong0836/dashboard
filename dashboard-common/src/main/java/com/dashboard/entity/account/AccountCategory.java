@@ -1,6 +1,7 @@
 package com.dashboard.entity.account;
 
 import com.dashboard.common.entity.BaseDO;
+import com.dashboard.enums.account.AccountCategoryTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -47,10 +48,12 @@ public class AccountCategory extends BaseDO implements Serializable {
     private String name;
 
     /**
-     * 类型: 1-一级分类 2-二级分类 3-三级分类
+     * 消费类型: 1-收入 2-支出
+     *
+     * @see AccountCategoryTypeEnum
      */
     @Column(name = "type")
-    @ApiModelProperty("类型: 1-一级分类 2-二级分类 3-三级分类")
+    @ApiModelProperty("消费类型: 1-收入 2-支出")
     private Integer type;
 
     /**

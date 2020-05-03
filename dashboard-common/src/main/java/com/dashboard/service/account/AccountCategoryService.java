@@ -40,9 +40,10 @@ public interface AccountCategoryService {
     /**
      * 查询消费分类树结构
      *
+     * @param type 分类类型
      * @return
      */
-    List<CategoryTreeVO> findAccountCategoryTreeList();
+    List<CategoryTreeVO> findAccountCategoryTreeList(Integer type);
 
     /**
      * 查询消费分类
