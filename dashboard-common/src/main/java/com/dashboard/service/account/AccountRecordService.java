@@ -1,8 +1,8 @@
 package com.dashboard.service.account;
 
+import com.dashboard.common.entity.Page;
 import com.dashboard.entity.account.AccountRecord;
-
-import java.util.List;
+import com.dashboard.entity.account.AccountRecordPageInfo;
 
 /**
  * @author konglinghui
@@ -35,7 +35,8 @@ public interface AccountRecordService {
     /**
      * 查询记录
      *
+     * @param accountRecordPageInfo
      * @return
      */
-    List<AccountRecord> findAccountRecordList();
+    Page<AccountRecord> findAccountRecordList(AccountRecordPageInfo accountRecordPageInfo);
 }

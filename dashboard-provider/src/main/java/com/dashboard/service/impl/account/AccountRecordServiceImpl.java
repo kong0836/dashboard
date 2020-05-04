@@ -1,18 +1,26 @@
 package com.dashboard.service.impl.account;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.dashboard.common.entity.Page;
 import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.entity.account.AccountRecord;
+import com.dashboard.entity.account.AccountRecordPageInfo;
 import com.dashboard.entity.account.builder.AccountRecordBuilder;
+import com.dashboard.entity.system.Person;
 import com.dashboard.mapper.account.AccountRecordMapper;
+import com.dashboard.mapper.permission.PersonMapper;
 import com.dashboard.service.account.AccountRecordService;
-import javafx.scene.shape.Circle;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author konglinghui
@@ -24,6 +32,9 @@ public class AccountRecordServiceImpl implements AccountRecordService {
 
     @Autowired
     private AccountRecordMapper accountRecordMapper;
+
+    @Autowired
+    private PersonMapper personMapper;
 
     @Override
     public void createAccountRecord(AccountRecord accountRecord) {
@@ -46,13 +57,38 @@ public class AccountRecordServiceImpl implements AccountRecordService {
     }
 
     @Override
-    public List<AccountRecord> findAccountRecordList() {
+    public Page<AccountRecord> findAccountRecordList(AccountRecordPageInfo accountRecordPageInfo) {
+        PageHelper.startPage(accountRecordPageInfo);
+
         Condition condition = new Condition(AccountRecord.class);
         Example.Criteria criteria = condition.createCriteria();
         criteria.andEqualTo("status", StatusEnum.ON.getCode());
-
         List<AccountRecord> accountRecordList = accountRecordMapper.selectByCondition(condition);
 
-        return accountRecordList;
+        PageInfo<AccountRecord> pageInfo = new PageInfo(accountRecordList);
+        List<AccountRecord> accountRecords = pageInfo.getList();
+        if (CollectionUtils.isEmpty(accountRecords)) {
+            return new Page<>();
+        }
+
+        // 根据id查询人员信息
+        List<Long> personIdList = accountRecords.stream()
+                .map(AccountRecord::getPersonId)
+                .collect(Collectors.toList());
+        Condition personCondition = new Condition(Person.class);
+        Example.Criteria personCriteria = personCondition.createCriteria();
+        personCriteria.andIn("id", personIdList);
+        List<Person> personList = personMapper.selectByCondition(personCondition);
+
+        // 数据转换
+        Map<Long, String> idNameMap = personList.stream()
+                .collect(Collectors.toMap(Person::getId, Person::getName));
+        Page<AccountRecord> page = new Page<>();
+        BeanUtils.copyProperties(pageInfo, page);
+        page.getList().forEach(accountRecord -> {
+            accountRecord.setName(idNameMap.get(accountRecord.getPersonId()));
+        });
+
+        return page;
     }
 }

@@ -1,20 +1,20 @@
 package com.dashboard.controller.account;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dashboard.common.entity.Page;
 import com.dashboard.common.enums.BaseResultEnum;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountRecord;
+import com.dashboard.entity.account.AccountRecordPageInfo;
 import com.dashboard.service.account.AccountRecordService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -37,9 +37,11 @@ public class AccountRecordRestController {
      */
     @PostMapping("/createAccountRecord")
     public RestResult createAccountRecord(@RequestBody AccountRecord accountRecord) {
-        //TODO ++
         accountRecord.setId(SnowflakeIdWorker.generateId());
+        accountRecord.setCreateBy("0");
+        accountRecord.setUpdateBy("0");
         accountRecord.setCreateTime(DateTimeUtils.currentTimeStamp());
+        accountRecord.setUpdateTime(DateTimeUtils.currentTimeStamp());
 
         accountRecordService.createAccountRecord(accountRecord);
 
@@ -69,10 +71,10 @@ public class AccountRecordRestController {
      * @return
      */
     @PostMapping("/findAccountRecordList")
-    public RestResult findAccountRecordList() {
-        List<AccountRecord> accountRecordList = accountRecordService.findAccountRecordList();
+    public RestResult findAccountRecordList(@RequestBody AccountRecordPageInfo accountRecordPageInfo) {
+        Page<AccountRecord> page = accountRecordService.findAccountRecordList(accountRecordPageInfo);
 
-        return RestResult.success(accountRecordList);
+        return RestResult.success(page);
     }
 
     /**
