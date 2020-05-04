@@ -10,9 +10,10 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Timestamp;
 
 /**
  * @author konglinghui
@@ -40,7 +41,13 @@ public class AccountRecord extends BaseDO implements Serializable {
      */
     @Column(name = "person_id")
     @ApiModelProperty("上级主键ID")
-    private String personId;
+    private Long personId;
+
+    /**
+     * 用户名
+     */
+    @Transient
+    private String name;
 
     /**
      * 分类ID
@@ -63,7 +70,7 @@ public class AccountRecord extends BaseDO implements Serializable {
      */
     @Column(name = "consumer_date")
     @ApiModelProperty("消费日期：默认当天")
-    private LocalDate consumerDate;
+    private Timestamp consumerDate;
 
     /**
      * 金额: 单位(分)

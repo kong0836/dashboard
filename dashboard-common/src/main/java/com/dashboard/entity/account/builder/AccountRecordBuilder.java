@@ -28,7 +28,7 @@ public class AccountRecordBuilder implements Serializable {
         return this;
     }
 
-    public AccountRecordBuilder personId(String personId) {
+    public AccountRecordBuilder personId(Long personId) {
         this.target.setPersonId(personId);
         return this;
     }
