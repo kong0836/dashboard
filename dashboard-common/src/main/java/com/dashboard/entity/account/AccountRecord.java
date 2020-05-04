@@ -66,6 +66,13 @@ public class AccountRecord extends BaseDO implements Serializable {
     private Integer type;
 
     /**
+     * 消费渠道：微信 支付宝 银行app 其他
+     */
+    @Column(name = "channel")
+    @ApiModelProperty("消费渠道：微信 支付宝 银行app 其他")
+    private String channel;
+
+    /**
      * 消费日期：默认当天
      */
     @Column(name = "consumer_date")
