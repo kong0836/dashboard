@@ -43,7 +43,7 @@ public class AccountRecordServiceImpl implements AccountRecordService {
 
     @Override
     public void updateAccountRecord(AccountRecord accountRecord) {
-        accountRecordMapper.updateByPrimaryKey(accountRecord);
+        accountRecordMapper.updateByPrimaryKeySelective(accountRecord);
     }
 
     @Override
@@ -63,6 +63,7 @@ public class AccountRecordServiceImpl implements AccountRecordService {
         Condition condition = new Condition(AccountRecord.class);
         Example.Criteria criteria = condition.createCriteria();
         criteria.andEqualTo("status", StatusEnum.ON.getCode());
+        condition.orderBy("type").desc();
         List<AccountRecord> accountRecordList = accountRecordMapper.selectByCondition(condition);
 
         PageInfo<AccountRecord> pageInfo = new PageInfo(accountRecordList);
@@ -90,5 +91,10 @@ public class AccountRecordServiceImpl implements AccountRecordService {
         });
 
         return page;
+    }
+
+    @Override
+    public AccountRecord findAccountRecordById(String id) {
+        return accountRecordMapper.selectByPrimaryKey(id);
     }
 }

@@ -39,4 +39,12 @@ public interface AccountRecordService {
      * @return
      */
     Page<AccountRecord> findAccountRecordList(AccountRecordPageInfo accountRecordPageInfo);
+
+    /**
+     * 查询消费记录
+     *
+     * @param id
+     * @return
+     */
+    AccountRecord findAccountRecordById(String id);
 }

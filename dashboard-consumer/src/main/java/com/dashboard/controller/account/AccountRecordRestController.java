@@ -9,6 +9,8 @@ import com.dashboard.entity.account.AccountRecord;
 import com.dashboard.entity.account.AccountRecordPageInfo;
 import com.dashboard.service.account.AccountRecordService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,10 +58,6 @@ public class AccountRecordRestController {
      */
     @PostMapping("/updateAccountRecord")
     public RestResult updateAccountRecord(@RequestBody AccountRecord accountRecord) {
-        //TODO ++
-
-        accountRecord.setUpdateTime(DateTimeUtils.currentTimeStamp());
-
         accountRecordService.updateAccountRecord(accountRecord);
 
         return RestResult.success();
@@ -92,5 +90,22 @@ public class AccountRecordRestController {
         accountRecordService.deleteAccountRecord(id);
 
         return RestResult.success();
+    }
+
+    /**
+     * 查询消费记录
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/findAccountRecordById/{id}")
+    public RestResult findAccountRecordById(@PathVariable String id) {
+        if (StringUtils.isBlank(id)) {
+            return RestResult.fail(BaseResultEnum.PARAM_ERROR);
+        }
+
+        AccountRecord accountRecord = accountRecordService.findAccountRecordById(id);
+
+        return RestResult.success(accountRecord);
     }
 }
