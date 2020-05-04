@@ -27,6 +27,7 @@ CREATE TABLE account_record (
     person_id     bigint(20)     NOT NULL COMMENT '用户主键',
     category_id   bigint(20)     NOT NULL COMMENT '账单分类主键',
     consumer_date date           NOT NULL COMMENT '消费日期：默认当天',
+    channel       varchar(16)    NOT NULL COMMENT '消费渠道：微信 支付宝 银行app 其他',
     type          tinyint(2)     NOT NULL COMMENT '消费类型: 1-收入 2-支出',
     amount        decimal(10, 2) NOT NULL COMMENT '金额: 单位(分)',
     status        tinyint(2)     NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
