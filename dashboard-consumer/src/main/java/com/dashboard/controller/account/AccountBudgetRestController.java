@@ -1,11 +1,13 @@
 package com.dashboard.controller.account;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dashboard.common.entity.Page;
 import com.dashboard.common.enums.BaseResultEnum;
 import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountBudget;
+import com.dashboard.entity.account.AccountBudgetPageInfo;
 import com.dashboard.service.account.AccountBudgetService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
 import org.apache.commons.lang3.StringUtils;
@@ -79,5 +81,35 @@ public class AccountBudgetRestController {
         accountBudgetService.deleteAccountBudget(id);
 
         return RestResult.success();
+    }
+
+    /**
+     * 查询消费预算
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/findAccountBudget/{id}")
+    public RestResult findAccountBudget(@PathVariable String id) {
+        if (StringUtils.isBlank(id)) {
+            return RestResult.fail(BaseResultEnum.PARAM_ERROR);
+        }
+
+        AccountBudget accountBudget = accountBudgetService.findAccountBudgetById(id);
+
+        return RestResult.success(accountBudget);
+    }
+
+    /**
+     * 查询消费预算列表
+     *
+     * @return
+     */
+    @PostMapping("/findAccountBudgetList")
+    public RestResult findAccountBudgetList(@RequestBody AccountBudgetPageInfo accountBudgetPageInfo) {
+
+        Page<AccountBudget> page = accountBudgetService.findAccountBudgetList(accountBudgetPageInfo);
+
+        return RestResult.success(page);
     }
 }

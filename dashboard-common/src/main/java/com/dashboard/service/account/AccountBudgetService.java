@@ -1,6 +1,8 @@
 package com.dashboard.service.account;
 
+import com.dashboard.common.entity.Page;
 import com.dashboard.entity.account.AccountBudget;
+import com.dashboard.entity.account.AccountBudgetPageInfo;
 
 /**
  * @author konglinghui
@@ -29,4 +31,20 @@ public interface AccountBudgetService {
      * @param id
      */
     void deleteAccountBudget(String id);
+
+    /**
+     * 查询消费预算
+     *
+     * @param id
+     * @return
+     */
+    AccountBudget findAccountBudgetById(String id);
+
+    /**
+     * 查询消费预算列表
+     *
+     * @return
+     * @param accountBudgetPageInfo
+     */
+    Page<AccountBudget> findAccountBudgetList(AccountBudgetPageInfo accountBudgetPageInfo);
 }

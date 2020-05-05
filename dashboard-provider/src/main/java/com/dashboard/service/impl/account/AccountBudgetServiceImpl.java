@@ -1,11 +1,14 @@
 package com.dashboard.service.impl.account;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.dashboard.common.entity.Page;
 import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.entity.account.AccountBudget;
+import com.dashboard.entity.account.AccountBudgetPageInfo;
 import com.dashboard.entity.account.builder.AccountBudgetBuilder;
 import com.dashboard.mapper.account.AccountBudgetMapper;
 import com.dashboard.service.account.AccountBudgetService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -37,5 +40,18 @@ public class AccountBudgetServiceImpl implements AccountBudgetService {
                 .build();
 
         accountBudgetMapper.updateByPrimaryKeySelective(accountBudget);
+    }
+
+    @Override
+    public AccountBudget findAccountBudgetById(String id) {
+        return accountBudgetMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public Page<AccountBudget> findAccountBudgetList(AccountBudgetPageInfo accountBudgetPageInfo) {
+        PageHelper.startPage(accountBudgetPageInfo);
+        //TODO ++
+
+        return null;
     }
 }
