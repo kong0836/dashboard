@@ -116,4 +116,9 @@ public class AccountRecord extends BaseDO implements Serializable {
     @Transient
     private List<String> categoryIdTem;
 
+    /**
+     * 分类名称
+     */
+    @Transient
+    private String categoryName;
 }

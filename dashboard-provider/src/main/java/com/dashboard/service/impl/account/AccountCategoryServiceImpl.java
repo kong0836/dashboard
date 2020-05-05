@@ -177,4 +177,11 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
             }
         }
     }
+
+    @Override
+    public List<AccountCategory> findAccountCategoryByIds(List<String> categoryIdList) {
+        String categoryIds = String.join(",", categoryIdList);
+
+        return accountCategoryMapper.selectByIds(categoryIds);
+    }
 }

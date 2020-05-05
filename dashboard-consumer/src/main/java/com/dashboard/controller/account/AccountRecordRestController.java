@@ -3,6 +3,7 @@ package com.dashboard.controller.account;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.entity.Page;
 import com.dashboard.common.enums.BaseResultEnum;
+import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountRecord;
@@ -44,6 +45,7 @@ public class AccountRecordRestController {
         accountRecord.setUpdateBy("0");
         accountRecord.setCreateTime(DateTimeUtils.currentTimeStamp());
         accountRecord.setUpdateTime(DateTimeUtils.currentTimeStamp());
+        accountRecord.setStatus(StatusEnum.ON.getCode());
 
         accountRecordService.createAccountRecord(accountRecord);
 

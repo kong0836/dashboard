@@ -95,8 +95,20 @@ public class AccountRecordServiceImpl implements AccountRecordService {
                 .collect(Collectors.toMap(Person::getId, Person::getName));
         Page<AccountRecord> page = new Page<>();
         BeanUtils.copyProperties(pageInfo, page);
+
+        // 分类名称
+        List<String> categoryIdList = accountRecords.stream()
+                .map(accountRecord -> accountRecord.getCategoryId().toString())
+                .collect(Collectors.toList());
+        Condition categoryCondition = new Condition(AccountCategory.class);
+        Example.Criteria categoryCriteria = categoryCondition.createCriteria();
+        categoryCriteria.andIn("id", categoryIdList);
+        List<AccountCategory> accountCategoryList = accountCategoryService.findAccountCategoryByIds(categoryIdList);
+        Map<Long, String> idNameMaps = accountCategoryList.stream()
+                .collect(Collectors.toMap(AccountCategory::getId, AccountCategory::getName));
         page.getList().forEach(accountRecord -> {
             accountRecord.setName(idNameMap.get(accountRecord.getPersonId()));
+            accountRecord.setCategoryName(idNameMaps.get(accountRecord.getCategoryId()));
         });
 
         return page;

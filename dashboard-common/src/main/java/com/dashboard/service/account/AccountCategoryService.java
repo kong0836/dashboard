@@ -61,7 +61,7 @@ public interface AccountCategoryService {
      * @param parentIdTem 上级分类ID集合
      */
     void findCategoryByCategoryId(Long categoryId, List<String> parentIdTem);
-    
+
     /**
      * 查询所有上级分类
      *
@@ -69,4 +69,12 @@ public interface AccountCategoryService {
      * @param parentIdTem 上级分类ID集合
      */
     void findCategoryByParentId(Long parentId, List<String> parentIdTem);
+
+    /**
+     * 查询所有分类
+     *
+     * @param categoryIdList
+     * @return
+     */
+    List<AccountCategory> findAccountCategoryByIds(List<String> categoryIdList);
 }
