@@ -52,4 +52,21 @@ public interface AccountCategoryService {
      * @return
      */
     AccountCategoryVO findAccountCategoryById(String id);
+
+
+    /**
+     * 查询所有上级分类
+     *
+     * @param categoryId  分类ID
+     * @param parentIdTem 上级分类ID集合
+     */
+    void findCategoryByCategoryId(Long categoryId, List<String> parentIdTem);
+    
+    /**
+     * 查询所有上级分类
+     *
+     * @param parentId    上级分类ID
+     * @param parentIdTem 上级分类ID集合
+     */
+    void findCategoryByParentId(Long parentId, List<String> parentIdTem);
 }

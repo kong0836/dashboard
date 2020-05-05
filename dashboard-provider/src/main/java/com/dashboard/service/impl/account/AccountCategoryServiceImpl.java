@@ -153,26 +153,27 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
 
         // 查询所有上级分类
         List<String> parentIdTem = new ArrayList<>();
-        this.buildCategoryParentId(accountCategory.getParentId(), parentIdTem);
+        this.findCategoryByParentId(accountCategory.getParentId(), parentIdTem);
         Collections.reverse(parentIdTem);
         accountCategoryVO.setParentIdTem(parentIdTem);
 
         return accountCategoryVO;
     }
 
-    /**
-     * 查询所有上级分类
-     *
-     * @param parentId
-     * @param parentIdTem
-     */
-    private void buildCategoryParentId(Long parentId, List<String> parentIdTem) {
+    @Override
+    public void findCategoryByCategoryId(Long categoryId, List<String> parentIdTem) {
+        AccountCategory accountCategory = accountCategoryMapper.selectByPrimaryKey(categoryId);
+        this.findCategoryByParentId(accountCategory.getParentId(), parentIdTem);
+    }
+
+    @Override
+    public void findCategoryByParentId(Long parentId, List<String> parentIdTem) {
         parentIdTem.add(parentId.toString());
         AccountCategory accountCategory = accountCategoryMapper.selectByPrimaryKey(parentId);
         if (Objects.nonNull(accountCategory)) {
             Long parentId1 = accountCategory.getParentId();
             if (!DashboardConstants.ZERO_LONG.equals(parentId1)) {
-                this.buildCategoryParentId(parentId, parentIdTem);
+                this.findCategoryByParentId(parentId, parentIdTem);
             }
         }
     }
