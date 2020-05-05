@@ -2,10 +2,12 @@ package com.dashboard.entity.account;
 
 import com.dashboard.common.entity.BaseDO;
 import com.dashboard.enums.account.AccountCategoryTypeEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -14,6 +16,7 @@ import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -70,9 +73,14 @@ public class AccountRecord extends BaseDO implements Serializable {
 
     /**
      * 消费日期：默认当天
+     *
+     * @JsonFormat 解决后台传递到前台时时间格式的问题
+     * @DateTimeFormat 接收前台传递的时间
      */
     @Column(name = "consumer_date")
     @ApiModelProperty("消费日期：默认当天")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Timestamp consumerDate;
 
     /**
