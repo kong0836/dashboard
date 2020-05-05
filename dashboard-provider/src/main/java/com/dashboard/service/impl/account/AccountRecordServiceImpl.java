@@ -72,6 +72,7 @@ public class AccountRecordServiceImpl implements AccountRecordService {
         Example.Criteria criteria = condition.createCriteria();
         criteria.andEqualTo("status", StatusEnum.ON.getCode());
         condition.orderBy("type").desc();
+        condition.orderBy("consumerDate").desc();
         List<AccountRecord> accountRecordList = accountRecordMapper.selectByCondition(condition);
 
         PageInfo<AccountRecord> pageInfo = new PageInfo(accountRecordList);
