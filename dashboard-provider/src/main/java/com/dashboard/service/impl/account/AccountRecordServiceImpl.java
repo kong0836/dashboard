@@ -3,12 +3,15 @@ package com.dashboard.service.impl.account;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.dashboard.common.entity.Page;
 import com.dashboard.common.enums.StatusEnum;
+import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountRecord;
 import com.dashboard.entity.account.AccountRecordPageInfo;
 import com.dashboard.entity.account.builder.AccountRecordBuilder;
 import com.dashboard.entity.system.Person;
+import com.dashboard.mapper.account.AccountCategoryMapper;
 import com.dashboard.mapper.account.AccountRecordMapper;
 import com.dashboard.mapper.permission.PersonMapper;
+import com.dashboard.service.account.AccountCategoryService;
 import com.dashboard.service.account.AccountRecordService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -18,6 +21,8 @@ import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,6 +40,9 @@ public class AccountRecordServiceImpl implements AccountRecordService {
 
     @Autowired
     private PersonMapper personMapper;
+
+    @Autowired
+    private AccountCategoryService accountCategoryService;
 
     @Override
     public void createAccountRecord(AccountRecord accountRecord) {
@@ -95,6 +103,16 @@ public class AccountRecordServiceImpl implements AccountRecordService {
 
     @Override
     public AccountRecord findAccountRecordById(String id) {
-        return accountRecordMapper.selectByPrimaryKey(id);
+        AccountRecord accountRecord = accountRecordMapper.selectByPrimaryKey(id);
+
+        // 上级分类
+        List<String> categoryIdTem = new ArrayList<>();
+        Long categoryId = accountRecord.getCategoryId();
+        categoryIdTem.add(categoryId.toString());
+        accountCategoryService.findCategoryByCategoryId(categoryId, categoryIdTem);
+        Collections.reverse(categoryIdTem);
+        accountRecord.setCategoryIdTem(categoryIdTem);
+
+        return accountRecord;
     }
 }

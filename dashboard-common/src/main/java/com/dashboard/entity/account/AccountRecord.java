@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author konglinghui
@@ -43,11 +44,6 @@ public class AccountRecord extends BaseDO implements Serializable {
     @ApiModelProperty("上级主键ID")
     private Long personId;
 
-    /**
-     * 用户名
-     */
-    @Transient
-    private String name;
 
     /**
      * 分类ID
@@ -99,4 +95,17 @@ public class AccountRecord extends BaseDO implements Serializable {
     @Column(name = "remark")
     @ApiModelProperty("备注")
     private String remark;
+
+    /**
+     * 用户名
+     */
+    @Transient
+    private String name;
+
+    /**
+     * 分类ID集合：从最高节点开始
+     */
+    @Transient
+    private List<String> categoryIdTem;
+
 }
