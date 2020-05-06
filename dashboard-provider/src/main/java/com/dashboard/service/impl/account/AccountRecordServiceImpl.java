@@ -75,7 +75,7 @@ public class AccountRecordServiceImpl implements AccountRecordService {
         condition.orderBy("consumerDate").desc();
         List<AccountRecord> accountRecordList = accountRecordMapper.selectByCondition(condition);
 
-        PageInfo<AccountRecord> pageInfo = new PageInfo(accountRecordList);
+        PageInfo<AccountRecord> pageInfo = new PageInfo<>(accountRecordList);
         List<AccountRecord> accountRecords = pageInfo.getList();
         if (CollectionUtils.isEmpty(accountRecords)) {
             return new Page<>();
