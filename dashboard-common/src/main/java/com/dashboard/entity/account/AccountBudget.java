@@ -48,13 +48,6 @@ public class AccountBudget extends BaseDO implements Serializable {
     private BigDecimal amount;
 
     /**
-     * 排序号
-     */
-    @Column(name = "order_no")
-    @ApiModelProperty("排序号")
-    private Integer orderNo;
-
-    /**
      * 状态: 0-启用 1-禁用
      */
     @Column(name = "status")
