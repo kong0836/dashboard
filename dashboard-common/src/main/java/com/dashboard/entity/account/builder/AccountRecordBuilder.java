@@ -4,6 +4,7 @@ import com.dashboard.entity.account.AccountRecord;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 /**
  * @author konglinghui
@@ -50,6 +51,26 @@ public class AccountRecordBuilder implements Serializable {
 
     public AccountRecordBuilder remark(String remark) {
         this.target.setRemark(remark);
+        return this;
+    }
+
+    public AccountRecordBuilder createTime(Timestamp createTime) {
+        this.target.setCreateTime(createTime);
+        return this;
+    }
+
+    public AccountRecordBuilder createBy(String createBy) {
+        this.target.setCreateBy(createBy);
+        return this;
+    }
+
+    public AccountRecordBuilder updateBy(String updateBy) {
+        this.target.setUpdateBy(updateBy);
+        return this;
+    }
+
+    public AccountRecordBuilder updateTime(Timestamp updateTime) {
+        this.target.setUpdateTime(updateTime);
         return this;
     }
 
