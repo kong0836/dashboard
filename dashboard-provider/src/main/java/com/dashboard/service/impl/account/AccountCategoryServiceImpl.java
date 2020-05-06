@@ -184,4 +184,13 @@ public class AccountCategoryServiceImpl implements AccountCategoryService {
 
         return accountCategoryMapper.selectByIds(categoryIds);
     }
+
+    @Override
+    public List<AccountCategory> findAllChildAccountCategoryList() {
+        Condition condition = new Condition(AccountCategory.class);
+        Example.Criteria criteria = condition.createCriteria();
+        criteria.andNotEqualTo("parentId", "0");
+
+        return accountCategoryMapper.selectByCondition(condition);
+    }
 }

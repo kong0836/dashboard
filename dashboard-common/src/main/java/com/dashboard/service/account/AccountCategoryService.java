@@ -77,4 +77,11 @@ public interface AccountCategoryService {
      * @return
      */
     List<AccountCategory> findAccountCategoryByIds(List<String> categoryIdList);
+
+    /**
+     * 查询所有非一级分类
+     *
+     * @return
+     */
+    List<AccountCategory> findAllChildAccountCategoryList();
 }
