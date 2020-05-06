@@ -65,4 +65,9 @@ public class AccountBudgetServiceImpl implements AccountBudgetService {
     public void insertAccountBudgetByBatch(List<AccountBudget> accountBudgetList) {
         accountBudgetMapper.insertByBatch(accountBudgetList);
     }
+
+    @Override
+    public void insertAccountBudget(AccountBudget accountBudget) {
+        accountBudgetMapper.insertSelective(accountBudget);
+    }
 }

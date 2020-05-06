@@ -56,4 +56,11 @@ public interface AccountBudgetService {
      * @param accountBudgetList
      */
     void insertAccountBudgetByBatch(List<AccountBudget> accountBudgetList);
+
+    /**
+     * 新增消费预算数据
+     *
+     * @param accountBudget
+     */
+    void insertAccountBudget(AccountBudget accountBudget);
 }

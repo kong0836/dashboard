@@ -1,16 +1,19 @@
 package com.dashboard.controller.account;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.dashboard.common.entity.Page;
+import com.dashboard.common.constants.DashboardConstants;
 import com.dashboard.common.enums.BaseResultEnum;
 import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
+import com.dashboard.entity.account.AccountBudget;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountCategoryPageInfo;
 import com.dashboard.entity.account.AccountCategoryTreeVO;
-import com.dashboard.entity.account.CategoryTreeVO;
 import com.dashboard.entity.account.AccountCategoryVO;
+import com.dashboard.entity.account.CategoryTreeVO;
+import com.dashboard.entity.account.builder.AccountBudgetBuilder;
+import com.dashboard.service.account.AccountBudgetService;
 import com.dashboard.service.account.AccountCategoryService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,6 +43,9 @@ public class AccountCategoryRestController {
 
     @Reference
     private AccountCategoryService accountCategoryService;
+
+    @Reference
+    private AccountBudgetService accountBudgetService;
 
     /**
      * 创建消费分类
@@ -59,6 +66,12 @@ public class AccountCategoryRestController {
         accountCategory.setUpdateTime(DateTimeUtils.currentTimeStamp());
 
         accountCategoryService.createAccountCategory(accountCategory);
+
+        if (!DashboardConstants.ZERO_LONG.equals(accountCategory.getParentId())) {
+            // 插入默认预算数据
+            AccountBudget accountBudget = this.buildAccountBudget(accountCategory);
+            accountBudgetService.insertAccountBudget(accountBudget);
+        }
 
         return RestResult.success();
     }
@@ -164,5 +177,27 @@ public class AccountCategoryRestController {
         List<CategoryTreeVO> accountCategoryTreeVOList = accountCategoryService.findAccountCategoryTreeList(type);
 
         return RestResult.success(accountCategoryTreeVOList);
+    }
+
+    /**
+     * 组装消费预算数据
+     *
+     * @param accountCategory
+     * @return
+     */
+    private AccountBudget buildAccountBudget(AccountCategory accountCategory) {
+        AccountBudget accountBudget = new AccountBudgetBuilder()
+                .id(SnowflakeIdWorker.generateId())
+                .categoryId(accountCategory.getId())
+                .status(StatusEnum.ON.getCode())
+                .amount(BigDecimal.ZERO)
+                .remark("")
+                .createTime(accountCategory.getCreateTime())
+                .createBy(accountCategory.getCreateBy())
+                .updateTime(accountCategory.getCreateTime())
+                .updateBy(accountCategory.getCreateBy())
+                .build();
+
+        return accountBudget;
     }
 }
