@@ -8,7 +8,10 @@ import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountBudget;
 import com.dashboard.entity.account.AccountBudgetPageInfo;
+import com.dashboard.entity.account.AccountCategory;
+import com.dashboard.entity.account.builder.AccountBudgetBuilder;
 import com.dashboard.service.account.AccountBudgetService;
+import com.dashboard.service.account.AccountCategoryService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author konglinghui
@@ -29,6 +36,27 @@ public class AccountBudgetRestController {
 
     @Reference
     private AccountBudgetService accountBudgetService;
+
+    @Reference
+    private AccountCategoryService accountCategoryService;
+
+    /**
+     * 初始化消费预算数据
+     *
+     * @return
+     */
+    @GetMapping("/initAccountBudget")
+    public RestResult initAccountBudget() {
+        // 查询所有非一级分类信息
+        List<AccountCategory> accountCategoryList = accountCategoryService.findAllChildAccountCategoryList();
+
+        // 组装数据
+        List<AccountBudget> accountBudgetList = this.buildAccountBudgetList(accountCategoryList);
+
+        accountBudgetService.insertAccountBudgetByBatch(accountBudgetList);
+
+        return RestResult.success();
+    }
 
     /**
      * 新建消费预算
@@ -111,5 +139,33 @@ public class AccountBudgetRestController {
         Page<AccountBudget> page = accountBudgetService.findAccountBudgetList(accountBudgetPageInfo);
 
         return RestResult.success(page);
+    }
+
+    /**
+     * 组装数据
+     *
+     * @param accountCategoryList
+     * @return
+     */
+    private List<AccountBudget> buildAccountBudgetList(List<AccountCategory> accountCategoryList) {
+        List<AccountBudget> accountBudgetList = new ArrayList<>();
+
+        accountCategoryList.forEach(accountCategory -> {
+            AccountBudget accountBudget = new AccountBudgetBuilder()
+                    .id(SnowflakeIdWorker.generateId())
+                    .categoryId(accountCategory.getId())
+                    .status(StatusEnum.ON.getCode())
+                    .amount(BigDecimal.ZERO)
+                    .remark("")
+                    .createTime(accountCategory.getCreateTime())
+                    .createBy(accountCategory.getCreateBy())
+                    .updateTime(accountCategory.getCreateTime())
+                    .updateBy(accountCategory.getCreateBy())
+                    .build();
+
+            accountBudgetList.add(accountBudget);
+        });
+
+        return accountBudgetList;
     }
 }

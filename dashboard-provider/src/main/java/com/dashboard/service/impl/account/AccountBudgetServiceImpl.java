@@ -7,9 +7,12 @@ import com.dashboard.entity.account.AccountBudget;
 import com.dashboard.entity.account.AccountBudgetPageInfo;
 import com.dashboard.entity.account.builder.AccountBudgetBuilder;
 import com.dashboard.mapper.account.AccountBudgetMapper;
+import com.dashboard.mapper.account.AccountCategoryMapper;
 import com.dashboard.service.account.AccountBudgetService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 /**
  * @author konglinghui
@@ -18,6 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  **/
 @Service
 public class AccountBudgetServiceImpl implements AccountBudgetService {
+
+    @Autowired
+    private AccountCategoryMapper accountCategoryMapper;
 
     @Autowired
     private AccountBudgetMapper accountBudgetMapper;
@@ -53,5 +59,10 @@ public class AccountBudgetServiceImpl implements AccountBudgetService {
         //TODO ++
 
         return null;
+    }
+
+    @Override
+    public void insertAccountBudgetByBatch(List<AccountBudget> accountBudgetList) {
+        accountBudgetMapper.insertByBatch(accountBudgetList);
     }
 }

@@ -4,6 +4,8 @@ import com.dashboard.common.entity.Page;
 import com.dashboard.entity.account.AccountBudget;
 import com.dashboard.entity.account.AccountBudgetPageInfo;
 
+import java.util.List;
+
 /**
  * @author konglinghui
  * @description 消费预算服务
@@ -43,8 +45,15 @@ public interface AccountBudgetService {
     /**
      * 查询消费预算列表
      *
-     * @return
      * @param accountBudgetPageInfo
+     * @return
      */
     Page<AccountBudget> findAccountBudgetList(AccountBudgetPageInfo accountBudgetPageInfo);
+
+    /**
+     * 新增消费预算数据
+     *
+     * @param accountBudgetList
+     */
+    void insertAccountBudgetByBatch(List<AccountBudget> accountBudgetList);
 }
