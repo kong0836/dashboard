@@ -54,7 +54,8 @@ CREATE TABLE account_budget (
     create_time datetime       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_by   varchar(32)    NOT NULL COMMENT '更新人ID',
     update_time datetime       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
-    PRIMARY KEY `account_budget_id` (id)
+    PRIMARY KEY `account_budget_id` (id),
+    UNIQUE INDEX `account_budget_category_id` (category_id)
 )
     ENGINE = InnoDB
     CHARACTER SET = utf8
