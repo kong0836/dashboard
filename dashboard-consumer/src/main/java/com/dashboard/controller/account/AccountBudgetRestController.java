@@ -99,6 +99,7 @@ public class AccountBudgetRestController {
      *
      * @param id
      * @return
+     * @deprecated
      */
     @GetMapping("/deleteAccountBudget/{id}")
     public RestResult deleteAccountBudget(@PathVariable String id) {
