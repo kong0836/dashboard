@@ -5,18 +5,22 @@ import com.dashboard.common.entity.Page;
 import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.entity.account.AccountBudget;
 import com.dashboard.entity.account.AccountBudgetPageInfo;
+import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.builder.AccountBudgetBuilder;
 import com.dashboard.mapper.account.AccountBudgetMapper;
 import com.dashboard.mapper.account.AccountCategoryMapper;
 import com.dashboard.service.account.AccountBudgetService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author konglinghui
@@ -54,7 +58,11 @@ public class AccountBudgetServiceImpl implements AccountBudgetService {
 
     @Override
     public AccountBudget findAccountBudgetById(String id) {
-        return accountBudgetMapper.selectByPrimaryKey(id);
+        AccountBudget accountBudget = accountBudgetMapper.selectByPrimaryKey(id);
+        AccountCategory accountCategory = accountCategoryMapper.selectByPrimaryKey(accountBudget.getCategoryId());
+        accountBudget.setCategoryName(accountCategory.getName());
+
+        return accountBudget;
     }
 
     @Override
@@ -70,6 +78,17 @@ public class AccountBudgetServiceImpl implements AccountBudgetService {
         PageInfo<AccountBudget> pageInfo = new PageInfo<>(accountBudgetList);
         Page<AccountBudget> page = new Page<>();
         BeanUtils.copyProperties(pageInfo, page);
+
+        // 根据categoryId获取categoryName
+        List<AccountBudget> list = page.getList();
+        List<String> categoryIdList = list.stream()
+                .map(accountBudget -> accountBudget.getCategoryId().toString())
+                .collect(Collectors.toList());
+        List<AccountCategory> accountCategoryList =
+                accountCategoryMapper.selectByIds(String.join(",", categoryIdList));
+        Map<Long, String> idNameMap = accountCategoryList.stream()
+                .collect(Collectors.toMap(AccountCategory::getId, AccountCategory::getName));
+        list.forEach(accountBudget -> accountBudget.setCategoryName(idNameMap.get(accountBudget.getCategoryId())));
 
         return page;
     }

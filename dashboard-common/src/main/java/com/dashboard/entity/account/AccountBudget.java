@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -60,4 +61,10 @@ public class AccountBudget extends BaseDO implements Serializable {
     @Column(name = "remark")
     @ApiModelProperty("备注")
     private String remark;
+
+    /**
+     * 分类名称
+     */
+    @Transient
+    private String categoryName;
 }
