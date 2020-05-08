@@ -119,8 +119,8 @@ public class AccountBudgetRestController {
      * @param id
      * @return
      */
-    @GetMapping("/findAccountBudget/{id}")
-    public RestResult findAccountBudget(@PathVariable String id) {
+    @GetMapping("/findAccountBudgetById/{id}")
+    public RestResult findAccountBudgetById(@PathVariable String id) {
         if (StringUtils.isBlank(id)) {
             return RestResult.fail(BaseResultEnum.PARAM_ERROR);
         }
