@@ -63,6 +63,7 @@ public class AccountBudgetRestController {
      *
      * @param accountBudget
      * @return
+     * @deprecated
      */
     @PostMapping("/createAccountBudget")
     public RestResult createAccountBudget(@RequestBody AccountBudget accountBudget) {
