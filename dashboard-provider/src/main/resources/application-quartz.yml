@@ -4,28 +4,26 @@ spring:
     properties:
       org:
         quartz:
+          # 调度器配置
           scheduler:
             # 默认或是自己改名字都行
-            instanceName: clusteredScheduler
+            instanceName: QuartzScheduler
             # 如果使用集群，instanceId必须唯一，设置成AUTO
             instanceId: AUTO
+          # 持久化配置
           jobStore:
+            # 存储方式使用JobStoreTX-数据库
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
             # 是否使用自己的配置文件
             useProperties: false
-            # 存储方式使用JobStoreTX，也就是数据库
-            class: org.quartz.impl.jdbcjobstore.JobStoreTX
             driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
             tablePrefix: QRTZ_
             # 是否使用集群（如果项目只部署到 一台服务器，就不用了）
             isClustered: false
             clusterCheckinInterval: 10000
+          # 线程池配置
           threadPool:
             class: org.quartz.simpl.SimpleThreadPool
             threadCount: 10
             threadPriority: 5
             threadsInheritContextClassLoaderOfInitializingThread: true
-    #数据库方式
-    job-store-type: jdbc
-    #初始化表结构
-    #jdbc:
-    #initialize-schema: never
