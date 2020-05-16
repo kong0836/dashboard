@@ -72,6 +72,13 @@ public class AccountRecord extends BaseDO implements Serializable {
     private String channel;
 
     /**
+     * 消费地点
+     */
+    @Column(name = "address")
+    @ApiModelProperty("消费地点")
+    private String address;
+
+    /**
      * 消费日期：默认当天
      *
      * @JsonFormat 解决后台传递到前台时时间格式的问题

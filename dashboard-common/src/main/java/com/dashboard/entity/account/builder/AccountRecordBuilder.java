@@ -39,6 +39,21 @@ public class AccountRecordBuilder implements Serializable {
         return this;
     }
 
+    public AccountRecordBuilder type(Integer type) {
+        this.target.setType(type);
+        return this;
+    }
+
+    public AccountRecordBuilder channel(String channel) {
+        this.target.setChannel(channel);
+        return this;
+    }
+
+    public AccountRecordBuilder address(String address) {
+        this.target.setAddress(address);
+        return this;
+    }
+
     public AccountRecordBuilder amount(BigDecimal amount) {
         this.target.setAmount(amount);
         return this;
