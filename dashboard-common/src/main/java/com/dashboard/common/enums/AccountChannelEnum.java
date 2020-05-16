@@ -23,9 +23,14 @@ public enum AccountChannelEnum {
     ALIPAY("ALIPAY", "支付宝"),
 
     /**
+     * 现金
+     */
+    CASH("CASH", "现金"),
+
+    /**
      * 其他
      */
-    OTHER("OTHER", "支付宝"),
+    OTHER("OTHER", "其他"),
 
     ;
 

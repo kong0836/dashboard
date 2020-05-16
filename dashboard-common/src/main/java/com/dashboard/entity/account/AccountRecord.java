@@ -1,6 +1,7 @@
 package com.dashboard.entity.account;
 
 import com.dashboard.common.entity.BaseDO;
+import com.dashboard.common.enums.AccountChannelEnum;
 import com.dashboard.enums.account.AccountCategoryTypeEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
@@ -65,10 +66,12 @@ public class AccountRecord extends BaseDO implements Serializable {
     private Integer type;
 
     /**
-     * 消费渠道：微信 支付宝 银行app 其他
+     * 消费渠道：微信、支付宝、现金、银行app、其他
+     *
+     * @see AccountChannelEnum
      */
     @Column(name = "channel")
-    @ApiModelProperty("消费渠道：微信 支付宝 银行app 其他")
+    @ApiModelProperty("消费渠道：微信、支付宝、现金、银行app、其他")
     private String channel;
 
     /**
