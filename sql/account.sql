@@ -70,9 +70,10 @@ DROP TABLE IF EXISTS account_total;
 
 CREATE TABLE account_total (
     id          bigint(20)     NOT NULL COMMENT '主键',
+    person_id   bigint(20)     NOT NULL COMMENT '用户主键',
     category_id bigint(20)     NOT NULL COMMENT '消费分类主键',
     type        tinyint(2)     NOT NULL COMMENT '汇总方式: 日、周、月、季度、半年、年',
-    amount      decimal(10, 2) NOT NULL COMMENT '预算金额: 单位(分)',
+    amount      decimal(10, 2) NOT NULL COMMENT '金额: 单位(分)',
     status      tinyint(2)     NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
     remark      varchar(32)    NULL     DEFAULT '' COMMENT '备注',
     create_by   varchar(32)    NOT NULL COMMENT '创建人ID',
