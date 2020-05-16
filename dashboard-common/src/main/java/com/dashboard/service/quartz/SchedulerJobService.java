@@ -14,6 +14,7 @@ public interface SchedulerJobService {
      * 添加定时任务
      *
      * @param schedulerJob 定时任务信息
+     * @throws SchedulerException
      */
     void insertJob(SchedulerJob schedulerJob) throws SchedulerException;
 
@@ -28,6 +29,7 @@ public interface SchedulerJobService {
      * 删除定时任务
      *
      * @param schedulerJob 定时任务信息
+     * @throws SchedulerException
      */
     void deleteJob(SchedulerJob schedulerJob) throws SchedulerException;
 
