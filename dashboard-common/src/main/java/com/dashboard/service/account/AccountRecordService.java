@@ -47,4 +47,11 @@ public interface AccountRecordService {
      * @return
      */
     AccountRecord findAccountRecordById(String id);
+
+    /**
+     * 初始化消费记录汇总数据
+     *
+     * @param personId
+     */
+    void initAccountTotal(String personId);
 }

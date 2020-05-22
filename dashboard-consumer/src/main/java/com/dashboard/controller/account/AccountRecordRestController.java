@@ -110,4 +110,18 @@ public class AccountRecordRestController {
 
         return RestResult.success(accountRecord);
     }
+
+    /**
+     * 初始化消费记录汇总数据
+     *
+     * @param personId
+     * @return
+     */
+    @GetMapping("/initAccountTotal/{personId}")
+    public RestResult initAccountTotal(@PathVariable String personId) {
+        //TODO ++
+        accountRecordService.initAccountTotal(personId);
+
+        return RestResult.success();
+    }
 }

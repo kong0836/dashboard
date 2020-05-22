@@ -8,19 +8,23 @@ import com.dashboard.entity.account.AccountRecord;
 import com.dashboard.entity.account.AccountRecordPageInfo;
 import com.dashboard.entity.account.builder.AccountRecordBuilder;
 import com.dashboard.entity.system.Person;
+import com.dashboard.enums.account.AccountCategoryTypeEnum;
 import com.dashboard.mapper.account.AccountCategoryMapper;
 import com.dashboard.mapper.account.AccountRecordMapper;
+import com.dashboard.mapper.analysis.AccountTotalMapper;
 import com.dashboard.mapper.permission.PersonMapper;
 import com.dashboard.service.account.AccountCategoryService;
 import com.dashboard.service.account.AccountRecordService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import javafx.scene.shape.Circle;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -39,10 +43,13 @@ public class AccountRecordServiceImpl implements AccountRecordService {
     private AccountRecordMapper accountRecordMapper;
 
     @Autowired
+    private AccountCategoryService accountCategoryService;
+
+    @Autowired
     private PersonMapper personMapper;
 
     @Autowired
-    private AccountCategoryService accountCategoryService;
+    private AccountTotalMapper accountTotalMapper;
 
     @Override
     public void createAccountRecord(AccountRecord accountRecord) {
@@ -127,5 +134,18 @@ public class AccountRecordServiceImpl implements AccountRecordService {
         accountRecord.setCategoryIdTem(categoryIdTem);
 
         return accountRecord;
+    }
+
+    @Override
+    public void initAccountTotal(String personId) {
+        //TODO ++
+
+        // 根据分类ID汇总消费支出数据
+        List<Map<String, BigDecimal>> accountTotalOut =
+                accountRecordMapper.selectTotalByPersonId(AccountCategoryTypeEnum.OUT.getType(), personId);
+
+        // 根据分类ID汇总消费收入数据
+        List<Map<String, BigDecimal>> accountTotalIn =
+                accountRecordMapper.selectTotalByPersonId(AccountCategoryTypeEnum.IN.getType(), personId);
     }
 }
