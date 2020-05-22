@@ -1,4 +1,4 @@
-package com.dashboard.entity.account;
+package com.dashboard.entity.analysis;
 
 import com.dashboard.common.entity.BaseDO;
 import com.dashboard.enums.account.AccountTotalTypeEnum;
@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 @Data
 @ApiModel
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "account_total")
+@Table(name = "analysis_account_total")
 public class AccountTotal extends BaseDO implements Serializable {
 
     private static final long serialVersionUID = -2236432232169514686L;

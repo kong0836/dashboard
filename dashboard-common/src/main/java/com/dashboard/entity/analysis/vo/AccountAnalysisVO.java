@@ -1,4 +1,4 @@
-package com.dashboard.entity.analysis;
+package com.dashboard.entity.analysis.vo;
 
 import com.dashboard.enums.analysis.AnalysisTypeEnum;
 import lombok.Data;
