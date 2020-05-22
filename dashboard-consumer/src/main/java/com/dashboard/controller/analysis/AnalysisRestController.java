@@ -3,7 +3,7 @@ package com.dashboard.controller.analysis;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.entity.analysis.vo.AccountAnalysisVO;
-import com.dashboard.service.analysis.AnalysisService;
+import com.dashboard.service.analysis.AccountTotalService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AnalysisRestController {
 
     @Reference
-    private AnalysisService analysisService;
+    private AccountTotalService accountTotalService;
 
-    @PostMapping("/findAnalysisAccount")
-    public RestResult findAnalysisAccount(@RequestBody AccountAnalysisVO accountAnalysisVO) {
+    @PostMapping("/findAccountTotal")
+    public RestResult findAccountTotal(@RequestBody AccountAnalysisVO accountAnalysisVO) {
 
+        //TODO ++
 
         return RestResult.success();
     }
