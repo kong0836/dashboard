@@ -25,6 +25,7 @@ public class AnalysisRestController {
     public RestResult findAccountTotal(@RequestBody AccountAnalysisVO accountAnalysisVO) {
 
         //TODO ++
+        accountTotalService.findAccountTotal(accountAnalysisVO);
 
         return RestResult.success();
     }
