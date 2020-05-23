@@ -4,7 +4,6 @@ DROP TABLE IF EXISTS analysis_account_total;
 CREATE TABLE analysis_account_total (
     id            bigint(20)     NOT NULL COMMENT '主键',
     person_id     bigint(20)     NOT NULL COMMENT '用户主键',
-    type          varchar(32)    NOT NULL COMMENT '汇总方式: 日、周、月、季度、半年、年',
     consumer_date date           NOT NULL COMMENT '消费日期：默认当天',
     amount        decimal(10, 2) NOT NULL COMMENT '金额: 单位(元)',
     status        tinyint(2)     NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
