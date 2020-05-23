@@ -15,22 +15,22 @@ public enum AccountTotalTypeEnum {
     /**
      * 日
      */
-    DAY("DAY", "日"),
+    CURRENT_DAY("DAY", "日"),
 
     /**
      * 周
      */
-    WEEK("WEEK", "周"),
+    CURRENT_WEEK("WEEK", "周"),
 
     /**
      * 月
      */
-    MONTH("MONTH", "月"),
+    CURRENT_MONTH("MONTH", "月"),
 
     /**
      * 季度
      */
-    QUARTER("QUARTER", "季度"),
+    CURRENT_QUARTER("QUARTER", "季度"),
 
     /**
      * 半年
@@ -40,8 +40,7 @@ public enum AccountTotalTypeEnum {
     /**
      * 年
      */
-    YEAR("YEAR", "年"),
-
+    CURRENT_YEAR("YEAR", "年"),
     ;
 
     private String type;

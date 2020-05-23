@@ -27,7 +27,6 @@ public class AccountTotal extends BaseDO implements Serializable {
 
     private static final long serialVersionUID = -2236432232169514686L;
 
-
     /**
      * 主键ID
      */
@@ -42,14 +41,6 @@ public class AccountTotal extends BaseDO implements Serializable {
     @ApiModelProperty("上级主键ID")
     private Long personId;
 
-
-    /**
-     * 分类ID
-     */
-    @Column(name = "category_id")
-    @ApiModelProperty("分类ID")
-    private Long categoryId;
-
     /**
      * 汇总方式: 日、周、月、季度、半年、年
      *
@@ -57,7 +48,7 @@ public class AccountTotal extends BaseDO implements Serializable {
      */
     @Column(name = "type")
     @ApiModelProperty("汇总方式: 日、周、月、季度、半年、年")
-    private Integer type;
+    private String type;
 
     /**
      * 金额: 单位(分)
