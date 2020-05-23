@@ -3,21 +3,24 @@ package com.dashboard.service.impl.account;
 import com.alibaba.dubbo.config.annotation.Service;
 import com.dashboard.common.entity.Page;
 import com.dashboard.common.enums.StatusEnum;
+import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountRecord;
 import com.dashboard.entity.account.AccountRecordPageInfo;
 import com.dashboard.entity.account.builder.AccountRecordBuilder;
+import com.dashboard.entity.analysis.AccountTotal;
+import com.dashboard.entity.analysis.builder.AccountTotalBuilder;
 import com.dashboard.entity.system.Person;
 import com.dashboard.enums.account.AccountCategoryTypeEnum;
-import com.dashboard.mapper.account.AccountCategoryMapper;
+import com.dashboard.enums.account.AccountTotalTypeEnum;
 import com.dashboard.mapper.account.AccountRecordMapper;
 import com.dashboard.mapper.analysis.AccountTotalMapper;
 import com.dashboard.mapper.permission.PersonMapper;
 import com.dashboard.service.account.AccountCategoryService;
 import com.dashboard.service.account.AccountRecordService;
+import com.dashboard.snowflake.SnowflakeIdWorker;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import javafx.scene.shape.Circle;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -138,14 +141,41 @@ public class AccountRecordServiceImpl implements AccountRecordService {
 
     @Override
     public void initAccountTotal(String personId) {
-        //TODO ++
+        List<AccountTotal> accountTotals = new ArrayList<>();
 
         // 根据分类ID汇总消费支出数据
-        List<Map<String, BigDecimal>> accountTotalOut =
+        List<Map<String, Object>> accountTotalOut =
                 accountRecordMapper.selectTotalByPersonId(AccountCategoryTypeEnum.OUT.getType(), personId);
+        this.buildAccountTotal(personId, accountTotalOut, accountTotals);
 
         // 根据分类ID汇总消费收入数据
-        List<Map<String, BigDecimal>> accountTotalIn =
+        List<Map<String, Object>> accountTotalIn =
                 accountRecordMapper.selectTotalByPersonId(AccountCategoryTypeEnum.IN.getType(), personId);
+        this.buildAccountTotal(personId, accountTotalIn, accountTotals);
+
+        accountTotalMapper.insertByBatch(accountTotals);
+    }
+
+    private List<AccountTotal> buildAccountTotal(String personId,
+                                                 List<Map<String, Object>> accountTotalList,
+                                                 List<AccountTotal> accountTotals) {
+        accountTotalList.forEach(accountTotalTem -> {
+            AccountTotal accountTotal = new AccountTotalBuilder()
+                    .id(SnowflakeIdWorker.generateId())
+                    .amount(new BigDecimal(accountTotalTem.get("amount").toString()))
+                    .createBy("0")
+                    .createTime(DateTimeUtils.currentTimeStamp())
+                    .personId(Long.valueOf(personId))
+                    .remark("系统生成")
+                    .status(StatusEnum.ON.getCode())
+                    .updateBy("0")
+                    .type(AccountTotalTypeEnum.CURRENT_DAY.getType())
+                    .updateTime(DateTimeUtils.currentTimeStamp())
+                    .build();
+
+            accountTotals.add(accountTotal);
+        });
+
+        return accountTotals;
     }
 }

@@ -21,7 +21,7 @@
           parameterType="map"
           resultType="map">
     SELECT ar.consumer_date          consumerDate,
-           IFNULL(SUM(ar.amount), 0) amountTotal
+           IFNULL(SUM(ar.amount), 0) amount
     FROM account.account_record ar
            LEFT JOIN account.account_category ac
                      ON ar.category_id = ac.id

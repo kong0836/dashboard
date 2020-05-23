@@ -4,7 +4,6 @@ import com.dashboard.common.mapper.BaseMapper;
 import com.dashboard.entity.account.AccountRecord;
 import org.apache.ibatis.annotations.Param;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +20,6 @@ public interface AccountRecordMapper extends BaseMapper<AccountRecord> {
      * @param personId 用户id
      * @return
      */
-    List<Map<String, BigDecimal>> selectTotalByPersonId(@Param("type") Integer type,
-                                                        @Param("personId") String personId);
+    List<Map<String, Object>> selectTotalByPersonId(@Param("type") Integer type,
+                                                    @Param("personId") String personId);
 }
