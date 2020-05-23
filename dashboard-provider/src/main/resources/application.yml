@@ -2,13 +2,13 @@ spring:
   # 多数据源
   permission:
     datasource:
-      url: jdbc:mysql://127.0.0.1:3306/permission?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+      url: jdbc:mysql://127.0.0.1:3306/permission?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
       username: root
       password: root
       type: com.alibaba.druid.pool.DruidDataSource
   account:
     datasource:
-      url: jdbc:mysql://127.0.0.1:3306/account?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+      url: jdbc:mysql://127.0.0.1:3306/account?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
       username: root
       password: root
       type: com.alibaba.druid.pool.DruidDataSource
