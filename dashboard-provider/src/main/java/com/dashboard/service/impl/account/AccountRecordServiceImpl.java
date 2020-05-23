@@ -81,7 +81,6 @@ public class AccountRecordServiceImpl implements AccountRecordService {
         Condition condition = new Condition(AccountRecord.class);
         Example.Criteria criteria = condition.createCriteria();
         criteria.andEqualTo("status", StatusEnum.ON.getCode());
-        condition.orderBy("type").desc();
         condition.orderBy("consumerDate").desc();
         List<AccountRecord> accountRecordList = accountRecordMapper.selectByCondition(condition);
 
@@ -156,6 +155,12 @@ public class AccountRecordServiceImpl implements AccountRecordService {
         accountTotalMapper.insertByBatch(accountTotals);
     }
 
+    /**
+     * @param personId
+     * @param accountTotalList
+     * @param accountTotals
+     * @return
+     */
     private List<AccountTotal> buildAccountTotal(String personId,
                                                  List<Map<String, Object>> accountTotalList,
                                                  List<AccountTotal> accountTotals) {
