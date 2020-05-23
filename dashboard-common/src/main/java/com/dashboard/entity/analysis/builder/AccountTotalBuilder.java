@@ -39,6 +39,11 @@ public class AccountTotalBuilder implements Serializable {
         return this;
     }
 
+    public AccountTotalBuilder type(Integer type) {
+        this.target.setType(type);
+        return this;
+    }
+
     public AccountTotalBuilder amount(BigDecimal amount) {
         this.target.setAmount(amount);
         return this;

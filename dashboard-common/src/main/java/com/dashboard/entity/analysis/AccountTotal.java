@@ -1,6 +1,7 @@
 package com.dashboard.entity.analysis;
 
 import com.dashboard.common.entity.BaseDO;
+import com.dashboard.enums.account.AccountCategoryTypeEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -54,6 +55,15 @@ public class AccountTotal extends BaseDO implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Timestamp consumerDate;
+
+    /**
+     * 消费类型: 1-收入 2-支出
+     *
+     * @see AccountCategoryTypeEnum
+     */
+    @Column(name = "type")
+    @ApiModelProperty("消费类型: 1-收入 2-支出")
+    private Integer type;
 
     /**
      * 金额: 单位(分)
