@@ -1,6 +1,7 @@
 package com.dashboard.date;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.Duration;
@@ -255,5 +256,16 @@ public final class DateTimeUtils implements Serializable {
      */
     public static Timestamp stringToTimestamp(String timestamp) {
         return Timestamp.valueOf(timestamp + " 00:00:00.0");
+    }
+
+    /**
+     * timestamp 转固定格式的字符串
+     * 默认为yyyy-MM-dd
+     *
+     * @param timestamp
+     * @return
+     */
+    public static String timestampToString(Timestamp timestamp) {
+        return timestamp.toLocalDateTime().format(DATE_FORMATTER);
     }
 }
