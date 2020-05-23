@@ -32,7 +32,7 @@ CREATE TABLE account_record (
     channel       varchar(16)    NOT NULL COMMENT '消费渠道：微信 支付宝 银行app 其他',
     address       varchar(32)    NOT NULL DEFAULT '' COMMENT '消费地点',
     type          tinyint(2)     NOT NULL COMMENT '消费类型: 1-收入 2-支出',
-    amount        decimal(10, 2) NOT NULL COMMENT '金额: 单位(分)',
+    amount        decimal(10, 2) NOT NULL COMMENT '金额: 单位(元)',
     status        tinyint(2)     NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
     remark        varchar(32)    NULL     DEFAULT '' COMMENT '备注',
     create_by     varchar(32)    NOT NULL COMMENT '创建人ID',
@@ -51,7 +51,7 @@ DROP TABLE IF EXISTS account_budget;
 CREATE TABLE account_budget (
     id          bigint(20)     NOT NULL COMMENT '主键',
     category_id bigint(20)     NOT NULL COMMENT '消费分类主键',
-    amount      decimal(10, 2) NOT NULL COMMENT '预算金额: 单位(分)',
+    amount      decimal(10, 2) NOT NULL COMMENT '预算金额: 单位(元)',
     status      tinyint(2)     NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
     remark      varchar(32)    NULL     DEFAULT '' COMMENT '备注',
     create_by   varchar(32)    NOT NULL COMMENT '创建人ID',
