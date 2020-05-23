@@ -12,7 +12,6 @@ import com.dashboard.entity.analysis.AccountTotal;
 import com.dashboard.entity.analysis.builder.AccountTotalBuilder;
 import com.dashboard.entity.system.Person;
 import com.dashboard.enums.account.AccountCategoryTypeEnum;
-import com.dashboard.enums.analysis.AnalysisTypeEnum;
 import com.dashboard.mapper.account.AccountRecordMapper;
 import com.dashboard.mapper.analysis.AccountTotalMapper;
 import com.dashboard.mapper.permission.PersonMapper;
@@ -28,6 +27,7 @@ import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -162,6 +162,7 @@ public class AccountRecordServiceImpl implements AccountRecordService {
         accountTotalList.forEach(accountTotalTem -> {
             AccountTotal accountTotal = new AccountTotalBuilder()
                     .id(SnowflakeIdWorker.generateId())
+                    .consumerDate(DateTimeUtils.stringToTimestamp(accountTotalTem.get("consumerDate").toString()))
                     .amount(new BigDecimal(accountTotalTem.get("amount").toString()))
                     .createBy("0")
                     .createTime(DateTimeUtils.currentTimeStamp())
@@ -169,7 +170,6 @@ public class AccountRecordServiceImpl implements AccountRecordService {
                     .remark("系统生成")
                     .status(StatusEnum.ON.getCode())
                     .updateBy("0")
-                    .type(AnalysisTypeEnum.CURRENT_DAY.getType())
                     .updateTime(DateTimeUtils.currentTimeStamp())
                     .build();
 
