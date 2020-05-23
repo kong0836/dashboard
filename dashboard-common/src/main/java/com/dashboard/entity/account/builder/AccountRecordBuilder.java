@@ -1,6 +1,7 @@
 package com.dashboard.entity.account.builder;
 
 import com.dashboard.entity.account.AccountRecord;
+import com.dashboard.entity.analysis.builder.AccountTotalBuilder;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -51,6 +52,11 @@ public class AccountRecordBuilder implements Serializable {
 
     public AccountRecordBuilder address(String address) {
         this.target.setAddress(address);
+        return this;
+    }
+
+    public AccountRecordBuilder consumerDate(Timestamp consumerDate) {
+        this.target.setConsumerDate(consumerDate);
         return this;
     }
 
