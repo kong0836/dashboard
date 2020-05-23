@@ -1,7 +1,7 @@
 package com.dashboard.entity.analysis;
 
 import com.dashboard.common.entity.BaseDO;
-import com.dashboard.enums.account.AccountTotalTypeEnum;
+import com.dashboard.enums.analysis.AnalysisTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -44,7 +44,7 @@ public class AccountTotal extends BaseDO implements Serializable {
     /**
      * 汇总方式: 日、周、月、季度、半年、年
      *
-     * @see AccountTotalTypeEnum
+     * @see AnalysisTypeEnum
      */
     @Column(name = "type")
     @ApiModelProperty("汇总方式: 日、周、月、季度、半年、年")

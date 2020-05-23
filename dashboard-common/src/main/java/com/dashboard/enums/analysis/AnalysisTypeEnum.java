@@ -5,36 +5,45 @@ import lombok.Getter;
 
 /**
  * @author konglinghui
- * @description 统计分析查询类型
- * @date 2020/5/22 18:58
+ * @description 汇总方式: 日、周、月、季度、半年、年
+ * @date 2020/4/27 22:43
  **/
 @Getter
 @AllArgsConstructor
 public enum AnalysisTypeEnum {
 
     /**
-     * 本周
+     * 日
      */
-    CURRENT_WEEK("CURRENT_WEEK", "本周"),
+    CURRENT_DAY("DAY", "日"),
 
     /**
-     * 本月
+     * 周
      */
-    CURRENT_MONTH("CURRENT_MONTH", "本月"),
+    CURRENT_WEEK("WEEK", "周"),
 
     /**
-     * 本年
+     * 月
      */
-    CURRENT_YEAR("CURRENT_YEAR", "本年"),
+    CURRENT_MONTH("MONTH", "月"),
+
+    /**
+     * 季度
+     */
+    CURRENT_QUARTER("QUARTER", "季度"),
+
+    /**
+     * 半年
+     */
+    HALF_YEAR("HALF_YEAR", "半年"),
+
+    /**
+     * 年
+     */
+    CURRENT_YEAR("YEAR", "年"),
     ;
 
-    /**
-     * 类型
-     */
-    private String code;
+    private String type;
 
-    /**
-     * 名称
-     */
     private String name;
 }
