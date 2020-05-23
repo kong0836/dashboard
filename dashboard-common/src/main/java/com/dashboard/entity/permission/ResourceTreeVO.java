@@ -3,6 +3,7 @@ package com.dashboard.entity.permission;
 import com.dashboard.common.entity.BaseTreeVO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import java.io.Serializable;
@@ -14,6 +15,7 @@ import java.util.List;
  * @date 2020/4/5 9:53
  **/
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class ResourceTreeVO extends BaseTreeVO<ResourceTreeVO> implements Serializable {
 
     private static final long serialVersionUID = 5305629264937763111L;
