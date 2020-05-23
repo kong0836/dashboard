@@ -20,7 +20,8 @@
   <select id="selectTotalByPersonId"
           parameterType="map"
           resultType="map">
-    SELECT ar.consumer_date          consumerDate,
+    SELECT ar.type                   type,
+           ar.consumer_date          consumerDate,
            IFNULL(SUM(ar.amount), 0) amount
     FROM account.account_record ar
            LEFT JOIN account.account_category ac

@@ -163,6 +163,7 @@ public class AccountRecordServiceImpl implements AccountRecordService {
             AccountTotal accountTotal = new AccountTotalBuilder()
                     .id(SnowflakeIdWorker.generateId())
                     .consumerDate(DateTimeUtils.stringToTimestamp(accountTotalTem.get("consumerDate").toString()))
+                    .type(Integer.valueOf(accountTotalTem.get("type").toString()))
                     .amount(new BigDecimal(accountTotalTem.get("amount").toString()))
                     .createBy("0")
                     .createTime(DateTimeUtils.currentTimeStamp())
