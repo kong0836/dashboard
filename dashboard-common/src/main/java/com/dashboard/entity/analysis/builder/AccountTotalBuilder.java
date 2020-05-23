@@ -34,8 +34,8 @@ public class AccountTotalBuilder implements Serializable {
         return this;
     }
 
-    public AccountTotalBuilder type(String type) {
-        this.target.setType(type);
+    public AccountTotalBuilder consumerDate(Timestamp consumerDate) {
+        this.target.setConsumerDate(consumerDate);
         return this;
     }
 

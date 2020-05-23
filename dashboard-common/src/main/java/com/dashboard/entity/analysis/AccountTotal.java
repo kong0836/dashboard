@@ -1,17 +1,19 @@
 package com.dashboard.entity.analysis;
 
 import com.dashboard.common.entity.BaseDO;
-import com.dashboard.enums.analysis.AnalysisTypeEnum;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 /**
  * @author konglinghui
@@ -42,13 +44,16 @@ public class AccountTotal extends BaseDO implements Serializable {
     private Long personId;
 
     /**
-     * 汇总方式: 日、周、月、季度、半年、年
+     * 消费日期：默认当天
      *
-     * @see AnalysisTypeEnum
+     * @JsonFormat 解决后台传递到前台时时间格式的问题
+     * @DateTimeFormat 接收前台传递的时间
      */
-    @Column(name = "type")
-    @ApiModelProperty("汇总方式: 日、周、月、季度、半年、年")
-    private String type;
+    @Column(name = "consumer_date")
+    @ApiModelProperty("消费日期：默认当天")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Timestamp consumerDate;
 
     /**
      * 金额: 单位(分)
