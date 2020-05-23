@@ -104,8 +104,16 @@ public final class DateTimeUtils implements Serializable {
         return LocalDateTime.now().format(DATETIME_FORMATTER);
     }
 
+    public static LocalDate parseLocalDate(String dateStr) {
+        return LocalDate.parse(dateStr, DATE_FORMATTER);
+    }
+
     public static LocalDate parseLocalDate(String dateStr, String pattern) {
         return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
+    }
+
+    public static LocalDateTime parseLocalDateTime(String dateTimeStr) {
+        return LocalDateTime.parse(dateTimeStr, DATETIME_FORMATTER);
     }
 
     public static LocalDateTime parseLocalDateTime(String dateTimeStr, String pattern) {
@@ -237,5 +245,15 @@ public final class DateTimeUtils implements Serializable {
      */
     public static LocalDate stringToDate(String time) {
         return LocalDate.parse(time, DATE_FORMATTER);
+    }
+
+    /**
+     * 字符串转timestamp
+     *
+     * @param timestamp 格式：yyyy-MM-dd
+     * @return
+     */
+    public static Timestamp stringToTimestamp(String timestamp) {
+        return Timestamp.valueOf(timestamp + " 00:00:00.0");
     }
 }
