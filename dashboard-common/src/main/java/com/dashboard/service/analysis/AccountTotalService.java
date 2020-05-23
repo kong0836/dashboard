@@ -1,6 +1,7 @@
 package com.dashboard.service.analysis;
 
 import com.dashboard.entity.analysis.vo.AccountAnalysisVO;
+import com.github.abel533.echarts.Option;
 
 /**
  * @author konglinghui
@@ -13,6 +14,7 @@ public interface AccountTotalService {
      * 查询消费记录统计数据
      *
      * @param accountAnalysisVO
+     * @return
      */
-    void findAccountTotal(AccountAnalysisVO accountAnalysisVO);
+    Option findAccountTotal(AccountAnalysisVO accountAnalysisVO);
 }
