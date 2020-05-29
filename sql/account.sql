@@ -4,7 +4,7 @@
 CREATE TABLE account_category (
     id          bigint(20)  NOT NULL COMMENT '主键',
     parent_id   bigint(20)  NOT NULL COMMENT '上级分类主键',
-    name        varchar(32) NOT NULL COMMENT '分类名称',
+    name        varchar(4)  NOT NULL COMMENT '分类名称',
     type        tinyint(2)  NOT NULL COMMENT '消费类型: 1-收入 2-支出',
     icon        varchar(32) NOT NULL COMMENT '图标',
     order_no    int(10)     NOT NULL DEFAULT 0 COMMENT '排序号',
@@ -22,7 +22,7 @@ CREATE TABLE account_category (
     COMMENT = '消费分类表';
 
 -- 消费记录表
-DROP TABLE IF EXISTS account_record;
+# DROP TABLE IF EXISTS account_record;
 
 CREATE TABLE account_record (
     id            bigint(20)     NOT NULL COMMENT '主键',
@@ -46,7 +46,7 @@ CREATE TABLE account_record (
     COMMENT = '消费记录表';
 
 -- 消费预算表
-DROP TABLE IF EXISTS account_budget;
+# DROP TABLE IF EXISTS account_budget;
 
 CREATE TABLE account_budget (
     id          bigint(20)     NOT NULL COMMENT '主键',
