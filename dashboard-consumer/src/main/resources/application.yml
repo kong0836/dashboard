@@ -1,21 +1,17 @@
 spring:
-  # 模板引擎配置
-  #  thymeleaf:
-  #    prefix: classpath:/templates/
-  #    suffix: .js
   # 静态资源配置
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/, classpath:/public/
+#  resources:
+#    static-locations: classpath:templates/
   # 多数据源
   permission:
     datasource:
-      url: jdbc:mysql://127.0.0.1:3306/permission?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://127.0.0.1:3306/permission?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
       username: root
       password: root
       type: com.alibaba.druid.pool.DruidDataSource
   account:
     datasource:
-      url: jdbc:mysql://127.0.0.1:3306/account?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://127.0.0.1:3306/account?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
       username: root
       password: root
       type: com.alibaba.druid.pool.DruidDataSource
@@ -52,6 +48,7 @@ spring:
       max-connections: 10
       # 空闲的连接过期时间，默认为30秒
       idle-timeout: 30000
+
 
 # dubbo
 dubbo:
