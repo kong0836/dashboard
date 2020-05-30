@@ -16,7 +16,7 @@ public interface SchedulerJobService {
      * @param schedulerJob 定时任务信息
      * @throws SchedulerException
      */
-    void insertJob(SchedulerJob schedulerJob) throws SchedulerException;
+    void insertJob(SchedulerJob schedulerJob) throws SchedulerException, ClassNotFoundException;
 
     /**
      * 更新定时任务

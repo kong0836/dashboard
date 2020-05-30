@@ -37,7 +37,7 @@ public class SchedulerJob implements Serializable {
     /**
      * 需要执行的job.class
      */
-    private Class jobClass;
+    private String jobClass;
 
     /**
      * cron表达式

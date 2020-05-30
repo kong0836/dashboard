@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.dashboard.entity.quartz.SchedulerJob;
 import com.dashboard.service.quartz.SchedulerJobService;
 import org.quartz.CronScheduleBuilder;
+import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.JobKey;
@@ -29,8 +30,8 @@ public class SchedulerJobServiceImpl implements SchedulerJobService {
     private Scheduler scheduler;
 
     @Override
-    public void insertJob(SchedulerJob schedulerJob) throws SchedulerException {
-        JobDetail jobDetail = JobBuilder.newJob(schedulerJob.getJobClass())
+    public void insertJob(SchedulerJob schedulerJob) throws SchedulerException, ClassNotFoundException {
+        JobDetail jobDetail = JobBuilder.newJob((Class<? extends Job>) Class.forName(schedulerJob.getJobClass()))
                 .withIdentity(schedulerJob.getJobName(), schedulerJob.getJobGroup())
                 .build();
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(schedulerJob.getCron());

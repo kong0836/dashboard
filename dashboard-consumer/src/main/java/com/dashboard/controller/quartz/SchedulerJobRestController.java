@@ -31,7 +31,8 @@ public class SchedulerJobRestController {
      * @throws SchedulerException
      */
     @PostMapping("/createSchedulerJob")
-    public RestResult createSchedulerJob(@RequestBody SchedulerJob schedulerJob) throws SchedulerException {
+    public RestResult createSchedulerJob(@RequestBody SchedulerJob schedulerJob)
+            throws SchedulerException, ClassNotFoundException {
         //TODO ++
         schedulerJobService.insertJob(schedulerJob);
 
