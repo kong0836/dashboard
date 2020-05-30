@@ -152,5 +152,27 @@ CREATE TABLE QRTZ_LOCKS (
     PRIMARY KEY (SCHED_NAME, LOCK_NAME)
 );
 
+-- 定时任务信息表
+DROP TABLE IF EXISTS qrtz_schedule_job;
+CREATE TABLE qrtz_schedule_job (
+    id            bigint(20)  NOT NULL COMMENT '主键',
+    job_name      varchar(8)  NOT NULL COMMENT 'job名称',
+    job_group     varchar(8)  NOT NULL COMMENT 'job分组名称',
+    trigger_name  varchar(8)  NOT NULL COMMENT '触发器名称',
+    trigger_group varchar(8)  NOT NULL COMMENT '触发器分组名称',
+    job_class     varchar(32) NOT NULL COMMENT '需要执行的job.class',
+    cron          varchar(16) NOT NULL COMMENT 'cron表达式',
+    remark        varchar(32) NOT NULL COMMENT '备注',
+    status        tinyint(2)  NOT NULL DEFAULT 0 COMMENT '状态: 0-启用 1-禁用',
+    create_by     varchar(32) NOT NULL DEFAULT '0' COMMENT '创建人ID',
+    create_time   datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_by     varchar(32) NOT NULL DEFAULT '0' COMMENT '更新人ID',
+    update_time   datetime    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+    PRIMARY KEY `job_id` (id),
+    UNIQUE INDEX (job_name)
+)
+    ENGINE = InnoDB
+    CHARACTER SET = utf8
+    COMMENT = '定时任务信息表';
 
 COMMIT;

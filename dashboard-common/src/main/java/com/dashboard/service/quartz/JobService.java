@@ -8,7 +8,7 @@ import org.quartz.SchedulerException;
  * @description 定时任务服务
  * @date 2020/5/14 19:20
  **/
-public interface SchedulerJobService {
+public interface JobService {
 
     /**
      * 添加定时任务

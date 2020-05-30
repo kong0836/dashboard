@@ -3,7 +3,7 @@ package com.dashboard.controller.quartz;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.entity.quartz.SchedulerJob;
-import com.dashboard.service.quartz.SchedulerJobService;
+import com.dashboard.service.quartz.JobService;
 import org.quartz.SchedulerException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SchedulerJobRestController {
 
     @Reference
-    private SchedulerJobService schedulerJobService;
+    private JobService jobService;
 
     /**
      * 创建定时任务
@@ -34,7 +34,8 @@ public class SchedulerJobRestController {
     public RestResult createSchedulerJob(@RequestBody SchedulerJob schedulerJob)
             throws SchedulerException, ClassNotFoundException {
         //TODO ++
-        schedulerJobService.insertJob(schedulerJob);
+        // 调用定时任务
+        jobService.insertJob(schedulerJob);
 
         return RestResult.success();
     }
@@ -48,7 +49,7 @@ public class SchedulerJobRestController {
     @PostMapping("/updateSchedulerJob")
     public RestResult updateSchedulerJob(@RequestBody SchedulerJob schedulerJob) {
         //TODO ++
-        schedulerJobService.updateJob(schedulerJob);
+        jobService.updateJob(schedulerJob);
 
         return RestResult.success();
     }
@@ -63,7 +64,7 @@ public class SchedulerJobRestController {
     @PostMapping("/deleteSchedulerJob")
     public RestResult deleteSchedulerJob(@RequestBody SchedulerJob schedulerJob) throws SchedulerException {
         //TODO ++
-        schedulerJobService.deleteJob(schedulerJob);
+        jobService.deleteJob(schedulerJob);
 
         return RestResult.success();
     }
@@ -76,7 +77,7 @@ public class SchedulerJobRestController {
      */
     @GetMapping("/findSchedulerList")
     public RestResult findSchedulerList() throws SchedulerException {
-        schedulerJobService.selectJobList();
+        jobService.selectJobList();
 
         return RestResult.success();
     }
