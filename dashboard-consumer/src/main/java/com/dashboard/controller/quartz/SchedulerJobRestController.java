@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.result.RestResult;
 import com.dashboard.entity.quartz.SchedulerJob;
 import com.dashboard.service.quartz.JobService;
+import com.dashboard.service.quartz.SchedulerJobService;
 import org.quartz.SchedulerException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class SchedulerJobRestController {
 
     @Reference
+    private SchedulerJobService schedulerJobService;
+
+    @Reference
     private JobService jobService;
 
     /**
@@ -33,7 +37,7 @@ public class SchedulerJobRestController {
     @PostMapping("/createSchedulerJob")
     public RestResult createSchedulerJob(@RequestBody SchedulerJob schedulerJob)
             throws SchedulerException, ClassNotFoundException {
-        //TODO ++
+        schedulerJobService.insertSchedulerJob(schedulerJob);
         // 调用定时任务
         jobService.insertJob(schedulerJob);
 
@@ -49,6 +53,7 @@ public class SchedulerJobRestController {
     @PostMapping("/updateSchedulerJob")
     public RestResult updateSchedulerJob(@RequestBody SchedulerJob schedulerJob) {
         //TODO ++
+        schedulerJobService.updateSchedulerJob(schedulerJob);
         jobService.updateJob(schedulerJob);
 
         return RestResult.success();
