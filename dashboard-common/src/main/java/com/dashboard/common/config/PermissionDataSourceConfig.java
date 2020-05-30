@@ -26,7 +26,9 @@ import javax.sql.DataSource;
  **/
 @Configuration
 @MapperScan(
-        basePackages = {"com.dashboard.mapper.permission", "com.dashboard.mapper.system"},
+        basePackages = {"com.dashboard.mapper.permission",
+                "com.dashboard.mapper.system",
+                "com.dashboard.mapper.quartz"},
         sqlSessionTemplateRef = "permissionSqlSessionTemplate")
 public class PermissionDataSourceConfig {
 
