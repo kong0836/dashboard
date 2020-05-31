@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author konglinghui
- * @description 资源实体-编辑使用
+ * @description 资源实体【编辑使用】
  * @date 2020/4/10 17:54
  **/
 @Data

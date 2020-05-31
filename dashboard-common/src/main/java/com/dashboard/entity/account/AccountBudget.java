@@ -1,7 +1,6 @@
 package com.dashboard.entity.account;
 
 import com.dashboard.common.entity.BaseDO;
-import com.dashboard.enums.account.AccountCategoryTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,18 +9,20 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @author konglinghui
- * @description 消费分类实体
+ * @description 消费预算实体
  * @date 2020/4/18 21:35
  **/
 @Data
 @ApiModel
 @EqualsAndHashCode(callSuper = false)
-@Table(name = "account_category")
-public class AccountCategory extends BaseDO implements Serializable {
+@Table(name = "account_budget")
+public class AccountBudget extends BaseDO implements Serializable {
 
     private static final long serialVersionUID = 5274555393847892683L;
 
@@ -34,41 +35,18 @@ public class AccountCategory extends BaseDO implements Serializable {
     private Long id;
 
     /**
-     * 上级主键ID
+     * 分类ID
      */
-    @Column(name = "parent_id")
-    @ApiModelProperty("上级主键ID")
-    private Long parentId;
+    @Column(name = "category_id")
+    @ApiModelProperty("分类ID")
+    private Long categoryId;
 
     /**
-     * 分类名称
+     * 金额: 单位(分)
      */
-    @Column(name = "name")
-    @ApiModelProperty("分类名称")
-    private String name;
-
-    /**
-     * 消费类型: 1-收入 2-支出
-     *
-     * @see AccountCategoryTypeEnum
-     */
-    @Column(name = "type")
-    @ApiModelProperty("消费类型: 1-收入 2-支出")
-    private Integer type;
-
-    /**
-     * 图标
-     */
-    @Column(name = "icon")
-    @ApiModelProperty("图标")
-    private String icon;
-
-    /**
-     * 排序号
-     */
-    @Column(name = "order_no")
-    @ApiModelProperty("排序号")
-    private Integer orderNo;
+    @Column(name = "amount")
+    @ApiModelProperty("金额: 单位(分)")
+    private BigDecimal amount;
 
     /**
      * 状态: 0-启用 1-禁用
@@ -83,4 +61,10 @@ public class AccountCategory extends BaseDO implements Serializable {
     @Column(name = "remark")
     @ApiModelProperty("备注")
     private String remark;
+
+    /**
+     * 分类名称
+     */
+    @Transient
+    private String categoryName;
 }

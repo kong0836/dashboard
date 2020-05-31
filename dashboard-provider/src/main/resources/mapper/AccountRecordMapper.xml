@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dashboard.mapper.account.AccountRecordMapper">
+  <sql id="base_column">
+    id,
+    person_id,
+    category_id,
+    consumer_date,
+    type,
+    amount,
+    status,
+    remark,
+    create_by,
+    create_time,
+    update_by,
+    update_time
+  </sql>
+
+  <select id="selectTotalByPersonId"
+          parameterType="map"
+          resultType="map">
+    SELECT ar.type                   type,
+           ar.consumer_date          consumerDate,
+           IFNULL(SUM(ar.amount), 0) amount
+    FROM account.account_record ar
+           LEFT JOIN account.account_category ac
+                     ON ar.category_id = ac.id
+    WHERE ac.type = #{type}
+      AND ar.person_id = #{personId}
+    GROUP BY ar.consumer_date
+  </select>
+</mapper>

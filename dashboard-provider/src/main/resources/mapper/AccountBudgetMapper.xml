@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dashboard.mapper.account.AccountBudgetMapper">
+  <sql id="base_column">
+    id,
+    category_id,
+    amount,
+    status,
+    remark,
+    create_by,
+    create_time,
+    update_by,
+    update_time
+  </sql>
+  <insert id="insertByBatch"
+          parameterType="list">
+    INSERT INTO account_budget
+    (<include refid="base_column"/>)
+    VALUES
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.id},
+      #{item.categoryId},
+      #{item.amount},
+      #{item.status},
+      #{item.remark},
+      #{item.createBy},
+      #{item.createTime},
+      #{item.updateBy},
+      #{item.updateTime}
+      )
+    </foreach>
+  </insert>
+</mapper>

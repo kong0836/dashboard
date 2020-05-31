@@ -1,6 +1,7 @@
 package com.dashboard.date;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
 import java.time.Duration;
@@ -25,6 +26,28 @@ public final class DateTimeUtils implements Serializable {
     private static final long serialVersionUID = 5186750118608821663L;
 
     private DateTimeUtils() {
+    }
+
+    /**
+     * 获取某年的开始时间的0时0分0秒
+     *
+     * @return
+     */
+    public static Timestamp getFirstDateTimeOfYear(int year) {
+        // int year = LocalDateTime.now().getYear();
+        LocalDateTime localDateTime = LocalDateTime.of(year, 1, 1, 0, 0, 0);
+        return Timestamp.valueOf(localDateTime);
+    }
+
+    /**
+     * 获取某年的最后一天的最后一秒
+     *
+     * @return
+     */
+    public static Timestamp getLastDateTimeOfYear(int year) {
+        // int year = LocalDateTime.now().getYear();
+        LocalDateTime localDateTime = LocalDateTime.of(year, 12, 31, 23, 59, 59);
+        return Timestamp.valueOf(localDateTime);
     }
 
     /**
@@ -82,8 +105,16 @@ public final class DateTimeUtils implements Serializable {
         return LocalDateTime.now().format(DATETIME_FORMATTER);
     }
 
+    public static LocalDate parseLocalDate(String dateStr) {
+        return LocalDate.parse(dateStr, DATE_FORMATTER);
+    }
+
     public static LocalDate parseLocalDate(String dateStr, String pattern) {
         return LocalDate.parse(dateStr, DateTimeFormatter.ofPattern(pattern));
+    }
+
+    public static LocalDateTime parseLocalDateTime(String dateTimeStr) {
+        return LocalDateTime.parse(dateTimeStr, DATETIME_FORMATTER);
     }
 
     public static LocalDateTime parseLocalDateTime(String dateTimeStr, String pattern) {
@@ -215,5 +246,26 @@ public final class DateTimeUtils implements Serializable {
      */
     public static LocalDate stringToDate(String time) {
         return LocalDate.parse(time, DATE_FORMATTER);
+    }
+
+    /**
+     * 字符串转timestamp
+     *
+     * @param timestamp 格式：yyyy-MM-dd
+     * @return
+     */
+    public static Timestamp stringToTimestamp(String timestamp) {
+        return Timestamp.valueOf(timestamp + " 00:00:00.0");
+    }
+
+    /**
+     * timestamp 转固定格式的字符串
+     * 默认为yyyy-MM-dd
+     *
+     * @param timestamp
+     * @return
+     */
+    public static String timestampToString(Timestamp timestamp) {
+        return timestamp.toLocalDateTime().format(DATE_FORMATTER);
     }
 }

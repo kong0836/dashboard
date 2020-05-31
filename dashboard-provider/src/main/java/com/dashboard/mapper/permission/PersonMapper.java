@@ -1,4 +1,4 @@
-package com.dashboard.mapper.system;
+package com.dashboard.mapper.permission;
 
 import com.dashboard.common.mapper.BaseMapper;
 import com.dashboard.entity.system.Person;

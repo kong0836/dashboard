@@ -1,11 +1,7 @@
 spring:
-  # 模板引擎配置
-  #  thymeleaf:
-  #    prefix: classpath:/templates/
-  #    suffix: .js
   # 静态资源配置
-  resources:
-    static-locations: classpath:/META-INF/resources/,classpath:/resources/, classpath:/static/, classpath:/public/
+#  resources:
+#    static-locations: classpath:templates/
   # 多数据源
   permission:
     datasource:
@@ -53,6 +49,7 @@ spring:
       # 空闲的连接过期时间，默认为30秒
       idle-timeout: 30000
 
+
 # dubbo
 dubbo:
   application:
@@ -61,4 +58,5 @@ dubbo:
     address: zookeeper://127.0.0.1:2181
     protocol: zookeeper
   consumer:
-    timeout: 3000
+    timeout: 6000
+    retries: 5
