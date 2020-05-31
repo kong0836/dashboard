@@ -1,11 +1,11 @@
-package com.dashboard.service.impl.system;
+package com.dashboard.service.impl.permission;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.dashboard.common.entity.Page;
 import com.dashboard.entity.system.Role;
 import com.dashboard.entity.system.RolePageInfo;
-import com.dashboard.mapper.system.RoleMapper;
-import com.dashboard.service.system.RoleService;
+import com.dashboard.mapper.permission.RoleMapper;
+import com.dashboard.service.permission.RoleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;

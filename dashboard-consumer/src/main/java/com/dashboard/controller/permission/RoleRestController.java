@@ -1,4 +1,4 @@
-package com.dashboard.controller.system;
+package com.dashboard.controller.permission;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.entity.Page;
@@ -7,7 +7,7 @@ import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.system.Role;
 import com.dashboard.entity.system.RolePageInfo;
-import com.dashboard.service.system.RoleService;
+import com.dashboard.service.permission.RoleService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.Objects;
 
 /**

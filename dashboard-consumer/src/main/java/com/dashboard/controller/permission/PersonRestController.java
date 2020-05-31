@@ -1,4 +1,4 @@
-package com.dashboard.controller.system;
+package com.dashboard.controller.permission;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.dashboard.common.entity.Page;
@@ -7,16 +7,13 @@ import com.dashboard.common.result.RestResult;
 import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.system.Person;
 import com.dashboard.entity.system.PersonPageInfo;
-import com.dashboard.service.system.PersonService;
+import com.dashboard.service.permission.PersonService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -114,5 +111,17 @@ public class PersonRestController {
         Person person = personService.findPersonById(id);
 
         return RestResult.success(person);
+    }
+
+    /**
+     * 查询所有人员信息
+     *
+     * @return
+     */
+    @GetMapping("/findPersonListAll")
+    public RestResult findPersonListAll() {
+        List<Person> personList = personService.findPersonListAll();
+
+        return RestResult.success(personList);
     }
 }

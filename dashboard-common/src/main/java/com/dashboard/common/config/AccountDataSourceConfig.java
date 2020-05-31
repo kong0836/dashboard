@@ -25,7 +25,8 @@ import javax.sql.DataSource;
  * @date 2020/4/19 10:09
  **/
 @Configuration
-@MapperScan(basePackages = {"com.dashboard.mapper.account"}, sqlSessionTemplateRef = "accountSqlSessionTemplate")
+@MapperScan(basePackages = {"com.dashboard.mapper.account", "com.dashboard.mapper.analysis"},
+        sqlSessionTemplateRef = "accountSqlSessionTemplate")
 public class AccountDataSourceConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountDataSourceConfig.class);
