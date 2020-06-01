@@ -1,16 +1,23 @@
 package com.dashboard.controller.quartz;
 
 import com.alibaba.dubbo.config.annotation.Reference;
+import com.dashboard.common.entity.Page;
 import com.dashboard.common.result.RestResult;
+import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.quartz.SchedulerJob;
+import com.dashboard.entity.quartz.SchedulerJobPageInfo;
 import com.dashboard.service.quartz.JobService;
 import com.dashboard.service.quartz.SchedulerJobService;
+import com.dashboard.snowflake.SnowflakeIdWorker;
 import org.quartz.SchedulerException;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.Timestamp;
 
 /**
  * @author konglinghui
@@ -37,6 +44,13 @@ public class SchedulerJobRestController {
     @PostMapping("/createSchedulerJob")
     public RestResult createSchedulerJob(@RequestBody SchedulerJob schedulerJob)
             throws SchedulerException, ClassNotFoundException {
+        Timestamp currentTimeStamp = DateTimeUtils.currentTimeStamp();
+        schedulerJob.setCreateTime(currentTimeStamp);
+        schedulerJob.setCreateBy("0");
+        schedulerJob.setUpdateTime(currentTimeStamp);
+        schedulerJob.setUpdateBy("0");
+        schedulerJob.setId(SnowflakeIdWorker.generateId());
+
         schedulerJobService.insertSchedulerJob(schedulerJob);
         // 调用定时任务
         jobService.insertJob(schedulerJob);
@@ -80,10 +94,18 @@ public class SchedulerJobRestController {
      * @return
      * @throws SchedulerException
      */
-    @GetMapping("/findSchedulerList")
-    public RestResult findSchedulerList() throws SchedulerException {
-        jobService.selectJobList();
+    @PostMapping("/findSchedulerJobList")
+    public RestResult findSchedulerJobList(@RequestBody SchedulerJobPageInfo schedulerJobPageInfo)
+            throws SchedulerException {
+        Page<SchedulerJob> page = schedulerJobService.selectSchedulerJobList(schedulerJobPageInfo);
 
-        return RestResult.success();
+        return RestResult.success(page);
+    }
+
+    @GetMapping("/findSchedulerJobById/{id}")
+    public RestResult findSchedulerJobById(@PathVariable String id) {
+        SchedulerJob schedulerJob = schedulerJobService.findSchedulerJobById(id);
+
+        return RestResult.success(schedulerJob);
     }
 }

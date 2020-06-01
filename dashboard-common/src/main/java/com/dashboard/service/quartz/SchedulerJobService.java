@@ -1,6 +1,8 @@
 package com.dashboard.service.quartz;
 
+import com.dashboard.common.entity.Page;
 import com.dashboard.entity.quartz.SchedulerJob;
+import com.dashboard.entity.quartz.SchedulerJobPageInfo;
 
 /**
  * @author konglinghui
@@ -22,4 +24,20 @@ public interface SchedulerJobService {
      * @param schedulerJob
      */
     void updateSchedulerJob(SchedulerJob schedulerJob);
+
+    /**
+     * 查询定时任务列表信息
+     *
+     * @param schedulerJobPageInfo
+     * @return
+     */
+    Page<SchedulerJob> selectSchedulerJobList(SchedulerJobPageInfo schedulerJobPageInfo);
+
+    /**
+     * 查询定时任务
+     *
+     * @param id
+     * @return
+     */
+    SchedulerJob findSchedulerJobById(String id);
 }
