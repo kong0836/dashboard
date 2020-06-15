@@ -8,7 +8,6 @@ import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountRecord;
 import com.dashboard.entity.account.AccountRecordPageInfo;
 import com.dashboard.entity.analysis.AccountTotal;
-import com.dashboard.entity.analysis.builder.AccountTotalBuilder;
 import com.dashboard.entity.system.Person;
 import com.dashboard.enums.account.AccountCategoryTypeEnum;
 import com.dashboard.mapper.account.AccountRecordMapper;
@@ -163,7 +162,7 @@ public class AccountRecordServiceImpl implements AccountRecordService {
                                                  List<Map<String, Object>> accountTotalList,
                                                  List<AccountTotal> accountTotals) {
         accountTotalList.forEach(accountTotalTem -> {
-            AccountTotal accountTotal = new AccountTotalBuilder()
+            AccountTotal accountTotal = AccountTotal.builder()
                     .id(SnowflakeIdWorker.generateId())
                     .consumerDate(DateTimeUtils.stringToTimestamp(accountTotalTem.get("consumerDate").toString()))
                     .type(Integer.valueOf(accountTotalTem.get("type").toString()))
