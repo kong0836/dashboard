@@ -9,7 +9,6 @@ import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountBudget;
 import com.dashboard.entity.account.AccountBudgetPageInfo;
 import com.dashboard.entity.account.AccountCategory;
-import com.dashboard.entity.account.builder.AccountBudgetBuilder;
 import com.dashboard.service.account.AccountBudgetService;
 import com.dashboard.service.account.AccountCategoryService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
@@ -154,7 +153,7 @@ public class AccountBudgetRestController {
         List<AccountBudget> accountBudgetList = new ArrayList<>();
 
         accountCategoryList.forEach(accountCategory -> {
-            AccountBudget accountBudget = new AccountBudgetBuilder()
+            AccountBudget accountBudget = AccountBudget.builder()
                     .id(SnowflakeIdWorker.generateId())
                     .categoryId(accountCategory.getId())
                     .status(StatusEnum.ON.getCode())

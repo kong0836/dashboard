@@ -12,7 +12,6 @@ import com.dashboard.entity.account.AccountCategoryPageInfo;
 import com.dashboard.entity.account.AccountCategoryTreeVO;
 import com.dashboard.entity.account.AccountCategoryVO;
 import com.dashboard.entity.account.CategoryTreeVO;
-import com.dashboard.entity.account.builder.AccountBudgetBuilder;
 import com.dashboard.service.account.AccountBudgetService;
 import com.dashboard.service.account.AccountCategoryService;
 import com.dashboard.snowflake.SnowflakeIdWorker;
@@ -186,7 +185,7 @@ public class AccountCategoryRestController {
      * @return
      */
     private AccountBudget buildAccountBudget(AccountCategory accountCategory) {
-        AccountBudget accountBudget = new AccountBudgetBuilder()
+        AccountBudget accountBudget = AccountBudget.builder()
                 .id(SnowflakeIdWorker.generateId())
                 .categoryId(accountCategory.getId())
                 .status(StatusEnum.ON.getCode())

@@ -6,7 +6,6 @@ import com.dashboard.common.enums.StatusEnum;
 import com.dashboard.entity.account.AccountBudget;
 import com.dashboard.entity.account.AccountBudgetPageInfo;
 import com.dashboard.entity.account.AccountCategory;
-import com.dashboard.entity.account.builder.AccountBudgetBuilder;
 import com.dashboard.mapper.account.AccountBudgetMapper;
 import com.dashboard.mapper.account.AccountCategoryMapper;
 import com.dashboard.service.account.AccountBudgetService;
@@ -47,7 +46,7 @@ public class AccountBudgetServiceImpl implements AccountBudgetService {
 
     @Override
     public void deleteAccountBudget(String id) {
-        AccountBudget accountBudget = new AccountBudgetBuilder()
+        AccountBudget accountBudget = AccountBudget.builder()
                 .id(Long.valueOf(id))
                 .status(StatusEnum.OFF.getCode())
                 .build();
