@@ -6,8 +6,12 @@ import com.dashboard.enums.account.AccountCategoryTypeEnum;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
@@ -26,8 +30,11 @@ import java.util.List;
  * @date 2020/4/18 22:10
  **/
 @Data
-@ApiModel
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@ApiModel
 @Table(name = "account_record")
 public class AccountRecord extends BaseDO implements Serializable {
 

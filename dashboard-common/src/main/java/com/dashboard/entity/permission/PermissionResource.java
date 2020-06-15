@@ -3,8 +3,11 @@ package com.dashboard.entity.permission;
 import com.dashboard.common.entity.BaseDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -17,8 +20,11 @@ import java.io.Serializable;
  * @date 2020/3/15 23:42
  **/
 @Data
-@ApiModel
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@ApiModel
 @Table(name = "permission_resource")
 public class PermissionResource extends BaseDO implements Serializable {
 

@@ -2,7 +2,10 @@ package com.dashboard.common.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import java.io.Serializable;
@@ -14,6 +17,9 @@ import java.sql.Timestamp;
  * @date 2019/9/4 19:04
  **/
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @ApiModel
 public class BaseDO implements Serializable {
 

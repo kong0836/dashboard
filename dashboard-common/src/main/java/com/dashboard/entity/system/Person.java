@@ -3,8 +3,11 @@ package com.dashboard.entity.system;
 import com.dashboard.common.entity.BaseDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -18,9 +21,12 @@ import java.util.Date;
  * @date 2019-12-2
  */
 @Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 @ApiModel
 @Table(name = "person")
-@EqualsAndHashCode(callSuper = false)
 public class Person extends BaseDO implements Serializable {
 
     private static final long serialVersionUID = 4248795554969207916L;

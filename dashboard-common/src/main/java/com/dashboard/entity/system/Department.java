@@ -2,6 +2,10 @@ package com.dashboard.entity.system;
 
 import com.dashboard.common.entity.BaseDO;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -12,6 +16,10 @@ import java.io.Serializable;
  * @description 部门实体
  * @date 2020/4/12 19:27
  **/
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class Department extends BaseDO implements Serializable {
 
     private static final long serialVersionUID = -2086262303936795844L;

@@ -4,8 +4,11 @@ import com.dashboard.common.entity.BaseDO;
 import com.dashboard.enums.account.AccountCategoryTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -18,8 +21,11 @@ import java.io.Serializable;
  * @date 2020/4/18 21:35
  **/
 @Data
-@ApiModel
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@ApiModel
 @Table(name = "account_category")
 public class AccountCategory extends BaseDO implements Serializable {
 
