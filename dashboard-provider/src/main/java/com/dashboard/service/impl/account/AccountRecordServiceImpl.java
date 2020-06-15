@@ -7,7 +7,6 @@ import com.dashboard.date.DateTimeUtils;
 import com.dashboard.entity.account.AccountCategory;
 import com.dashboard.entity.account.AccountRecord;
 import com.dashboard.entity.account.AccountRecordPageInfo;
-import com.dashboard.entity.account.builder.AccountRecordBuilder;
 import com.dashboard.entity.analysis.AccountTotal;
 import com.dashboard.entity.analysis.builder.AccountTotalBuilder;
 import com.dashboard.entity.system.Person;
@@ -27,7 +26,6 @@ import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -66,7 +64,7 @@ public class AccountRecordServiceImpl implements AccountRecordService {
 
     @Override
     public void deleteAccountRecord(Long id) {
-        AccountRecord accountRecord = new AccountRecordBuilder()
+        AccountRecord accountRecord = AccountRecord.builder()
                 .id(id)
                 .status(StatusEnum.OFF.getCode())
                 .build();
