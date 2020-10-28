@@ -2,10 +2,10 @@ package com.dashboard.service.impl.permission;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.dashboard.common.entity.Page;
-import com.dashboard.common.redis.RedisClient;
+import com.dashboard.entity.system.Person;
 import com.dashboard.entity.system.PersonPageInfo;
 import com.dashboard.mapper.permission.PersonMapper;
-import com.dashboard.entity.system.Person;
+import com.dashboard.service.cache.RedisService;
 import com.dashboard.service.permission.PersonService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -31,10 +31,10 @@ public class PersonServiceImpl implements PersonService {
     private PersonMapper personMapper;
 
     @Autowired
-    private RedisClient redisClient;
+    private JmsMessagingTemplate jmsMessagingTemplate;
 
     @Autowired
-    private JmsMessagingTemplate jmsMessagingTemplate;
+    private RedisService redisService;
 
     @Override
     public void createPerson(Person person) {
@@ -64,13 +64,24 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person findPersonById(String id) {
-        Person person = personMapper.selectByPrimaryKey(id);
 
-        return person;
+        return personMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public List<Person> findPersonListAll() {
+
+        redisService.set("name1", "张三");
+        redisService.set("age1", "25");
+        redisService.set("sex1", "man");
+        redisService.set("member1", "222");
+
+        String o = redisService.get("name1");
+        System.out.println(o);
+        System.out.println(redisService.get("age1").toString());
+        System.out.println(redisService.get("sex1").toString());
+        System.out.println(redisService.get("member1").toString());
+
         return personMapper.selectAll();
     }
 }

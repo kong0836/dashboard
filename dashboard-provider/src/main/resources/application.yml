@@ -14,24 +14,18 @@ spring:
       type: com.alibaba.druid.pool.DruidDataSource
   # redis
   redis:
-    host: 127.0.0.1
-    port: 6379
-    database: 0
-    timeout: 1000s  # 数据库连接超时时间，2.0 中该参数的类型为Duration，这里在配置的时候需要指明单位
-    # 连接池配置，2.0中直接使用jedis或者lettuce配置连接池
-    jedis:
-      pool:
-        # 最大空闲连接数
-        max-idle: 500
-        # 最小空闲连接数
-        min-idle: 50
-        # 等待可用连接的最大时间，负数为不限制
-        max-wait: -1
-        # 最大活跃连接数，负数为不限制
-        max-active: -1
-  cache:
-    redis:
-      time-to-live: -1 #毫秒
+    cluster:
+      nodes:
+        - 192.168.80.132:7001
+        - 192.168.80.132:7002
+        - 192.168.80.132:7003
+        - 192.168.80.132:7004
+        - 192.168.80.132:7005
+        - 192.168.80.132:7006
+      connectionTimeout: 6000
+      soTimeout: 6000
+      maxAttempts: 5
+      password:
   # activemq
   activemq:
     broker-url: tcp://127.0.0.1:61616
