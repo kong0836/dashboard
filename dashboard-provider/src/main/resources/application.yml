@@ -22,9 +22,9 @@ spring:
         - 192.168.80.132:7004
         - 192.168.80.132:7005
         - 192.168.80.132:7006
-      connectionTimeout: 6000
-      soTimeout: 6000
-      maxAttempts: 5
+      max-redirects: 5
+      connection-timeout: 6000
+      so-timeout: 6000
       password:
   # activemq
   activemq:

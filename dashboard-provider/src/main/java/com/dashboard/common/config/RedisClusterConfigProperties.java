@@ -25,7 +25,7 @@ public class RedisClusterConfigProperties {
     /**
      *
      */
-    private Integer maxAttempts;
+    private Integer maxRedirects;
 
     /**
      *

@@ -50,14 +50,14 @@ public class RedisClusterConfig extends CachingConfigurerSupport {
         return new JedisCluster(nodes,
                 redisClusterConfigProperties.getConnectionTimeout(),
                 redisClusterConfigProperties.getSoTimeout(),
-                redisClusterConfigProperties.getMaxAttempts(),
+                redisClusterConfigProperties.getMaxRedirects(),
                 poolConfig);
     }
 
     @Bean
     public RedisClusterConfiguration clusterConfig() {
         RedisClusterConfiguration clusterConfig = new RedisClusterConfiguration(redisClusterConfigProperties.getNodes());
-        clusterConfig.setMaxRedirects(redisClusterConfigProperties.getMaxAttempts());
+        clusterConfig.setMaxRedirects(redisClusterConfigProperties.getMaxRedirects());
         clusterConfig.setPassword(RedisPassword.of(redisClusterConfigProperties.getPassword()));
 
         return clusterConfig;
