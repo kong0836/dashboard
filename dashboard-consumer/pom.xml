@@ -14,7 +14,7 @@
   <dependencies>
     <dependency>
       <groupId>com.dashboard</groupId>
-      <artifactId>dashboard-common</artifactId>
+      <artifactId>dashboard-api</artifactId>
       <version>${project.parent.version}</version>
     </dependency>
     <dependency>
@@ -24,7 +24,7 @@
       <exclusions>
         <exclusion>
           <groupId>com.dashboard</groupId>
-          <artifactId>dashboard-common</artifactId>
+          <artifactId>dashboard-api</artifactId>
         </exclusion>
       </exclusions>
     </dependency>

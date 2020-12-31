@@ -9,7 +9,7 @@
   <name>dashboard</name>
 
   <modules>
-    <module>dashboard-common</module>
+    <module>dashboard-api</module>
     <module>dashboard-consumer</module>
     <module>dashboard-provider</module>
     <module>dashboard-util</module>
